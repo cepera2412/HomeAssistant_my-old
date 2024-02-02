@@ -1,0 +1,549 @@
+system_ha:
+
+########################################################################################################################################
+#                                                         Шаблоны 
+########################################################################################################################################
+
+    template:
+
+      - sensor:
+
+########################################################## Автоматизации ###############################################################
+
+          - name: count_automation
+            state: >
+                  {%- set domains = ['automation'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:robot-excited-outline
+            
+          - name: count_automation_on
+            state: "{{states.automation | selectattr ('state', 'equalto', 'on') | list | length}}"
+            icon: mdi:robot-outline
+
+          - name: count_automation_off
+            state: "{{states.automation | selectattr ('state', 'equalto', 'off') | list | length}}"
+            icon: mdi:robot-off-outline
+
+          - name: count_automation_unavailable
+            state: "{{states.automation | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:robot-confused-outline
+            
+############################################### Скрипты ##################################################
+
+          - name: count_script
+            state: >
+                  {%- set domains = ['script'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:script-text
+            
+          - name: count_script_on
+            state: "{{states.script | selectattr ('state', 'equalto', 'on') | list | length}}"
+            icon: mdi:file-check
+
+          - name: count_script_off
+            state: "{{states.script | selectattr ('state', 'equalto', 'off') | list | length}}"
+            icon: mdi:file-remove            
+
+          - name: count_script_unavailable
+            state: "{{states.script | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:file-question
+
+########################################### Обновления ###################################################
+
+          - name: count_update
+            state: >
+                  {%- set domains = ['update'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:monitor-dashboard
+            
+          - name: count_update_on
+            state: "{{states.update | selectattr ('state', 'equalto', 'on') | list | length}}"
+            icon: mdi:monitor-arrow-down-variant
+
+############################################## Светильники ################################################
+
+          - name: count_light
+            state: >
+                  {%- set domains = ['light'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:lightbulb-group
+
+          - name: count_light_on
+            state: "{{states.light | selectattr ('state', 'equalto', 'on') | list | length}}"
+            icon: mdi:lightbulb-on
+
+          - name: count_light_off
+            state: "{{states.light | selectattr ('state', 'equalto', 'off') | list | length}}"
+            icon: mdi:lightbulb
+
+          - name: count_light_unavailable
+            state: "{{states.light | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:lightbulb-question
+            
+#################################################### Реле ###################################################
+
+          - name: count_switch
+            state: >
+                  {%- set domains = ['switch'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:power
+
+          - name: count_switch_on
+            state: "{{states.switch | selectattr ('state', 'equalto', 'on') | list | length}}"
+            icon: mdi:power-plug
+
+          - name: count_switch_off
+            state: "{{states.switch | selectattr ('state', 'equalto', 'off') | list | length}}"
+            icon: mdi:power-plug-off
+
+          - name: count_switch_unavailable
+            state: "{{states.switch | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:power-plug-outline
+
+##################################################### Сенсоры #############################################
+
+          - name: count_sensor
+            state: >
+                  {%- set domains = ['sensor'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:eye
+            
+          - name: count_sensor_unavailable
+            state: "{{states.sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:eye-off
+            
+##################################################### Бинарные сенсоры ##########################################
+
+          - name: count_binary_sensor
+            state: >
+                  {%- set domains = ['binary_sensor'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:numeric-10-circle
+            
+          - name: count_binary_sensor_unavailable
+            state: "{{states.binary_sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:alert-circle
+
+######################################################### Камеры ##############################################
+
+          - name: count_camera
+            state: >
+                  {%- set domains = ['camera'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:cctv
+            
+          - name: count_camera_unavailable
+            state: "{{states.camera | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:alert-circle
+
+######################################################### media_player ##############################################
+
+          - name: count_media_player
+            state: >
+                  {%- set domains = ['media_player'] -%}
+                  {%- for domain in domains -%}
+                    {%- for item in states[domain] -%}
+                      {% if loop.first %}
+                        {{loop.length}}
+                      {% endif %}
+                    {%- endfor -%}
+                  {%- endfor -%}
+            icon: mdi:motion-play
+
+          - name: count_media_player_on
+            state: "{{states.media_player | selectattr ('state', 'equalto', 'playing') | list | length}}"
+            icon: mdi:speaker-play
+
+          - name: count_media_player_unavailable
+            state: "{{states.media_player | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+            icon: mdi:bug-play-outline
+
+######################################################### Время и дата ##############################################
+
+          - name: custom_time_data
+            state: >
+              {{ now().strftime("%H:%M:%S  %d-%m-%Y") }}
+
+          - name: custom_data
+            state: >
+              {{ now().strftime("%d-%m-%Y") }}
+
+
+
+################################################ Объединение Медио ##############################################
+
+      - binary_sensor:
+
+          - name: media_all
+            state: >
+              {{ is_state('media_player.mi_speaker', 'playing')
+                 and is_state('media_player.androidbox', 'playing')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.corridor_motion_on", "on") %}
+              mdi:music
+              {% else %}
+              mdi:music-off
+              {% endif %}
+
+
+#################################################################################################################################
+#                                                            Сенсоры 
+#################################################################################################################################
+
+    sensor:
+
+########################################################## Системные ############################################################
+
+# Время
+        - platform: time_date
+          display_options:
+              - 'time'
+              - 'date'
+              - 'time_date'
+
+# Системный монитор
+        - platform: systemmonitor
+          resources:
+            - type: processor_use
+            - type: processor_temperature
+            - type: disk_use_percent
+              arg: /
+            - type: memory_use_percent
+            - type: last_boot
+            - type: disk_free
+              arg: /
+
+# База Даных
+        - platform: sql
+          db_url: mysql://hass:hass@core-mariadb/homeassistant?charset=utf8
+          queries:
+              - name: Maria DB size
+                query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 2) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+                column: 'value'
+                unit_of_measurement: MB 
+
+# Время с последней перезагрузки одноплатника
+        - platform: template
+          sensors:
+              last_boot_custom:
+                friendly_name: "Последняя перезагрузка"
+                value_template: >
+                   {% set uptime = as_timestamp (now()) -as_timestamp(states.sensor.last_boot.state) | int %}
+                   {% set minutes = (( uptime % 3600) / 60) | int %}
+                   {% set hours = ((uptime % 86400) / 3600) | int %}
+                   {% set days = (uptime / 86400) | int %}
+        
+                     {% if uptime < 1 %}
+                       Меньше минуты
+                     {% else %}
+                       {% if days > 0 %}
+                         {{ days }} д.
+                       {% endif %}
+                       {% if hours > 0 %}
+                         {% if days > 0 %}
+                           {{ ' ' }}
+                         {% endif %}
+                         {{ hours }} ч.
+                       {% endif %}
+                       {% if minutes > 0 %}
+                         {% if days > 0 or hours > 0 %}
+                           {{ ' ' }}
+                         {% endif %}
+                           {{ minutes }} мин.
+                       {% endif %}
+                     {% endif %}
+                icon_template: mdi:clock
+
+
+######################################################### google_backup #########################################################
+
+        - platform: template
+          sensors:
+            last_google_backup_train:
+               friendly_name: 'BackUp последний'
+               value_template: '{{ (as_timestamp(states.sensor.backup_state.attributes["last_backup"])) | timestamp_custom("%d.%m.%Y %H:%M") }}'
+               icon_template: mdi:calendar-check-outline
+        
+            snapshots_in_google_drive_train:
+               friendly_name: 'Снапшотов на Googe Drive'
+               value_template: '{{ states.sensor.backup_state.attributes["backups_in_google_drive"] }}'
+               icon_template: mdi:folder-google-drive
+               
+            snapshots_in_hassio_train:
+               friendly_name: 'Снапшотов в Home Assistant'
+               value_template: '{{ states.sensor.backup_state.attributes["backups_in_home_assistant"] }}'
+               icon_template: mdi:home-assistant
+
+#########################################################################################################################################
+#                                                      Логическое переключатель
+#########################################################################################################################################
+
+    input_boolean:
+
+# Визуализация на планшете Погоды
+        ui_hide_weather:
+            name: Погода
+            icon: mdi:weather-partly-cloudy
+
+# Визуализация на планшете Календаря
+        ui_hide_calendar:
+            name: Календарь
+            icon: mdi:calendar
+
+# Визуализация на планшете Календаря смен
+        ui_hide_calendar_word:
+            name: Календарь смен
+            icon: mdi:calendar
+
+# Визуализация на планшете Часов
+        ui_hide_clock:
+            name: Часы
+            icon: mdi:clock-outline
+
+# Визуализация на планшете Камеры
+        ui_hide_camera:
+            name: Камеры
+            icon: mdi:cctv
+
+# Визуализация на планшете Проигрователя
+        ui_hide_music:
+            name: Проигрователи
+            icon: mdi:speaker
+
+# Визуализация на планшете Батареек
+        ui_hide_battery:
+            name: Батарейки
+            icon: mdi:battery-alert
+
+# Визуализация на планшете Автоматизаций
+        ui_hide_automation:
+            name: Автоматизации
+            icon: mdi:home-automation
+
+# Выкл сервера
+        off_home_assistant:
+            name: Переключатель выкл НА
+            icon: mdi:home-remove
+
+#########################################################################################################################################
+#                                                      Введимые дату и время
+#########################################################################################################################################
+
+    input_datetime:
+
+        off_home_assistant:
+          name: Время выключения НА
+          has_date: false
+          has_time: true
+
+#########################################################################################################################################
+#                                                       Виртуальная Кнопка 
+#########################################################################################################################################
+
+    input_button:
+
+      automation_reload:
+        name: Обновление количества Автоматизаций
+        icon: mdi:reload
+
+#################################################################################################################################
+#                                                            Скрипты 
+#################################################################################################################################
+
+    script:
+
+# Перезагрузка НА
+        restart_ha:
+          alias: Перезапускаем Home Assistant
+          icon: mdi:restart-alert
+          sequence:
+            - service: homeassistant.restart
+              data: {}
+
+#################################################################################################################################
+#                                                    Автоматизации 
+#################################################################################################################################
+
+    automation:
+
+# Сжатие Базы Данных
+        - id: Сжатие базы
+          alias: Сжатие БД
+          initial_state: true
+          trigger:
+            - platform: time
+              at: '01:00:00'
+          action:
+            - service: recorder.purge
+              data:
+                  keep_days: 3
+                  repack: true
+
+# Установить время выкл НА
+        - id: Выкл. по таймеру НА
+          alias: (Внимание) Выкл. по таймеру НА
+          initial_state: true
+          trigger:
+            platform: time
+            at: input_datetime.off_home_assistant
+          condition:
+           - condition: state
+             entity_id: input_boolean.off_home_assistant
+             state: 'on'
+          action:
+            - service: hassio.host_shutdown
+              data: {}
+
+######################################################## Перезагрузки #########################################################
+# Перезагрузка localtuya
+        - id: Перезагрузка localtuya
+          alias: (Перезагрузка) localtuya
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: switch.svet_v_vannoi
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_v_garderobnoi
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_v_gostinoi
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_v_kabinete
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_v_koridore
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_v_spalne
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_v_tualete
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_nad_stoleshnei
+              to: 'unavailable'
+              for:
+                minutes: 10
+            - platform: state
+              entity_id: switch.svet_na_lodzhii
+              to: 'unavailable'
+              for:
+                minutes: 10
+          condition:
+            - condition: state
+              entity_id: switch.0x84b4dbfffeac2b87
+              state: 'on'
+          action:  
+            - service: localtuya.reload
+              data: {}
+
+# Перезагрузка LD2410b
+        - id: Перезагрузка LD2410b Кухня
+          alias: (Перезагрузка) LD2410b Кухня
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.hlk_ld2410_9378_occupancy
+              to: 'unavailable'
+              for:
+                minutes: 5
+          action: 
+            - service: homeassistant.reload_config_entry
+              data: {}
+              target:
+                device_id: 364dee42736afda5129ae4797025dbc2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

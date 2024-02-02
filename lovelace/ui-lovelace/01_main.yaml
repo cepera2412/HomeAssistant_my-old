@@ -1,0 +1,395 @@
+title: Главная
+icon: mdi:home-assistant
+cards:
+
+    - type: vertical-stack
+      cards:
+
+################### Присутствие Дома ####################
+        - type: horizontal-stack
+          cards:
+          - type: picture-elements
+            image: /local/foto/я.jpg
+            elements:
+              - prefix: 'Серега -- '
+                style:
+                  color: yellow
+                  top: 93%
+                  left: 25%
+                type: state-label
+                entity: device_tracker.ping_cepera
+              - style:
+                  color: yellow
+                  top: 93%
+                  left: 55%
+                type: state-icon
+                entity: binary_sensor.serega_mi_bahd_4
+              - style:
+                  color: yellow
+                  top: 93%
+                  left: 70%
+                type: state-icon
+                entity: binary_sensor.redmi_note_8_pro_is_charging
+              - style:
+                  color: white
+                  top: 93%
+                  left: 80%
+                type: state-icon
+                entity: sensor.redmi_note_8_pro_battery_level
+              - style:
+                  color: white
+                  top: 93%
+                  left: 90%
+                type: state-label
+                entity: sensor.redmi_note_8_pro_battery_level
+        
+              - style:
+                  color: yellow
+                  top: 10%
+                  left: 95%
+                type: state-icon
+                entity: binary_sensor.redmi_note_8_pro_bluetooth_state
+              - style:
+                  color: yellow
+                  top: 25%
+                  left: 95%
+                type: state-icon
+                entity: binary_sensor.moi_telefon_wifi_state
+          - type: picture-elements
+            image: /local/foto/Надюша.jpg
+            elements:
+              - prefix: 'Надюша -- '
+                style:
+                  color: yellow
+                  top: 93%
+                  left: 30%
+                type: state-label
+                entity: device_tracker.ping_nadya
+              - style:
+                  color: yellow
+                  top: 93%
+                  left: 61%
+                type: state-icon
+                entity: binary_sensor.nadiusha_mi_band_4
+              - style:
+                  color: white
+                  top: 93%
+                  left: 90%
+                type: state-label
+                entity: sensor.iphone_nadiusha_battery_level
+              - style:
+                  color: white
+                  top: 93%
+                  left: 75%
+                type: state-icon
+                entity: sensor.iphone_nadiusha_battery_level
+              - style:
+                  color: yellow
+                  top: 85%
+                  left: 80%
+                type: state-label
+                entity: sensor.iphone_nadiusha_ssid
+ 
+################### Погода ####################
+        - type: weather-forecast
+          entity: weather.my_smart_home
+          secondary_info_attribute: wind_speed
+          name: Нетешин
+
+    - type: vertical-stack
+      cards:
+
+################### Включеные Выключатели ####################
+        - type: entity-filter
+          entities:
+          - entity: switch.svet_v_koridore
+            icon: mdi:dome-light
+            secondary_info: last-changed
+          - entity: switch.lenta_v_koridore
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_tualete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.vytiazhka_v_tualete
+            icon: mdi:fan
+            secondary_info: last-changed
+          - entity: switch.svet_v_vannoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_vannoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_gostinoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_gostinoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.liustra_v_gostinoi
+            icon: mdi:dome-light
+            secondary_info: last-changed
+          - entity: switch.svet_v_garderobnoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.svet_na_lodzhii
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_na_lodzhii
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_spalne
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_spalne
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_kabinete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.svet_nad_stoleshnei
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_na_kukhne
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_nad_stolom
+            icon: mdi:vanity-light
+            secondary_info: last-changed
+          state_filter:
+           - "on"
+
+################### Включеные розетки/светильники ####################
+        - type: entity-filter
+          entities:
+          - entity: light.bslamp2_cloud_402265
+          - entity: switch.elka
+            icon: mdi:pine-tree
+            secondary_info: last-changed
+          - entity: switch.chainik
+            icon: mdi:kettle-steam
+            secondary_info: last-changed
+          - entity: switch.planshet
+            icon: mdi:tablet
+            secondary_info: last-changed
+          - entity: switch.rele_dlia_mi_robota
+            secondary_info: last-changed
+          - entity: switch.rele_napriazheniia
+            icon: mdi:meter-electric-outline
+            secondary_info: last-changed
+
+
+
+          state_filter:
+           - "on"
+    
+################### Активные Сенсоры ####################
+        - type: entity-filter
+          entities:
+           - entity: binary_sensor.0x158d0003fb0f3a_motion
+             name: Коридор
+           - entity: binary_sensor.0x158d00067919d1_motion
+             name: Туалет
+           - entity: binary_sensor.0x158d00067963a8_motion
+             name: Ванная
+           - entity: binary_sensor.0x158d00062fdc4f_motion
+             name: Гардеробная
+           - entity: binary_sensor.0x158d0006337230_motion
+             name: Кухня
+           - entity: binary_sensor.28d1272f330d_motion
+             name: НС Коридор
+           - entity: binary_sensor.28d1272d46cc_motion
+             name: НС Гостинная
+           - entity: binary_sensor.0x158d0001dff57f_contact
+             name: Входная
+           - entity: binary_sensor.0x158d00028d3838_contact
+             name: Туалет
+           - entity: binary_sensor.0x158d00069b0949_contact
+             name: Ванная
+           - entity: binary_sensor.54ef44e5d062_water_leak
+             name: Ванная
+           - entity: binary_sensor.54ef44e5ca71_water_leak
+             name: Туалет
+           - entity: binary_sensor.54ef44e5d0d9_water_leak
+             name: Кухня
+          state_filter:
+           - "on"
+
+    - type: vertical-stack
+      cards:
+
+################### Устройства Недоступные ####################
+        - type: entity-filter
+#          show_empty: false
+          entities:
+          - entity: switch.svet_v_koridore
+            icon: mdi:dome-light
+            secondary_info: last-changed
+          - entity: switch.lenta_v_koridore
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_tualete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.vytiazhka_v_tualete
+            icon: mdi:fan
+            secondary_info: last-changed
+          - entity: switch.svet_v_vannoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_vannoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_gostinoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_gostinoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.liustra_v_gostinoi
+            icon: mdi:dome-light
+            secondary_info: last-changed
+          - entity: switch.svet_v_garderobnoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.svet_na_lodzhii
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_na_lodzhii
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_spalne
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_spalne
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_v_kabinete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.svet_nad_stoleshnei
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_na_kukhne
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_nad_stolom
+            icon: mdi:vanity-light
+            secondary_info: last-changed
+          - entity: light.bslamp2_cloud_402265
+          - entity: switch.jlsw01_cloud_470381
+          - entity: switch.elka
+            icon: mdi:pine-tree
+            secondary_info: last-changed
+          - entity: switch.chainik
+            icon: mdi:kettle-steam
+            secondary_info: last-changed
+          state_filter:
+           - "unavailable"
+
+################### Сенсоры Недоступные ####################
+        - type: entity-filter
+          entities:
+           - entity: binary_sensor.0x158d0003fb0f3a_motion
+             name: Коридор
+           - entity: binary_sensor.0x158d00067919d1_motion
+             name: Туалет
+           - entity: binary_sensor.0x158d00067963a8_motion
+             name: Ванная
+           - entity: binary_sensor.0x158d00062fdc4f_motion
+             name: Гардеробная
+           - entity: binary_sensor.0x158d0006337230_motion
+             name: Кухня
+           - entity: binary_sensor.28d1272f330d_motion
+             name: НС Коридор
+           - entity: binary_sensor.28d1272d46cc_motion
+             name: НС Гостинная
+           - entity: binary_sensor.0x158d0001dff57f_contact
+             name: Входная дверь
+           - entity: binary_sensor.0x158d00028d3838_contact
+             name: Туалет дверь
+           - entity: binary_sensor.0x158d00069b0949_contact
+             name: Ванная дверь
+           - entity: binary_sensor.54ef44e5d062_water_leak
+             name: Протечка в Ванная
+           - entity: binary_sensor.54ef44e5ca71_water_leak
+             name: Протечка в Туалет
+           - entity: binary_sensor.54ef44e5d0d9_water_leak
+             name: Протечка на Кухня
+          state_filter:
+           - "unavailable"
+           
+################### Разряженные Батарейки ####################
+        - type: entity-filter
+          entities:
+           - sensor.0x158d0001dff57f_battery
+           - sensor.0x158d00069b0949_battery
+           - sensor.0x158d00028d3838_battery
+           - sensor.0x158d00067963a8_battery
+           - sensor.0x158d00062fdc4f_battery
+           - sensor.0x158d0003fb0f3a_battery
+           - sensor.0x158d00067919d1_battery
+           - sensor.0x158d0006337230_battery
+           - sensor.0x158d0006ea5f45_battery
+           - sensor.0x158d0006ba1c1d_battery
+           - sensor.0x158d0006ba1ba3_battery
+           - sensor.0x158d00054bca97_battery
+           - sensor.28d1272d46cc_battery
+           - sensor.28d1272f330d_battery
+           - sensor.a4c138f9ce31_battery
+           - sensor.a4c138ea1a11_battery
+           - sensor.a4c138c67cbc_battery
+           - sensor.a4c138bfa633_battery
+           - sensor.54ef44e5d062_battery
+           - sensor.54ef44e5ca71_battery
+           - sensor.54ef44e5d0d9_battery
+          state_filter:
+           - operator: "<="
+             value: 10
+
+
+
+################### Календарь ####################
+    - type: vertical-stack
+      cards:
+      
+        - type: "custom:atomic-calendar-revive"
+          entities:
+              - calendar.s_demeduk_gmail_com
+              - calendar.dni_rozhdeniia
+              - calendar.dni_rozhdeniia_nadiny
+              - calendar.pravoslavnye_prazdniki
+              - calendar.prazdniki_ukrainy
+              - calendar.uefa_champions_league_2021_2022_sofabold_dk
+          name: 'Календарь'
+
+        - type: "custom:atomic-calendar-revive"
+          entities:
+              - calendar.rabota
+          name: 'Рабочий календарь'
+          maxDaysToShow: 5
+          maxEventCount: 6
+          showLocation: true
+          showMonth: true
+          showWeekDay: true
+          showDate: true
+          showDescription: false
+          showNoEventsForToday: false
+          disableEventLink: true
+          disableLocationLink: false
+          defaultMode: Event
+          refreshInterval: 60
+          showHours: true
+          showRelativeTime: true
+          europeanDate: true
+          dateFormat: 'LL'
+          hoursFormat: 'HH:mm'
+
+
+
+
+
+
+
+
+

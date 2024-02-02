@@ -1,0 +1,122 @@
+livingroom:
+
+#########################################################################################################################################
+#                                                                Шаблоны 
+#########################################################################################################################################
+
+# Шаблон в Спальне прописан
+    # template:
+
+    #   - binary_sensor:
+
+    #       - name: no_presence_doma
+    #         state: >
+    #           {{ is_state('media_player.androidbox', 'unavailable')
+    #              and is_state('binary_sensor.0x158d00067963a8_motion', 'off')
+    #              and is_state('binary_sensor.0x158d00062fdc4f_motion', 'off')
+    #              and is_state('binary_sensor.0x158d0003fb0f3a_motion', 'off')
+    #              and is_state('binary_sensor.0x158d00067919d1_motion', 'off')
+    #              and is_state('binary_sensor.0x158d0006337230_motion', 'off')
+    #              and is_state('binary_sensor.28d1272f330d_motion', 'off')
+    #           }}
+    #         delay_on: 03:00:00
+
+#########################################################################################################################################
+#                                                              Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+# Переключения выключателем
+        - alias: (Гостиная) Выкл ленты по вкл света
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: switch.liustra_v_gostinoi
+             to: 'on'
+           - platform: state
+             entity_id: switch.svet_v_gostinoi
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.lenta_v_gostinoi
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.lenta_v_gostinoi
+
+        - alias: (Гостиная) Выкл света при вкл ленты
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: switch.lenta_v_gostinoi
+            to: 'on'
+          condition:
+            condition: or
+            conditions:
+              - condition: state
+                entity_id: switch.svet_v_gostinoi
+                state: 'on'
+              - condition: state
+                entity_id: switch.liustra_v_gostinoi
+                state: 'on'
+          action:
+          - service: switch.turn_off
+            entity_id: switch.svet_v_gostinoi
+          - service: switch.turn_off
+            entity_id: switch.liustra_v_gostinoi
+
+
+# Принудительное выкл света
+        - id: Принудительное выкл света в гостиной
+          alias: (Гостиная) Принудительное выкл света
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.no_presence_doma
+              from: 'off'
+              to: 'on'
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: switch.lenta_v_gostinoi
+                    state: 'on'
+                sequence:
+                  - service: switch.turn_off
+                    entity_id:
+                      - switch.lenta_v_gostinoi
+              - conditions:
+                  - condition: state
+                    entity_id: switch.liustra_v_gostinoi
+                    state: 'on'
+                sequence:
+                  - service: switch.turn_off
+                    entity_id:
+                      - switch.liustra_v_gostinoi
+              - conditions:
+                  - condition: state
+                    entity_id: switch.svet_v_gostinoi
+                    state: 'on'
+                sequence:
+                  - service: switch.turn_off
+                    entity_id:
+                      - switch.svet_v_gostinoi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

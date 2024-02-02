@@ -1,0 +1,181 @@
+################################################################################################
+######################################### Кнопка Свет ##########################################
+################################################################################################
+
+      type: custom:layout-card
+      layout_type: vertical
+      layout:
+        # max_cols: 1
+        # width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Свет                                ##
+          icon: mdi:home-lightbulb-outline
+          template: button_return
+
+################################### Выключить все ###########################################
+
+
+################################### Какие устройства вкл. ###########################################
+
+        - type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+              grid-template-columns: 87% auto
+          cards:
+
+            - type: conditional
+              conditions:
+                  - entity: group.light_all                      ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  name: Выключить весь свет  --->
+                  template: button_zagolovok_2
+
+#=================================== Кнопка Выключить все ==========================================
+            - type: conditional
+              conditions:
+                  - entity: group.light_all                         ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  icon: mdi:lightbulb-group-off
+                  entity: group.light_all                           ##
+                  template: button_svet_all
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                        entity_id: group.light_all                  ##
+                    confirmation:
+                        text: 'Выключить весь свет?'
+#============================================================================================
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+
+# Коридор
+                - type: custom:button-card
+                  entity: switch.svet_v_koridore                            ##
+                  icon: mdi:dome-light
+                  name: Свет в Коридоре
+                  template: button_main_light
+
+                - type: custom:button-card
+                  entity: switch.lenta_v_koridore                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента в Коридоре
+                  template: button_main_light
+
+# Туалет
+                - type: custom:button-card
+                  entity: switch.svet_v_tualete
+                  icon: mdi:lightbulb-spot
+                  name: Свет в Туалете
+                  template: button_main_light_180
+
+                - type: custom:button-card
+                  entity: switch.vytiazhka_v_tualete
+                  icon: mdi:fan
+                  name: Вытяжка
+                  template: button_main_light_fan
+
+# Ванная
+                - type: custom:button-card
+                  entity: switch.svet_v_vannoi
+                  icon: mdi:lightbulb-spot
+                  name: Свет в Ванной
+                  template: button_main_light_180
+
+                - type: custom:button-card
+                  entity: switch.lenta_v_vannoi                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента в Ванной
+                  template: button_main_light
+
+# Гостиная
+                - type: custom:button-card
+                  entity: switch.svet_v_gostinoi                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет в Гостиной
+                  template: button_main_light_180
+
+                - type: custom:button-card
+                  entity: switch.lenta_v_gostinoi                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента в Гостиной
+                  template: button_main_light
+
+                - type: custom:button-card
+                  entity: switch.liustra_v_gostinoi                           ##
+                  icon: mdi:vanity-light
+                  name: Люстра в Гостиной
+                  template: button_main_light
+
+# Гардеробная
+                - type: custom:button-card
+                  entity: switch.svet_v_garderobnoi                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет в Гардеробе
+                  template: button_main_light_180
+
+# Лоджия
+                - type: custom:button-card
+                  entity: switch.svet_na_lodzhii                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет на Лоджии
+                  template: button_main_light_180
+
+                - type: custom:button-card
+                  entity: switch.lenta_na_lodzhii                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента на Лоджии
+                  template: button_main_light
+
+# Спальня
+                - type: custom:button-card
+                  entity: switch.svet_v_spalne                            ##
+                  icon: mdi:vanity-light
+                  name: Свет в Спальне
+                  template: button_main_light
+
+                - type: custom:button-card
+                  entity: switch.lenta_v_spalne                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента в Спальне
+                  template: button_main_light
+
+# Кабинет
+                - type: custom:button-card
+                  entity: switch.svet_v_kabinete                            ##
+                  icon: mdi:wall-sconce-flat
+                  name: Свет в Кабинете
+                  template: button_main_light
+
+# Кухня
+                - type: custom:button-card
+                  entity: switch.svet_nad_stoleshnei                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет на Кухне
+                  template: button_main_light_180
+
+                - type: custom:button-card
+                  entity: switch.lenta_na_kukhne                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента на Кухне
+                  template: button_main_light
+
+                - type: custom:button-card
+                  entity: switch.svet_nad_stolom                            ##
+                  icon: mdi:vanity-light
+                  name: Люстра на Кухне
+                  template: button_main_light
+
+
+

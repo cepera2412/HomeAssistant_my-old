@@ -1,0 +1,858 @@
+##########################################################################################################################################
+#                                                               System                                                 
+##########################################################################################################################################
+title: Система
+icon: mdi:alert-outline
+type: custom:masonry-layout
+layout:
+    width: 300
+    max_cols: 4
+cards:
+
+##########################################################################################################################################
+#                                                                Колонка 1                                              
+##########################################################################################################################################
+
+    - type: vertical-stack
+      cards:
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+
+############################################################### Время ####################################################################
+
+            - type: entities
+              style: |
+                   ha-card {
+                     color: #FFA500;
+                     --paper-item-icon-color: #FFA500;
+                     --iron-icon-stroke-color: #FFFFE0;
+                     font-weight: bold;
+                     font-size: 14px;
+                   }                 
+              show_header_toggle: false
+              entities:
+              - entity: sensor.custom_data
+                type: custom:multiple-entity-row
+                name: Время
+                icon: mdi:home-clock-outline
+                state_header: Дата
+                entities:
+                  - entity: sensor.time
+                    name: Время
+
+########################################## Сервер ##########################################################
+
+            - type: entities
+              style: |
+                   ha-card {
+                     color: #FFA500;
+                     --paper-item-icon-color: #FFA500;
+                     --iron-icon-stroke-color: #FFFFE0;
+                     font-weight: bold;
+                     font-size: 14px;
+                   }                 
+              show_header_toggle: false
+              entities:
+              - entity: sensor.online_ha
+                type: custom:multiple-entity-row
+#                name: Загрузка сервера
+                icon: mdi:clock-time-three
+                state_header: Последняя перезагрузка
+                entities:
+                  - entity: sensor.last_boot_custom
+                    name: Сервер Online
+
+################################################# Графики #################################################
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+
+            - type: markdown
+              content: >
+                 **Графики** 
+    
+            - type: horizontal-stack
+              cards:
+    
+               - type: gauge
+                 name: Загрузка CPU
+                 unit: '%'
+                 entity: sensor.processor_use
+                 severity:
+                    green: 0
+                    yellow: 60
+                    red: 85
+                 
+               - type: gauge
+                 name: Загрузка ОЗУ
+                 unit: '%'
+                 entity: sensor.memory_use_percent
+                 severity:
+                    green: 0
+                    yellow: 60
+                    red: 85
+                    
+            - type: horizontal-stack
+              cards:
+    
+               - type: gauge
+                 name: Диск заполнен
+                 unit: '%'
+                 entity: sensor.disk_use_percent
+                 severity:
+                    green: 0
+                    yellow: 60
+                    red: 85    
+                    
+               - type: gauge
+                 name: Свободное место
+                 unit: 'Гб'
+                 entity: sensor.disk_free
+                 severity:
+                    red: 2
+                    yellow: 6
+                    green: 8
+                    
+            - type: custom:mini-graph-card
+              entities:
+               - entity: sensor.maria_db_size
+                 name: Maria DB
+    
+            - type: markdown
+              content: >
+                Коды для телеграмм смайлов
+                **https://apps.timwhitlock.info/emoji/tables/unicode**
+    
+            - type: markdown
+              content: >
+                Спортивный сайт
+                **https://sofabold.dk/**
+
+        - type: custom:mushroom-entity-card
+          entity: input_button.automation_reload
+          icon_color: red
+          layout: vertical
+          secondary_info: none
+          name: Автоматизации
+          tap_action:
+              action: toggle
+
+
+
+##################################################################################################
+#                                         Колонка 2                                              #
+##################################################################################################
+
+    - type: vertical-stack
+      cards:
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+      
+            - type: markdown
+              style: |
+                   ha-card {
+                     color: #00BFFF;
+                     font-weight: bold;
+                     font-size: 16px;
+                   }          
+              content: >
+                 **Автоматизации и скрипты**
+
+######################################## Автоматизации ##############################################
+
+            - type: entities
+              style: |
+                   ha-card {
+                     color: #00BFFF;
+                     --paper-item-icon-color: #00BFFF;
+                     --iron-icon-stroke-color: #FFFFE0;
+                     font-weight: bold;
+                     font-size: 14px;
+                   }                 
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_automation
+                type: custom:multiple-entity-row
+                name: Автоматизации
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_automation_on
+                    name: Активно
+                  - entity: sensor.count_automation_off
+                    name: Отключено
+                  - entity: sensor.count_automation_unavailable
+                    name: Недоступно
+
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+                style: |
+                  ha-card {
+                    color: #00BFFF;
+                    --paper-item-icon-color: #E6E6FA;
+                    font-weight: bold;
+                    font-size: 14px;
+                  }
+              filter:
+                include:
+                 - domain: automation
+                   state: 'unavailable'
+                   options:
+                      secondary_info: last-changed
+
+############################################### Скрипты ################################################
+
+            - type: entities
+              style: |
+                   ha-card {
+                     color: #00BFFF;
+                     --paper-item-icon-color: #00BFFF;
+                     --iron-icon-stroke-color: #FFFFE0;
+                     font-weight: bold;
+                     font-size: 14px;
+                   }                 
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_script
+                type: custom:multiple-entity-row
+                name: Скрипты
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_script_on
+                    name: Активно
+                  - entity: sensor.count_script_off
+                    name: Отключено
+                  - entity: sensor.count_script_unavailable
+                    name: Недоступно
+
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+                style: |
+                  ha-card {
+                    color: #00BFFF;
+                    --paper-item-icon-color: #E6E6FA;
+                    font-weight: bold;
+                    font-size: 14px;
+                  }
+              filter:
+                include:
+                 - domain: script
+                   state: 'unavailable'
+                   options:
+                      secondary_info: last-changed 
+
+################################################# Обновления ############################################ 
+
+# Аддонов
+        # - type: custom:stack-in-card
+        #   mode: vertical
+        #   cards:
+
+            - type: markdown
+              style: |
+                   ha-card {
+                     color: #00BFFF;
+                     font-weight: bold;
+                     font-size: 16px;
+                   }          
+              content: >
+                 **Обновления**
+          
+            - type: entities
+              style: |
+                   ha-card {
+                     color: #00BFFF;
+                     --paper-item-icon-color: #00BFFF;
+                     --iron-icon-stroke-color: #FFFFE0;
+                     font-weight: bold;
+                     font-size: 14px;
+                   }                 
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_update
+                type: custom:multiple-entity-row
+                name: Аддоны
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_update_on
+                    name: Доступно обновлений
+                      
+
+            - type: custom:auto-entities
+              card:
+                type: entities
+                show_header_toggle: false
+              filter:
+                include:
+                - domain: update
+                  state: 'on'
+                  options:
+                     type: custom:multiple-entity-row
+                     show_state: false
+                     secondary_info: last-changed
+                     entities:
+                      - attribute: installed_version
+                        name: Установлено
+                      - attribute: latest_version
+                        name: Последняя
+
+# Hacs
+            - type: markdown
+              style: |
+                   ha-card {
+                     color: #00BFFF;
+                     font-weight: bold;
+                     font-size: 14px;
+                   }   
+              content: |
+                <ha-icon icon="hacs:hacs"></ha-icon>&nbsp;&nbsp;&nbsp;Обновлений для HACS - {{ states('sensor.hacs') | default }}
+                > {% for repo in state_attr('sensor.hacs', 'repositories') %}
+                > {{ repo.display_name }} {{ repo["installed_version"] }} -> {{ repo["available_version"] }}
+                > {% endfor %}
+
+################################################# BackUp ############################################ 
+
+            - type: entities
+              style: |
+                   ha-card {
+                     color: #00BFFF;
+                     --paper-item-icon-color: #00BFFF;
+                     --iron-icon-stroke-color: #FFFFE0;
+                     font-weight: bold;
+                     font-size: 12px;
+                   }                 
+              show_header_toggle: false
+              entities:
+              - entity: sensor.last_google_backup_train
+                type: custom:multiple-entity-row
+                name: BackUp
+                icon: mdi:cloud-upload-outline
+                state_header: Последние
+                entities:
+                  - entity: sensor.snapshots_in_google_drive_train
+                    name: Googe Drive
+                  - entity: sensor.snapshots_in_hassio_train
+                    name: Home Assistant
+
+
+
+##################################################################################################
+#                                         Колонка 3                                              #
+##################################################################################################
+
+    - type: vertical-stack
+      cards:
+      
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+      
+######################################### Светильники ############################################
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #FA8072;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Cветильники**
+                  
+            - type: entities
+              style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }               
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_light
+                type: custom:multiple-entity-row
+                name: Светильники
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_light_on
+                    name: Активно
+                  - entity: sensor.count_light_off
+                    name: Отключено
+                  - entity: sensor.count_light_unavailable
+                    name: Недоступно
+                    
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+                style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }  
+              filter:
+                include:
+                 - domain: light
+                   state: 'unavailable'
+                   options:
+                      secondary_info: last-changed
+                exclude:
+                 - entity_id: "*light.first_led_hardware_instance*"
+                 - entity_id: "*light.first_led_hardware_instance_priority*"
+
+##################################################### Реле ##############################################
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #FA8072;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Реле**
+                  
+            - type: entities
+              style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }               
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_switch
+                type: custom:multiple-entity-row
+                name: Реле
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_switch_on
+                    name: Активно
+                  - entity: sensor.count_switch_off
+                    name: Отключено
+                  - entity: sensor.count_switch_unavailable
+                    name: Недоступно
+                    
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+                style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }  
+              filter:
+                include:
+                 - domain: switch
+                   state: 'unavailable'
+                   options:
+                      secondary_info: last-changed 
+
+##################################################### Сенсоры ###############################################
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #FA8072;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Сенсоры**
+                  
+            - type: entities
+              style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }               
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_sensor
+                type: custom:multiple-entity-row
+                name: Сенсоры
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_sensor_unavailable
+                    name: Недоступно
+                    
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+                style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }  
+              filter:
+                include:
+                 - domain: sensor
+                   state: 'unavailable'
+                   options:
+                      secondary_info: last-changed 
+
+############################################### Бинарные сенсоры ###############################################
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #FA8072;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Бинарные сенсоры**
+                  
+            - type: entities
+              style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }               
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_binary_sensor
+                type: custom:multiple-entity-row
+                name: Бинарные сенсоры
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_binary_sensor_unavailable
+                    name: Недоступно
+                    
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+                style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }  
+              filter:
+                include:
+                 - domain: binary_sensor
+                   state: 'unavailable'
+                   options:
+                      secondary_info: last-changed 
+                exclude:
+                 - entity_id: "*06f59f58_d1c0441c*"
+                 - entity_id: "*d7f06977_f88fde14*"
+                 - entity_id: "*phone_ostrovok*"
+
+##################################################### Камеры ###################################################
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #FA8072;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **IP Камеры**
+                  
+            - type: entities
+              style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }               
+              show_header_toggle: false
+              entities:
+              - entity: sensor.count_camera
+                type: custom:multiple-entity-row
+                name: IP камеры
+                state_header: Всего
+                entities:
+                  - entity: sensor.count_camera_unavailable
+                    name: Недоступно
+                    
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+                style: |
+                    ha-card {
+                      color: #FA8072;
+                      --paper-item-icon-color: #E6E6FA;
+                      --iron-icon-stroke-color: #E6E6FA;
+                      font-weight: bold;
+                      font-size: 14px;
+                    }  
+              filter:
+                include:
+                 - domain: camera
+                   state: 'unavailable'
+                   options:
+                      secondary_info: last-changed 
+
+
+##################################################################################################
+#                                         Колонка 4                                              #
+##################################################################################################
+
+    - type: vertical-stack
+      cards:
+
+######################################## Вкл свет и розетки ######################################
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #00FA9A;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Включеный свет и разетки**
+
+            - type: custom:auto-entities
+              card:
+                type: entities
+                show_header_toggle: false
+              filter:
+                include:
+                - domain: switch
+                  state: 'on'
+                  attributes:
+                    device_class: 'outlet'
+#                   current: '! none'
+                  options:
+                     type: custom:multiple-entity-row
+                     toggle: true
+                    #  show_state: false
+                     secondary_info: last-changed
+                - domain: light
+                  state: 'on'
+                  options:
+                     type: custom:multiple-entity-row
+                     toggle: true
+                    #  show_state: false
+                     secondary_info: last-changed
+
+
+############################################# Аварийные датчики #######################################
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #00FA9A;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Аварийные датчики**
+
+            - type: custom:auto-entities
+              card:
+                type: entities
+                show_header_toggle: false
+              filter:
+                include:
+                - domain: binary_sensor
+                  state: 'on'
+                  attributes:
+                    device_class: 'moisture'
+                  options:
+                      secondary_info: last-changed
+
+################################################# Датчики движения #######################################
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #00FA9A;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Активные датчики движения**
+
+            - type: custom:auto-entities
+              card:
+                type: entities
+                show_header_toggle: false
+              filter:
+                include:
+                - domain: binary_sensor
+                  state: 'on'
+                  attributes:
+                    device_class: 'motion'
+                  options:
+                      secondary_info: last-changed
+                - domain: binary_sensor
+                  state: 'on'
+                  attributes:
+                    device_class: 'presence'
+                  options:
+                      secondary_info: last-changed
+                - domain: binary_sensor
+                  state: 'on'
+                  attributes:
+                    device_class: 'occupancy'
+                  options:
+                      secondary_info: last-changed
+
+################################################# Датчики открытия дверей #################################
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #00FA9A;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Открытые двери**
+                      
+            - type: custom:auto-entities
+              card:
+                type: entities
+                show_header_toggle: false
+              filter:
+                include:
+                - domain: binary_sensor
+                  state: 'on'
+                  attributes:
+                    device_class: 'door'
+                  options:
+                      secondary_info: last-changed
+
+
+
+################################################# Батарейки ##############################################
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+           
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #00FA9A;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Сенсоры < 10% заряда**
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: custom:battery-state-card
+                show_header_toggle: false
+                style: |
+                    ha-card {
+                      color: #f53325;
+                      font-weight: bold;
+                      font-size: 14px;
+                    } 
+              filter:
+                include:
+                 - entity_id: sensor.*battery*
+                exclude:
+                 - state: '> 10.0'
+                 - state: 'unknown'
+                 - state: 'good'
+                 - state: 'discharging'
+                 - state: 'Charging'
+                 - state: 'Not Charging'
+                 - state: 'charging'
+                 - entity_id: "*telefon*"
+                 - entity_id: "*phone*"
+                 - entity_id: "*planshet*"
+                 - entity_id: "*Планшет*"
+                 - entity_id: sensor.battery_lower_10
+#                 - state: 'unavailable'
+
+
+#################################################################### Таймеры ############################################################
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+
+            - type: markdown
+              style: |
+                  ha-card {
+                    color: #FFA500;
+                    font-weight: bold;
+                    font-size: 16px;
+                  } 
+              content: >
+                  **Активные таймеры**
+
+            - type: custom:auto-entities
+              show_empty: false
+              card:
+                type: entities
+                show_header_toggle: false
+              filter:
+                include:
+                - domain: timer
+                  state: 'active'
+                  options:
+                      secondary_info: last-changed
+
+
+
+
+
+
+
+
+
+
+
+
+
+

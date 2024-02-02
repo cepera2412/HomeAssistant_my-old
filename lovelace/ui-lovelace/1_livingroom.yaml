@@ -1,0 +1,325 @@
+title: Гостинная
+icon: mdi:sofa
+cards:
+
+################### Выключатели ####################
+
+      - type: vertical-stack
+        cards:
+        
+# Гостинная
+        - type: entities
+          title: Гостинная
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_gostinoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_gostinoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.liustra_v_gostinoi
+            icon: mdi:dome-light
+            secondary_info: last-changed
+
+# Гардеробная
+        - type: entities
+          title: Гардеробная
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_garderobnoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+
+# Лоджия
+        - type: entities
+          title: Лоджия
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_na_lodzhii
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_na_lodzhii
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+
+# прикроватный ночник
+        - type: light
+          entity: light.bslamp2_cloud_402265
+
+################### Датчики и Сенсоры ####################
+
+      - type: vertical-stack
+        cards:
+        
+        - type: entities
+          title: Термометр
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: sensor.a4c138f9ce31_temperature
+            secondary_info: last-updated
+          - entity: sensor.a4c138f9ce31_humidity
+            secondary_info: last-updated
+          - entity: sensor.a4c138f9ce31_battery
+            secondary_info: last-updated
+            
+        - type: entities
+          title: Ночной свет
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.28d1272d46cc_motion
+            secondary_info: last-changed
+          - entity: sensor.28d1272d46cc_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: Движение в гардеробной
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.0x158d00062fdc4f_motion
+            secondary_info: last-changed
+          - entity: sensor.0x158d00062fdc4f_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: Кнопка в гостинной
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: sensor.0x158d0006ea5f45_action
+            secondary_info: last-changed
+          - entity: sensor.0x158d0006ea5f45_battery
+            secondary_info: last-updated
+
+################### Датчики и Сенсоры ####################
+
+      - type: vertical-stack
+        cards:
+
+        - type: markdown
+          content: |
+            Увлажнитель
+            Телек 55
+            Сонька
+            Камера Mi
+
+        - type: entities
+          title: Вентилятор
+          show_header_toggle: false
+          state_color: true
+          entities:
+          - entity: switch.jlsw01_cloud_470381
+            secondary_info: last-changed
+
+
+        - type: custom:stack-in-card
+          mode: vertical
+          cards:
+    
+    # Все
+             - type: horizontal-stack
+               cards:
+    
+                  - type: custom:mushroom-cover-card
+                    entity: cover.livingroom_blinds
+                    name: Все
+    #                layout: vertical
+                    show_position_control: false
+                    show_buttons_control: true
+                  - type: vertical-stack
+                    cards:
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_full_75
+                        name: Откр на 75%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_full_50
+                        name: Откр на 50%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_full_25
+                        name: Откр на 25%
+                        show_state: false
+    
+    # Левая
+             - type: horizontal-stack
+               cards:
+    
+                  - type: custom:mushroom-cover-card
+                    entity: cover.blinds_livingroom_left_blinds_lr
+                    name: Левая
+    #                layout: vertical
+                    show_position_control: false
+                    show_buttons_control: true
+                  - type: vertical-stack
+                    cards:
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_left_75
+                        name: Откр на 75%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_left_50
+                        name: Откр на 50%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_left_25
+                        name: Откр на 25%
+                        show_state: false
+    
+    # Центральная
+             - type: horizontal-stack
+               cards:
+    
+                  - type: custom:mushroom-cover-card
+                    entity: cover.blinds_livingroom_central_blinds_lr
+                    name: Центральная
+    #                layout: vertical
+                    show_position_control: false
+                    show_buttons_control: true
+                  - type: vertical-stack
+                    cards:
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_central_75
+                        name: Откр на 75%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_central_50
+                        name: Откр на 50%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_central_25
+                        name: Откр на 25%
+                        show_state: false
+    
+    # Правая
+             - type: horizontal-stack
+               cards:
+    
+                  - type: custom:mushroom-cover-card
+                    entity: cover.blinds_livingroom_right_blinds_lr
+                    name: Правая
+    #                layout: vertical
+                    show_position_control: false
+                    show_buttons_control: true
+                  - type: vertical-stack
+                    cards:
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_right_75
+                        name: Откр на 75%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_right_50
+                        name: Откр на 50%
+                        show_state: false
+                      - type: button
+                        show_name: false
+                        show_icon: true
+                        icon_height: 20px
+                        tap_action:
+                          action: toggle
+                        entity: script.livingroom_blinds_right_25
+                        name: Откр на 25%
+                        show_state: false
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

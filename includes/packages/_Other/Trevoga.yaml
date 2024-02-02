@@ -1,0 +1,475 @@
+trevoga:
+
+##########################################################################################################################################
+#                                                                  Шаблоны 
+##########################################################################################################################################
+
+    template:
+     
+      - binary_sensor:
+
+#################################################### Сработка оповщения тревоги дома ####################################################
+
+          - name: trevoga_on
+            state: >
+              {{ is_state('group.vse_doma', 'on')
+                 and is_state('binary_sensor.time_trevoga_on', 'on')
+              }}
+
+          - name: trevoga_unavailable
+            state: >
+              {{ is_state('binary_sensor.netishin_air', 'unavailable') }}
+            delay_on: 
+                minutes: 2
+
+
+##########################################################################################################################################
+#                                                            Бинарные сенсоры 
+##########################################################################################################################################
+
+    binary_sensor:
+
+############################################################ Периоды времени #############################################################
+
+        - platform: tod
+          name: Time_trevoga_on
+          after: '10:00'
+          before: '23:00'
+
+##########################################################################################################################################
+#                                                                    Скрипты 
+##########################################################################################################################################
+
+    script:
+
+########################################################### Голосовые оповещения #########################################################
+
+# На Mi speaker
+        air_trevoga_on:
+          alias: (Тревога) Голосовая тревога на Mi speaker
+          icon: mdi:alarm-light-outline
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.5
+              target:
+                entity_id: media_player.mi_speaker
+            - delay: 00:00:01
+            - service: tts.google_translate_say
+              data:
+                  entity_id: media_player.mi_speaker
+                  language: "uk"
+                  message: "Увага, Увага! Повітрена тривога! Увага, Увага! Повітрена тривога!"
+
+        air_trevoga_off:
+          alias: (Тревога) Голосовой отбой на Mi speaker
+          icon: mdi:alarm-light-off-outline
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.5
+              target:
+                entity_id: media_player.mi_speaker
+            - delay: 00:00:01
+            - service: tts.google_translate_say
+              data:
+                  entity_id: media_player.mi_speaker
+                  language: "uk"
+                  message: "Увага, Увага! Відбій повітряної тривоги! Увага, Увага! Відбій повітряної тривоги!"
+
+
+########################################################## Световое оповещения ##########################################################
+
+# Коридор тревога
+        air_trevoga_light_coridor_on:
+            alias: (Тревога) Мерцание тревога ленты в коридоре
+            icon: mdi:alarm-light-outline
+            sequence:
+                repeat:
+                  count: 3
+                  sequence:
+                  - service: switch.turn_on
+                    entity_id: 
+                       - switch.lenta_v_koridore
+                  - delay: 3
+                  - service: switch.turn_off
+                    entity_id: 
+                      - switch.lenta_v_koridore
+                  - delay: 3
+
+# Спальня отбой
+        air_trevoga_light_bedroom_off:
+            alias: (Тревога) Мерцание отбой ленты в спальне
+            icon: mdi:alarm-light-off-outline
+            sequence:
+                repeat:
+                  count: 2
+                  sequence:
+                  - service: switch.turn_on
+                    entity_id: 
+                       - switch.lenta_v_spalne
+                  - delay: 3
+                  - service: switch.turn_off
+                    entity_id: 
+                      - switch.lenta_v_spalne
+                  - delay: 3
+
+# Кухня тревога
+        air_trevoga_light_kitchen_on:
+            alias: (Тревога) Мерцание тревога ленты на Кухне
+            icon: mdi:alarm-light-outline
+            sequence:
+                repeat:
+                  count: 3
+                  sequence:
+                  - service: switch.turn_on
+                    entity_id: 
+                       - switch.lenta_na_kukhne
+                  - delay: 3
+                  - service: switch.turn_off
+                    entity_id: 
+                      - switch.lenta_na_kukhne
+                  - delay: 3
+
+# Кухня отбой
+        air_trevoga_light_kitchen_off:
+            alias: (Тревога) Мерцание отбой ленты на Кухне
+            icon: mdi:alarm-light-off-outline
+            sequence:
+              - service: switch.turn_on
+                entity_id: 
+                   - switch.lenta_na_kukhne
+              - delay: 5
+              - service: switch.turn_off
+                entity_id: 
+                  - switch.lenta_na_kukhne
+
+
+# Гостиная тревога
+        air_trevoga_light_living_room_on:
+            alias: (Тревога) Мерцание тревоги ночник в гостиной
+            icon: mdi:alarm-light-outline
+            sequence:
+              - service: scene.create
+                data:
+                  scene_id: light_before
+                  snapshot_entities:
+                    - light.bslamp2_cloud_402265
+              - delay: '00:00:01'
+              - repeat:
+                  count: 4
+                  sequence:
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 100
+                      rgb_color: [255, 0, 0]
+                      transition: 1
+                  - delay: 1
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 50
+                      rgb_color: [255, 0, 0]
+                      transition: 1
+                  - delay: 1
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 1
+                      rgb_color: [255, 0, 0]
+                      transition: 1
+                  - delay: 1
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 50
+                      rgb_color: [255, 0, 0]
+                      transition: 1
+                  - delay: 1
+              - service: scene.turn_on
+                target:
+                  entity_id: scene.light_before
+
+# Гостиная отбой
+        air_trevoga_light_living_room_off:
+            alias: (Тревога) Мерцание отбой ночник в гостиной
+            icon: mdi:alarm-light-off-outline
+            sequence:
+              - service: scene.create
+                data:
+                  scene_id: light_before
+                  snapshot_entities:
+                    - light.bslamp2_cloud_402265
+              - delay: '00:00:01'
+              - repeat:
+                  count: 4
+                  sequence:
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 100
+                      rgb_color: [0, 255, 0]
+                      transition: 1
+                  - delay: 1
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 50
+                      rgb_color: [0, 255, 0]
+                      transition: 1
+                  - delay: 1
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 1
+                      rgb_color: [0, 255, 0]
+                      transition: 1
+                  - delay: 1
+                  - service: light.turn_on
+                    entity_id: 
+                       - light.bslamp2_cloud_402265
+                    data:
+                      brightness_pct: 50
+                      rgb_color: [0, 255, 0]
+                      transition: 1
+                  - delay: 1
+              - service: scene.turn_on
+                target:
+                  entity_id: scene.light_before
+
+#########################################################################################################################################
+#                                                                Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+######################################################## Воздушная тревога недоступна ###################################################
+
+        - id: Воздушная тревога недоступна
+          alias: (Telegram) Недоступна Воздушная тревога
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.trevoga_unavailable
+              to: 'on'
+          action:
+            - service: notify.Telegram_cepera
+              data:
+                message: | 
+                      {{"\U0000203C"}} Недоступный датчик Воздушная тревога {{"\U0000203C"}}
+
+        - id: Воздушная тревога доступна
+          alias: (Telegram) Снова доступна Воздушная тревога
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.trevoga_unavailable
+              from: 'on'
+              to: 'off'
+          condition:
+            - condition: template
+              value_template: "{{ (as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) > 450 }}"
+          action:
+            - service: notify.Telegram_cepera
+              data:
+                message: | 
+                      {{"\U0001F44C"}} Снова доступен датчик Воздушной тревоги! {{"\U0001F44C"}}
+
+########################################################### СМС в Telegram при тревоге #################################################
+
+# Воздушная тревога
+        - id: Воздушная тревога
+          alias: (Telegram) Воздушная тревога
+          initial_state: true
+          trigger:   
+            - platform: state
+              entity_id: binary_sensor.netishin_air
+              from: 'off'
+              to: 'on'
+          action:
+            - service: notify.Telegram_Air_Trevoga
+              data:
+                message: | 
+                      {{"\U00002757"}} {{"\U00002708"}} Воздушная тревога {{"\U0001F680"}} {{"\U00002757"}}
+
+# Отбой тревога
+        - id: Отбой воздушной тревоги
+          alias: (Telegram) Отбой воздушной тревоги
+          initial_state: true
+          trigger:   
+            - platform: state
+              entity_id: binary_sensor.netishin_air
+              from: 'on'
+              to: 'off'
+          action:
+            - service: notify.Telegram_Air_Trevoga
+              data:
+                message: | 
+                      {{"\U0001F64F"}} Отбой воздушной тревоги {{"\U0001F64F"}}
+
+################################################## Световое и голосовое оповещение тревоги ##############################################
+
+# Тревога ночник в гостиной
+        - id: Световое уведомление Тревоги ночник в гостиной
+          alias: (Тревога) Световое уведомление Тревоги ночник в гостиной
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.netishin_air
+              from: 'off'
+              to: 'on'
+          condition:
+           - condition: state
+             entity_id: group.vse_doma
+             state: 'on'
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: light.bslamp2_cloud_402265
+                    state: 'on'
+                sequence:
+                  - service: script.turn_on
+                    entity_id: script.air_trevoga_light_living_room_on
+              - conditions:
+                  - condition: state
+                    entity_id: light.bslamp2_cloud_402265
+                    state: 'off'
+                sequence:
+                  - service: light.turn_on
+                    entity_id: light.bslamp2_cloud_402265
+                  - delay: '00:00:01'
+                  - service: script.turn_on
+                    entity_id: script.air_trevoga_light_living_room_on
+                  - delay: '00:00:45'
+                  - service: light.turn_off
+                    entity_id: light.bslamp2_cloud_402265
+
+# Отбой ночник в гостиной
+        - id: Световое уведомление Отбоя ночник в гостиной
+          alias: (Тревога) Световое уведомление Отбоя ночник в гостиной
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.netishin_air
+              from: 'on'
+              to: 'off'
+          condition:
+           - condition: state
+             entity_id: group.vse_doma
+             state: 'on'
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: light.bslamp2_cloud_402265
+                    state: 'on'
+                sequence:
+                  - service: script.turn_on
+                    entity_id: script.air_trevoga_light_living_room_off
+              - conditions:
+                  - condition: state
+                    entity_id: light.bslamp2_cloud_402265
+                    state: 'off'
+                sequence:
+                  - service: light.turn_on
+                    entity_id: light.bslamp2_cloud_402265
+                  - delay: '00:00:01'
+                  - service: script.turn_on
+                    entity_id: script.air_trevoga_light_living_room_off
+                  - delay: '00:00:45'
+                  - service: light.turn_off
+                    entity_id: light.bslamp2_cloud_402265
+
+# Тревога свет и голос в квартире
+        - id: Световое и голосовое уведомление Тревоги в квартире
+          alias: (Тревога) Световое и голосовое уведомление Тревоги в квартире
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.netishin_air
+              from: 'off'
+              to: 'on'
+          condition:
+           - condition: state
+             entity_id: binary_sensor.trevoga_on
+             state: 'on'
+          action:
+             - service: fullykiosk.volume_set
+               data:
+                  entity_id: media_player.galaxy_tab_a8_media_player
+                  volume_level: 0.2
+                  stream: 3
+             - delay: 00:00:01
+             - service: script.turn_on
+               entity_id: script.air_trevoga_on
+             - service: script.turn_on
+               entity_id: script.air_trevoga_light_coridor_on
+             - service: script.turn_on
+               entity_id: script.air_trevoga_light_kitchen_on
+             - delay: 00:00:10
+             - service: media_player.volume_set
+               data:
+                  volume_level: 0.5
+               target:
+                  entity_id: media_player.galaxy_tab_a8_media_player
+             - delay: 00:00:30
+
+# Отбой свет и голос в квартире
+        - id: Световое и голосовое уведомление Отбоя в квартире
+          alias: (Тревога) Световое и голосовое уведомление Отбоя в квартире
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.netishin_air
+              from: 'on'
+              to: 'off'
+          condition:
+           - condition: state
+             entity_id: binary_sensor.trevoga_on
+             state: 'on'
+          action:
+             - service: fullykiosk.volume_set
+               data:
+                  entity_id: media_player.galaxy_tab_a8_media_player
+                  volume_level: 0.2
+                  stream: 3
+             - delay: 00:00:01
+             - service: script.turn_on
+               entity_id: script.air_trevoga_off
+             - service: script.turn_on
+               entity_id: script.air_trevoga_light_bedroom_off
+             - service: script.turn_on
+               entity_id: script.air_trevoga_light_kitchen_off
+             - delay: 00:00:10
+             - service: media_player.volume_set
+               data:
+                  volume_level: 0.5
+               target:
+                  entity_id: media_player.galaxy_tab_a8_media_player
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,131 @@
+title: Camers
+path: Camers
+icon: mdi:cctv
+cards:
+    - type: custom:mushroom-chips-card
+      chips:
+      - type: back
+      - type: entity
+        entity: person.cepera
+        content_info: state
+        icon: mdi:account-tie
+        use_entity_picture: false
+      - type: entity
+        entity: person.nadiusha
+        icon: mdi:face-woman-outline
+        use_entity_picture: false
+      alignment: center
+# Камера Reolink на лесничной клетке
+    - type: horizontal-stack
+      cards:
+          - type: picture-entity
+            entity: camera.reolink_hallway_profile000_mainstream
+            camera_view: live
+            name: Камера Reolink Холл
+            show_state: false
+            show_name: true
+
+# Камера Reolink в спальне - коридор
+    - type: horizontal-stack
+      cards:
+        #   - type: picture-entity
+        #     entity: camera.reolink_bedroom_profile000_mainstream
+        #     camera_view: live
+        #     name: Камера Reolink Спальня
+        #     show_state: false
+        #     show_name: true
+
+          - type: picture-glance
+            title: Камера Bedroom
+            camera_image: camera.reolink_bedroom_profile000_mainstream
+            camera_view: live
+            entities:
+            #   - entity: camera.reolink_bedroom_profile000_mainstream
+            #     icon: mdi:arrow-down-drop-circle-outline
+            #     tap_action:
+            #       action: call-service
+            #       service: onvif.ptz
+            #       service_data:
+            #         entity_id: camera.reolink_bedroom_profile000_mainstream
+            #         tilt: DOWN
+            #         move_mode: ContinuousMode
+            #   - entity: camera.reolink_bedroom_profile000_mainstream
+            #     icon: mdi:arrow-up-drop-circle-outline
+            #     tap_action:
+            #       action: call-service
+            #       service: onvif.ptz
+            #       service_data:
+            #         entity_id: camera.reolink_bedroom_profile000_mainstream
+            #         tilt: UP
+            #         move_mode: ContinuousMode
+            #   - entity: camera.reolink_bedroom_profile000_mainstream
+            #     icon: mdi:arrow-left-drop-circle-outline
+            #     tap_action:
+            #       action: call-service
+            #       service: onvif.ptz
+            #       service_data:
+            #         entity_id: camera.reolink_bedroom_profile000_mainstream
+            #         pan: LEFT
+            #         move_mode: ContinuousMode
+            #   - entity: camera.reolink_bedroom_profile000_mainstream
+            #     icon: mdi:arrow-right-drop-circle-outline
+            #     tap_action:
+            #       action: call-service
+            #       service: onvif.ptz
+            #       service_data:
+            #         entity_id: camera.reolink_bedroom_profile000_mainstream
+            #         pan: RIGHT
+            #         move_mode: ContinuousMode
+              - entity: camera.reolink_bedroom_profile000_mainstream
+                icon: mdi:sofa
+                tap_action:
+                  action: call-service
+                  service: onvif.ptz
+                  service_data:
+                    entity_id: camera.reolink_bedroom_profile000_mainstream
+                    preset: '000'
+                    move_mode: GotoPreset
+              - entity: camera.reolink_bedroom_profile000_mainstream
+                icon: mdi:door
+                tap_action:
+                  action: call-service
+                  service: onvif.ptz
+                  service_data:
+                    entity_id: camera.reolink_bedroom_profile000_mainstream
+                    preset: '001'
+                    move_mode: GotoPreset
+              - entity: camera.reolink_bedroom_profile000_mainstream
+                icon: mdi:wardrobe-outline
+                tap_action:
+                  action: call-service
+                  service: onvif.ptz
+                  service_data:
+                    entity_id: camera.reolink_bedroom_profile000_mainstream
+                    preset: '002'
+                    move_mode: GotoPreset
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

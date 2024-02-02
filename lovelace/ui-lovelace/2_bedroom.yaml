@@ -1,0 +1,233 @@
+title: Спальня
+icon: mdi:bed
+cards:
+
+################### Выключатели ####################
+
+      - type: vertical-stack
+        cards:
+
+# Спальня
+        - type: entities
+          title: Спальня
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_spalne
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_spalne
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+
+# Кабинет
+        - type: entities
+          title: Кабинет
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_kabinete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+
+################### Датчики и Сенсоры ####################
+
+      - type: vertical-stack
+        cards:
+
+        - type: entities
+          title: Термометр
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: sensor.a4c138c67cbc_temperature
+            secondary_info: last-updated
+          - entity: sensor.a4c138c67cbc_humidity
+            secondary_info: last-updated
+          - entity: sensor.a4c138c67cbc_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: кнопка
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: sensor.0x158d0006ba1ba3_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: куб
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: sensor.0x158d00054bca97_battery
+            secondary_info: last-updated
+
+################### Устройства ####################
+
+      - type: vertical-stack
+        cards:
+
+        - type: media-control
+          entity: media_player.androidbox
+
+        - type: markdown
+          content: |
+            Кондер
+
+# Увлажнитель
+        - type: custom:mini-humidifier
+          entity: humidifier.jsq5_cloud_466808
+          name: Mi Увлаж.
+          model: deerma.humidifier.jsq5
+          target_humidity:
+              icon: mdi:water
+              unit: '%'
+              min: 30
+              max: 80
+              step: 5
+              hide: false
+              hide_indicator: false
+              disabled: false
+              state:
+                attribute: humidity
+          secondary_info:
+              type: mode
+              icon: mdi:air-humidifier
+          toggle:
+              default: 'on'
+              hide: 'on'
+          power:
+              icon: mdi:power
+              type: button
+              hide: false
+          indicators:
+              '1':
+                icon:
+                  template: |
+                    (value) => {
+                      if (value == '')
+                        return 'mdi:wifi';
+                      return 'mdi:wifi-off';
+                    }
+                  style: |
+                    (value) => {
+                      if (value === '')
+                        return { color: '#58ff3c' };
+                      return { color: 'red' };
+                    }
+                source:
+                  entity: device_tracker.b4_60_ed_4a_c5_0c
+                  mapper: '(state) => (state ? '''' : ''!'')'
+              no_water:
+                icon:
+                  template: |
+                    (value) => {
+                      if (value == '')
+                        return 'mdi:dishwasher';
+                      return 'mdi:dishwasher-alert';
+                    }
+                  style: |
+                    (value) => {
+                      if (value === '')
+                        return { color: '#58ff3c' };
+                      if (value === '!')
+                        return { color: 'red' };
+                      return {};
+                    }
+                source:
+                  entity: fan.humidifier_xiaomi
+                  attribute: no_water
+                  mapper: '(state) => (state ? ''!'' : '''')'
+              water_tank_detached:
+                icon:
+                  template: |
+                    (value) => {
+                      if (value == '')
+                        return 'mdi:water-boiler';
+                      return 'mdi:water-boiler-off';
+                    }
+                  style: |
+                    (value) => {
+                      if (value === '')
+                        return { color: '#58ff3c' };
+                      if (value === '!')
+                        return { color: 'red' };
+                      return {};
+                    }
+                source:
+                  entity: fan.humidifier_xiaomi
+                  attribute: water_tank_detached
+                  mapper: '(state) => (state ? ''!'' : '''')'
+          buttons:
+              mode:
+                icon: mdi:air-humidifier
+                source:
+                  Level1: Низкая
+                  Level2: Средная
+                  Level3: Высокая
+                  Humidity: Влажность
+              led:
+                icon: mdi:lightbulb-on-outline
+                type: button
+                state:
+                  entity: switch.xiaomi_humidifier_led
+              buzzer:
+                icon: mdi:volume-high
+                state:
+                  entity: switch.xiaomi_humidifier_buzzer
+
+
+
+################### Шлюз ####################
+
+      - type: vertical-stack
+        cards:
+        
+          - type: grid
+            square: false
+            columns: 1
+            cards:
+              - type: alarm-panel
+                entity: alarm_control_panel.54ef4424240b_alarm
+              - type: entities
+                entities:
+                  - entity: select.54ef4424240b_command
+                    name: Command
+                  - entity: select.54ef4424240b_data
+                    name: Data
+                title: Шлюз
+              - type: entities
+                entities:
+                  - entity: switch.54ef4424240b_led
+                    name: LED Шлюза
+              - type: entities
+                entities:
+                  - entity: binary_sensor.54ef4424240b_cloud_link
+                    name: Cloud Link
+                  - entity: binary_sensor.54ef4424240b_gateway
+                    name: Gateway
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

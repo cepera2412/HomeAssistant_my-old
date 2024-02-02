@@ -1,0 +1,176 @@
+###################################### Весь #####################################
+
+# Весь свет в квартире
+light_all:
+    name: Весь Свет
+    entities:
+      - switch.lenta_v_gostinoi
+      - switch.liustra_v_gostinoi
+      - switch.svet_v_gostinoi
+      - switch.lenta_v_vannoi
+      - switch.svet_v_vannoi
+      - switch.svet_v_garderobnoi
+      - switch.svet_v_kabinete
+      - switch.lenta_v_koridore
+      - switch.svet_v_koridore
+      - switch.lenta_v_spalne
+      - switch.svet_v_spalne
+      - switch.svet_v_tualete
+      - switch.lenta_na_kukhne
+      - switch.svet_nad_stoleshnei
+      - switch.svet_nad_stolom
+      - switch.lenta_na_lodzhii
+      - switch.svet_na_lodzhii
+#      - switch.elka
+
+# Все датчики в квартире
+dat4iki_all:
+    name: Все датчики
+    entities:
+      - binary_sensor.0x158d0001dff57f_contact
+      - binary_sensor.0x158d00069b0949_contact
+      - binary_sensor.0x158d00028d3838_contact
+      - binary_sensor.0x158d00067963a8_motion
+      - binary_sensor.0x158d00062fdc4f_motion
+      - binary_sensor.0x158d0003fb0f3a_motion
+      - binary_sensor.0x158d00067919d1_motion
+      - binary_sensor.0x158d0006337230_motion
+      - binary_sensor.28d1272d46cc_motion
+      - binary_sensor.28d1272f330d_motion
+      - binary_sensor.54ef44e5d062_water_leak
+      - binary_sensor.54ef44e5ca71_water_leak
+      - binary_sensor.54ef44e5d0d9_water_leak
+
+# Всё в квартире
+all_in_the_home:
+    name: Все в квартире
+    entities:
+      - group.light_all
+      - light.bslamp2_cloud_402265
+      - switch.chainik
+      - switch.vytiazhka_v_tualete
+      - light.galaxy_tab_a8_screen
+      - switch.planshet
+      - humidifier.jsq5_cloud_466808
+
+# Все дома
+Vse_doma:
+    name: Все дома
+    entities:
+      - input_boolean.serega
+      - input_boolean.nadiusha
+
+# Все обновления Add-on's
+Vse_addon:
+    name: Все Add-on's
+    entities:
+      - update.esphome_update
+      - update.file_editor_update
+      - update.home_assistant_google_drive_backup_update
+      - update.mariadb_update
+      - update.mosquitto_broker_update
+      - update.motioneye_update
+      - update.samba_share_update
+      - update.studio_code_server_update
+      - update.tailscale_update
+      - update.terminal_ssh_update
+      - update.zigbee2mqtt_update
+
+# Все обновления системы
+update_home_assistant:
+    name: Обнова системы
+    entities:
+      - update.home_assistant_core_update
+      - update.home_assistant_operating_system_update
+      - update.home_assistant_supervisor_update
+      
+###################################### Свет по комнатам #####################################
+
+vannaia: 
+    name: Ванная
+    entities:
+      - switch.lenta_v_vannoi
+      - switch.svet_v_vannoi
+
+garderobnaia: 
+    name: Гардеробная
+    entities:
+      - switch.svet_v_garderobnoi
+
+gostinaia:
+    name: Гостиная
+    entities:
+      - switch.lenta_v_gostinoi
+      - switch.liustra_v_gostinoi
+      - switch.svet_v_gostinoi
+
+kabinet: 
+    name: Кабинет
+    entities:
+      - switch.svet_v_kabinete
+
+koridor:
+    name: Коридор
+    entities:
+      - switch.lenta_v_koridore
+      - switch.svet_v_koridore
+
+kukhnia:
+    name: Кухня
+    entities:
+      - switch.lenta_na_kukhne
+      - switch.svet_nad_stolom
+      - switch.svet_nad_stoleshnei
+
+lodzhiia:
+    name: Лоджия
+    entities:
+      - switch.lenta_na_lodzhii
+      - switch.svet_na_lodzhii
+
+spalnia:
+    name: Спальня
+    entities:
+      - switch.lenta_v_spalne
+      - switch.svet_v_spalne
+
+tualet:
+    name: Туалет
+    entities:
+      - switch.svet_v_tualete
+      - switch.vytiazhka_v_tualete
+
+
+###################################### Конкретная #####################################
+
+# Стрижка
+Strijka:
+    name: Стрижка
+    entities:
+      - automation.vykl_svet_v_koridore_po_otsutstviiu_dvizhenie
+      - automation.vykl_svet_v_koridore_po_otsutstviiu_dvizhenie_na_nochnike
+      - automation.vykl_svet_v_koridore_prinuditelnoe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

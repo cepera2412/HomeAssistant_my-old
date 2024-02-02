@@ -1,0 +1,152 @@
+  type: custom:layout-card
+  layout_type: vertical
+  layout:
+    # max_cols: 1
+    # width: 250
+  cards:
+
+
+# #################################################### Название с кнопкой выхода ########################################################
+
+    - type: custom:button-card
+      name: Ролеты                                ##
+      icon: phu:ikea-blind-closed
+      template: button_return
+
+    - type: vertical-stack
+      cards:
+
+######################################################## Визуальное #####################################################################
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+                      - type: custom:button-card
+                        entity: sensor.position_left_blinds_k
+                        name: Левая
+                        styles:
+                          icon:
+                            - color: '#78fa14'
+                      - type: custom:button-card
+                        entity: sensor.position_right_blinds_k
+                        name: Правая
+                        styles:
+                          icon:
+                            - color: '#78fa14'
+
+######################################################## Все окна #######################################################################
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+                  - type: custom:blind-card
+                    entities:
+                      - entity: cover.kitchen_blinds
+                        name: Все
+                        buttons_position: left
+                        title_position: top
+                        blind_color: '#78fa14'
+                  - type: vertical-stack
+                    cards:
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_75
+                        name: 75% 
+                        icon: phu:shutter-30
+                        template: button_cover_green_full
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_50
+                        name: 50% 
+                        icon: phu:shutter-50
+                        template: button_cover_green_full
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_33
+                        name: 33% 
+                        icon: phu:shutter-70
+                        template: button_cover_green_full
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_25
+                        name: 25% 
+                        icon: phu:shutter-80
+                        template: button_cover_green_full
+
+
+######################################################## По отдельности окна ############################################################
+        
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+                  - type: custom:blind-card
+                    entities:
+                      - entity: cover.blinds_kitchen_left_blinds_k
+                        name: Левая
+                        buttons_position: left
+                        title_position: top
+                        blind_color: '#78fa14'
+                  - type: custom:blind-card
+                    entities:
+                      - entity: cover.blinds_kitchen_right_blinds_k
+                        name: Правая
+                        buttons_position: left
+                        title_position: top
+                        blind_color: '#78fa14'
+        
+                - type: horizontal-stack
+                  cards:
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_left_75
+                        name: 75% 
+                        icon: phu:shutter-30
+                        template: button_cover_green
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_left_50
+                        name: 50% 
+                        icon: phu:shutter-50
+                        template: button_cover_green
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_left_25
+                        name: 25% 
+                        icon: phu:shutter-80
+                        template: button_cover_green
+
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_right_75
+                        name: 75% 
+                        icon: phu:shutter-30
+                        template: button_cover_green
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_right_50
+                        name: 50% 
+                        icon: phu:shutter-50
+                        template: button_cover_green
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_right_25
+                        name: 25% 
+                        icon: phu:shutter-80
+                        template: button_cover_green
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

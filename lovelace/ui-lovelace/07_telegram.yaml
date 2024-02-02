@@ -1,0 +1,119 @@
+Title: Telegram
+icon: mdi:navigation-variant
+type: custom:layout-card
+layout_type: custom:masonry-layout
+layout:
+    width: 200
+    max_cols: 3
+#type: panel
+cards:
+
+  - type: vertical-stack
+    cards:
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: script.send_message_1
+            name: Сервис уведомлений
+            action_name: send
+          - entity: script.system_report
+            name: Состоянии системы
+            action_name: send
+          - entity: sensor.unavailable_now_light
+            name: Светильников unavailable
+          - entity: sensor.unavailable_now_switch
+            name: Выключатели unavailable
+          - entity: sensor.unavailable_now_sensor
+            name: Сенсоры unavailable
+          - entity: sensor.unavailable_now_binary_sensor
+            name: Бин.Cенсоры unavailable
+
+  - type: vertical-stack
+    cards:
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: script.climate_report_cepera
+            name: Погода Сереге
+            action_name: send
+          - entity: script.climate_report_nadya
+            name: Погода Надюше
+            action_name: send
+
+  - type: vertical-stack
+    cards:
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: script.photo_reolink_hallway_telegram
+            name: Reolink HallWay
+            action_name: send
+          - entity: script.photo_reolink_bedroom_telegram
+            name: Reolink BedRoom
+            action_name: send
+          - entity: script.video_reolink_hallway_telegram
+            name: Reolink HallWay
+            action_name: send
+          - entity: script.video_reolink_bedroom_telegram
+            name: Reolink BedRoom
+            action_name: send
+
+
+
+
+
+
+
+#   - type: grid
+#     cards:
+#       - type: entities
+#         show_header_toggle: false
+#         entities:
+#           - entity: script.send_message_1
+#             name: Сервис уведомлений
+#           - entity: script.system_report
+#             name: Состоянии системы
+#           - entity: sensor.unavailable_now_light
+#             name: Светильников unavailable
+#           - entity: sensor.unavailable_now_switch
+#             name: Выключатели unavailable
+#           - entity: sensor.unavailable_now_sensor
+#             name: Сенсоры unavailable
+#           - entity: sensor.unavailable_now_binary_sensor
+#             name: Бинарны сенсоры unavailable
+#       - type: entities
+#         show_header_toggle: false
+#         entities:
+#           - entity: script.climate_report_cepera
+#             name: Погода Сереге
+#           - entity: script.climate_report_nadya
+#             name: Погода Надюше
+#       - type: entities
+#         show_header_toggle: false
+#         entities:
+#           - entity: script.photo_reolink_hallway_telegram
+#             name: Фото с Reolink HallWay
+#           - entity: script.photo_reolink_bedroom_telegram
+#             name: Фото с Reolink BedRoom
+#           - entity: script.video_reolink_hallway_telegram
+#             name: Видео с камеры Reolink HallWay
+#           - entity: script.video_reolink_bedroom_telegram
+#             name: Видео с камеры Reolink BedRoom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

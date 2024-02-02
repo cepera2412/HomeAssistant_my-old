@@ -1,0 +1,236 @@
+################################################################################################
+########################################### Коридор ############################################
+################################################################################################
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Коридор                                ##
+          icon: mdi:human-male-female-child
+          template: button_return
+
+################################### Выключить все ###########################################
+
+
+################################### Какие устройства вкл. ###########################################
+
+        - type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+              grid-template-columns: 87% auto
+          cards:
+
+            - type: conditional
+              conditions:
+                  - entity: group.koridor                      ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  name: Включеные приборы
+                  template: button_zagolovok_2
+
+#=================================== Кнопка Выключить все ==========================================
+            - type: conditional
+              conditions:
+                  - entity: group.koridor                         ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  icon: mdi:lightbulb-group-off
+                  entity: group.koridor                           ##
+                  template: button_svet_all
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                        entity_id: group.koridor                  ##
+                    confirmation:
+                        text: 'Выключить весь свет в Коридоре?'
+#============================================================================================
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+    
+            - type: conditional
+              conditions:
+                  - entity: switch.svet_v_koridore                       ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.svet_v_koridore                            ##
+                  icon: mdi:dome-light
+                  name: Свет
+                  template: button_svet_blue
+
+            - type: conditional
+              conditions:
+                  - entity: switch.lenta_v_koridore                  ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.lenta_v_koridore                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента
+                  template: button_svet_blue
+
+################################### Выключатель ###########################################
+        - type: custom:button-card
+          name: Освещение
+          template: button_zagolovok
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+
+                - type: custom:button-card
+                  entity: switch.svet_v_koridore                            ##
+                  icon: mdi:dome-light
+                  name: Свет
+                  template: button_svet_blue
+
+                - type: custom:button-card
+                  entity: switch.lenta_v_koridore                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента
+                  template: button_svet_blue
+
+################################### Устройства ###########################################
+
+        - type: custom:button-card
+          name: Устройства
+          template: button_zagolovok
+
+        - type: entities
+          entities:
+           - vacuum.mc1808_cloud_753499
+          title: []
+
+################################### Камеры ###########################################
+        - type: custom:button-card
+          name: Камеры
+          template: button_zagolovok
+    
+        - type: grid
+          columns: 2
+          square: false
+          cards:
+
+              - type: picture-glance
+                title: []
+                camera_image: camera.reolink_bedroom_profile001_substream
+                camera_view: live
+                # tap_action:
+                #   action: none
+                entities:
+                  - entity: camera.reolink_bedroom_profile001_substream
+                    icon: mdi:sofa
+                    tap_action:
+                      action: call-service
+                      service: onvif.ptz
+                      service_data:
+                        entity_id: camera.reolink_bedroom_profile001_substream
+                        preset: '000'
+                        move_mode: GotoPreset
+                  - entity: camera.reolink_bedroom_profile001_substream
+                    icon: mdi:door
+                    tap_action:
+                      action: call-service
+                      service: onvif.ptz
+                      service_data:
+                        entity_id: camera.reolink_bedroom_profile001_substream
+                        preset: '001'
+                        move_mode: GotoPreset
+                  - entity: camera.reolink_bedroom_profile001_substream
+                    icon: mdi:wardrobe-outline
+                    tap_action:
+                      action: call-service
+                      service: onvif.ptz
+                      service_data:
+                        entity_id: camera.reolink_bedroom_profile001_substream
+                        preset: '002'
+                        move_mode: GotoPreset
+              - type: picture-entity
+                entity: camera.reolink_hallway_profile001_substream
+                camera_view: live
+                show_state: false
+                show_name: false
+                # tap_action:
+                #   action: none
+
+            #   - type: custom:button-card
+            #     entity: button.reolink_bedroom_reboot                           ##
+            #     icon: mdi:restart-alert
+            #     name: Reboot
+            #     template: button_camera_reboot
+
+            #   - type: custom:button-card
+            #     entity: button.camera_reolink_reboot                           ##
+            #     icon: mdi:restart-alert
+            #     name: Reboot
+            #     template: button_camera_reboot
+
+################################### Датчики, Сенсоры ###########################################
+        - type: custom:button-card
+          name: Датчики
+          template: button_zagolovok
+    
+        - type: grid
+          columns: 2
+          square: false
+          cards:
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d0001dff57f_contact
+              name: Входная 
+              template: button_sensor_door
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d0003fb0f3a_motion
+              name: Коридор 
+              template: button_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.28d1272f330d_motion
+              name: ночник Коридор
+              template: button_sensor_motion
+
+################################### Кнопки режтмов ###########################################
+
+
+
+################################### Автоматизации ###########################################
+
+        - type: custom:button-card
+          entity: input_boolean.ui_hide_automation
+          name: Автоматизации
+          template: button_zagolovok_menu
+
+        - type: custom:state-switch
+          entity: input_boolean.ui_hide_automation
+          transition: slide-left
+#          transition_time: 1000
+          states:
+              "on":
+                type: entities
+                entities:
+                  - entity: automation.vkl_svet_v_koridore_pri_dvizhenie
+                  - entity: automation.vkl_svet_v_koridore_pri_otkrytie_dveri
+                  - entity: automation.vykl_lenty_v_koridor
+                  - entity: automation.vykl_lenty_v_koridore_prinuditelnoe
+                  - entity: automation.vykl_svet_v_koridore_po_otsutstviiu_dvizhenie
+                  - entity: automation.vykl_svet_v_koridore_pri_zakrytie_dveri
+                  - entity: automation.vykl_svet_v_koridore_prinuditelnoe
+                  - entity: automation.perekliuchenie_lenta_svet_v_koridore
+                  - entity: automation.perekliuchenie_svet_lenta_v_koridore
+                  - entity: automation.knopka_v_koridore_zazhatie
+                  - entity: automation.ne_vykliuchat_svet_v_koridore_pri_strizhke

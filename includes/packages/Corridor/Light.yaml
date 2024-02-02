@@ -1,0 +1,259 @@
+corridor:
+
+##########################################################################################################################################
+#                                                                   Шаблоны 
+##########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+# Вкл света при движение
+          - name: corridor_motion_on
+            state: >
+              {{ is_state('binary_sensor.0x158d0003fb0f3a_motion', 'on')
+                 and is_state('binary_sensor.28d1272f330d_motion', 'on')
+                 and is_state('group.vse_doma', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.corridor_motion_on", "on") %}
+              mdi:run
+              {% else %}
+              mdi:run
+              {% endif %}
+
+# Движение в Коридоре
+          - name: corridor_motion
+            state: >
+                  {{ is_state('binary_sensor.0x158d0003fb0f3a_motion', 'on')
+                     or is_state('binary_sensor.28d1272f330d_motion', 'on')  }} 
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.corridor_motion", "on") %}
+              mdi:run
+              {% else %}
+              mdi:run
+              {% endif %}
+
+# Принудительтное отключение света
+          - name: auto_light_off_v_koridore
+            state: >
+                  {{ is_state('switch.svet_v_koridore', 'on')
+                     and is_state('binary_sensor.corridor_motion', 'off')
+                     and is_state('input_boolean.strijka', 'off') }}
+            delay_on:
+              minutes: 20
+            icon: >
+              {% if is_state("auto_light_off_v_koridore", "on") %}
+              mdi:lightbulb-off-outline
+              {% else %}
+              mdi:lightbulb-off-outline
+              {% endif %}
+
+# Принудительтное отключение ленты
+          - name: auto_lenta_off_v_koridore
+            state: >
+                  {{ is_state('switch.lenta_v_koridore', 'on')
+                     and is_state('binary_sensor.corridor_motion', 'off')
+                     and is_state('input_boolean.strijka', 'off') }}
+            delay_on: 
+              minutes: 20
+            icon: >
+              {% if is_state("auto_lenta_off_v_koridore", "on") %}
+              mdi:lightbulb-off-outline
+              {% else %}
+              mdi:lightbulb-off-outline
+              {% endif %}
+
+
+##########################################################################################################################################
+#                                                           Логическое переключатель
+##########################################################################################################################################
+
+    input_boolean:
+    
+# Переключатель для стрижки
+      strijka:
+        name: Режим стрижки
+        icon: mdi:content-cut
+
+##########################################################################################################################################
+#                                                               Бинарные сенсоры 
+##########################################################################################################################################
+
+    binary_sensor:
+
+# Периоды времени
+          - platform: tod
+            name: Домашний день
+            after: '06:00'
+            before: '00:00'
+        
+          - platform: tod
+            name: Домашняя ночь
+            after: '00:00'
+            before: '06:00'
+
+########################################################################################################################################
+#                                                               Автоматизации 
+########################################################################################################################################
+
+    automation:
+
+
+# Вкл свет при движение днем
+        - alias: (Коридор) Вкл свет при движение днем
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.corridor_motion_on
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_koridore
+             state: 'off'
+           - condition: state
+             entity_id: switch.lenta_v_koridore
+             state: 'off'
+           - condition: state
+             entity_id: binary_sensor.domashnii_den
+             state: 'on'
+          action:
+           - service: switch.turn_on
+             entity_id: switch.svet_v_koridore
+
+# Вкл свет при открытие двери
+        - alias: (Коридор) Вкл свет при открытие двери
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.0x158d0001dff57f_contact
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_koridore
+             state: 'off'
+             for:
+               minutes: 5
+          action:
+           - service: switch.turn_on
+             entity_id: switch.svet_v_koridore
+
+# Выкл свет при движение
+        - alias: (Коридор) Выкл свет по отсутствию движение
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.corridor_motion
+             to: 'off'
+             for:
+               minutes: 1.5
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_koridore
+             state: 'on'
+           - condition: state
+             entity_id: input_boolean.strijka
+             state: 'off'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_koridore
+
+# Выкл свет при закрытие двери
+        - alias: (Коридор) Выкл свет при закрытие двери
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.0x158d0001dff57f_contact
+             from: 'on'
+             to: 'off'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_koridore
+             state: 'on'
+             for:
+               minutes: 3
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_koridore
+
+# Переключение Свет - Лента
+        - alias: (Коридор) Переключение Свет - Лента
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: switch.lenta_v_koridore
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_koridore
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_koridore
+
+# Переключение Лента - Свет
+        - alias: (Коридор) Переключение Лента - Свет
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: switch.svet_v_koridore
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.lenta_v_koridore
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.lenta_v_koridore
+
+# Выкл лента
+        - alias: (Коридор) Выкл ленты
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.corridor_motion
+             to: 'off'
+             for:
+               minutes: 4
+          condition:
+           - condition: state
+             entity_id: switch.lenta_v_koridore
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.lenta_v_koridore
+
+# Выкл свет принудительное
+        - alias: (Коридор) Выкл свет принудительное
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_light_off_v_koridore
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_koridore
+
+# Выкл ленты принудительное
+        - alias: (Коридор) Выкл ленты принудительное
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_lenta_off_v_koridore
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_koridore
+
+
+
+
+
+
+
+
+
+
+

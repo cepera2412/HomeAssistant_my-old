@@ -1,0 +1,583 @@
+telegram_alarm:
+
+#########################################################################################################################################
+#                                                            Шаблоны 
+#########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+########################################################## Вернулись с unavailable ######################################################
+
+          - name: switch_unavailable
+            state: >
+              {{ (states('sensor.switch_unavailable')|int) == 0 }}
+            delay_off: 
+                minutes: 2.5
+
+          - name: light_unavailable
+            state: >
+              {{ (states('sensor.light_unavailable')|int) == 0 }}
+            delay_off: 
+                minutes: 2.5
+
+          - name: door_unavailable
+            state: >
+              {{ (states('sensor.door_unavailable')|int) == 0 }}
+            delay_off: 
+                minutes: 2.5
+
+          - name: water_leak_unavailable
+            state: >
+              {{ (states('sensor.water_leak_unavailable')|int) == 0 }}
+            delay_off: 
+                minutes: 2.5
+
+          - name: motion_unavailable
+            state: >
+              {{ (states('sensor.motion_unavailable')|int) == 0 }}
+            delay_off: 
+                minutes: 2.5
+
+          - name: camera_unavailable
+            state: >
+              {{ (states('sensor.camera_unavailable')|int) == 0 }}
+            delay_off: 
+                minutes: 2.5
+
+
+      - sensor:
+
+######################################################## Датчики протечки сработал ######################################################
+
+          - name: water_leak_detect
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')
+                and is_state_attr(entity.entity_id, 'device_class', 'moisture') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')
+                  and is_state_attr(entity.entity_id, 'device_class', 'moisture') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+########################################################### Недоступные Розетки ########################################################
+
+          - name: switch_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.sensor if is_state(entity.entity_id, 'unavailable')
+                and is_state_attr(entity.entity_id, 'device_class', 'voltage') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.sensor if is_state(entity.entity_id, 'unavailable')
+                  and is_state_attr(entity.entity_id, 'device_class', 'voltage') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+########################################################### Недоступный Свет ##########################################################
+
+          - name: light_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.light if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.light if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+###################################################### Недоступные Датчики Дверей ####################################################
+
+          - name: door_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                and is_state_attr(entity.entity_id, 'device_class', 'door') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                  and is_state_attr(entity.entity_id, 'device_class', 'door') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+##################################################### Недоступные Датчики протечки ####################################################
+
+          - name: water_leak_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                and is_state_attr(entity.entity_id, 'device_class', 'moisture') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                  and is_state_attr(entity.entity_id, 'device_class', 'moisture') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+##################################################### Недоступные Датчики Движения ####################################################
+
+          - name: motion_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                and is_state_attr(entity.entity_id, 'device_class', 'motion') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                  and is_state_attr(entity.entity_id, 'device_class', 'motion') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+########################################################## Недоступные Камеры ##########################################################
+
+          - name: camera_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.camera if is_state(entity.entity_id, 'unavailable') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.camera if is_state(entity.entity_id, 'unavailable') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+
+########################################################################################################################################
+#                                                              Сенсоры 
+########################################################################################################################################
+
+    sensor:
+
+######################################################## Сколько сервер онлайн #########################################################
+
+      - platform: template
+        sensors:
+          online_ha:
+            friendly_name: "Сервер онлайн"
+            unit_of_measurement: 'часов online'
+            value_template: "{{ ((as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) / 3600) |round(1) }}"
+            icon_template: mdi:home-clock
+
+
+########################################################################################################################################
+#                                                           Автоматизации 
+########################################################################################################################################
+
+    automation:
+
+############################################################## Датчики воды ############################################################
+
+      - id: Список сработавших датчиков протечки
+        alias: (Внимание) Сработавший датчик протечки
+        initial_state: true
+        trigger:
+         - platform: template
+           value_template: "{{ (states('sensor.water_leak_detect')|int) > 0 }}"
+         - platform: template
+           value_template: "{{ (states('sensor.water_leak_detect')|int) == 0 }}"
+        action:
+            - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.water_leak_detect')|int) > 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U000026A0"}} Опасность
+                          {{"\U0000203C"}} {% for entity_name, entity_state in state_attr('sensor.water_leak_detect', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %} !
+                          {{"\U0001F567"}} Время события - {{ states('sensor.time_date') }}
+                          {{"\U0001F4F1"}} (Ковальчук) +38.....63
+                          {{"\U0001F4F1"}} (Руслан) +380.....300
+                  - service: media_player.volume_set
+                    data:
+                      volume_level: 0.7
+                    target:
+                      entity_id: media_player.mi_speaker
+                  - service: fullykiosk.volume_set
+                    data:
+                      entity_id: media_player.galaxy_tab_a8_media_player
+                      volume_level: 0.2
+                      stream: 3
+                  - delay: 00:00:01
+                  - service: tts.google_translate_say
+                    entity_id:
+                      - media_player.mi_speaker
+                    data:
+                      message: "Появилась {% for entity_name, entity_state in state_attr('sensor.water_leak_detect', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}"
+                      language: ru
+                  - delay: 00:00:20
+                  - service: media_player.volume_set
+                    data:
+                      volume_level: 0.5
+                    target:
+                      entity_id: media_player.galaxy_tab_a8_media_player
+                  - service: media_player.volume_set
+                    data:
+                      volume_level: 0.4
+                    target:
+                      entity_id: media_player.mi_speaker
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.water_leak_detect')|int) == 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: | 
+                           {{"\U0001F44C"}} Протечка устранена
+                  - service: media_player.volume_set
+                    data:
+                      volume_level: 0.7
+                    target:
+                      entity_id: media_player.mi_speaker
+                  - delay: 00:00:02
+                  - service: tts.google_translate_say
+                    entity_id:
+                      - media_player.mi_speaker
+                    data:
+                      message: "Все в порядку, протікання усунено"
+                      language: uk
+                  - delay: 00:00:20
+                  - service: media_player.volume_set
+                    data:
+                      volume_level: 0.4
+                    target:
+                      entity_id: media_player.mi_speaker
+
+
+############################################## Недоступные Датчики и Устройства ########################################################
+
+      - id: Список недоступных датчиков и устройств
+        alias: (Внимание) Недоступные датчики и устройства
+        initial_state: true
+        trigger:
+          - platform: template
+            value_template: "{{ (states('sensor.switch_unavailable')|int) > 0 }}"
+            for:
+              minutes: 2.5
+          - platform: template
+            value_template: "{{ (states('sensor.light_unavailable')|int) > 0 }}"
+            for:
+              minutes: 2.5
+          - platform: template
+            value_template: "{{ (states('sensor.door_unavailable')|int) > 0 }}"
+            for:
+              minutes: 2.5
+          - platform: template
+            value_template: "{{ (states('sensor.water_leak_unavailable')|int) > 0 }}"
+            for:
+              minutes: 2.5
+          - platform: template
+            value_template: "{{ (states('sensor.motion_unavailable')|int) > 0 }}"
+            for:
+              minutes: 2.5
+          - platform: template
+            value_template: "{{ (states('sensor.camera_unavailable')|int) > 0 }}"
+            for:
+              minutes: 2.5
+        action:
+            - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.switch_unavailable')|int) > 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Появилось недоступная розетка - {% for entity_name, entity_state in state_attr('sensor.switch_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.light_unavailable')|int) > 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Появилось недоступный светильник - {% for entity_name, entity_state in state_attr('sensor.light_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.door_unavailable')|int) > 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Появилось недоступный датчик - {% for entity_name, entity_state in state_attr('sensor.door_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.water_leak_unavailable')|int) > 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Появилось недоступный датчик - {% for entity_name, entity_state in state_attr('sensor.water_leak_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.motion_unavailable')|int) > 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Появилось недоступный датчик - {% for entity_name, entity_state in state_attr('sensor.motion_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+              - conditions:
+                  - condition: template
+                    value_template: "{{ (states('sensor.camera_unavailable')|int) > 0 }}"
+                sequence:
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Появилось недоступная камера- {% for entity_name, entity_state in state_attr('sensor.camera_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+
+######################################## Вышедшие с Недоступного Датчики и Устройства ##################################################
+
+      - id: С недоступного розетки
+        alias: (Внимание) С недоступного розетки
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.switch_unavailable
+            from: 'off'
+            to: 'on'
+        condition:
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) > 450 }}"
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U0001F44C"}} Розетка снова в работе {% for entity_name, entity_state in state_attr('sensor.switch_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+
+      - id: С недоступного светильники
+        alias: (Внимание) С недоступного светильники
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.light_unavailable
+            from: 'off'
+            to: 'on'
+        condition:
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) > 450 }}"
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U0001F44C"}} Светильник снова в работе {% for entity_name, entity_state in state_attr('sensor.light_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+
+      - id: С недоступного датчики дверей
+        alias: (Внимание) С недоступного датчики дверей
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.door_unavailable
+            from: 'off'
+            to: 'on'
+        condition:
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) > 450 }}"
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U0001F44C"}} Датчик дверей снова в работе {% for entity_name, entity_state in state_attr('sensor.door_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+
+      - id: С недоступного датчики протечек
+        alias: (Внимание) С недоступного датчики протечек
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.water_leak_unavailable
+            from: 'off'
+            to: 'on'
+        condition:
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) > 450 }}"
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U0001F44C"}} Датчик протечки снова в работе {% for entity_name, entity_state in state_attr('sensor.water_leak_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+
+      - id: С недоступного датчики движения
+        alias: (Внимание) С недоступного датчики движения
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.motion_unavailable
+            from: 'off'
+            to: 'on'
+        condition:
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) > 450 }}"
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U0001F44C"}} Датчик движения снова в работе {% for entity_name, entity_state in state_attr('sensor.motion_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+
+      - id: С недоступного камера
+        alias: (Внимание) С недоступного камера
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.camera_unavailable
+            from: 'off'
+            to: 'on'
+        condition:
+          - condition: template
+            value_template: "{{ (as_timestamp(now()) | int - as_timestamp(states('sensor.online')) | int) > 450 }}"
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U0001F44C"}} Камера снова в работе {% for entity_name, entity_state in state_attr('sensor.camera_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

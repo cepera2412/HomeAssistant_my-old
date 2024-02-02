@@ -1,0 +1,194 @@
+mi_robot:
+
+##########################################################################################################################################
+#                                                                 Виртуальные настройки
+##########################################################################################################################################
+
+    input_boolean:
+
+      corridor_vacuum:
+        name: "Уборка в Коридоре"
+
+      kitchen_vacuum:
+        name: "Уборка на Кухне"
+
+      bedroom_vacuum:
+        name: "Уборка в Спальне"
+    
+      cabinet_vacuum:
+        name: "Уборка в Кабинете"
+
+      livingroom_vacuum:
+        name: "Уборка в Гостиной"
+      
+      dressingroom_vacuum:
+        name: "Уборка в Гардеробной"
+
+      loggia_vacuum:
+        name: "Уборка на Лоджии"
+
+##########################################################################################################################################
+#                                                                 Группы
+##########################################################################################################################################
+
+    group:
+      all_rooms_for_vac_clean:
+        name: All rooms for vacuum clean
+        entities:
+          - input_boolean.corridor_vacuum
+          - input_boolean.kitchen_vacuum
+          - input_boolean.bedroom_vacuum
+          - input_boolean.cabinet_vacuum
+          - input_boolean.livingroom_vacuum
+          - input_boolean.dressingroom_vacuum
+          - input_boolean.loggia_vacuum
+
+##########################################################################################################################################
+#                                                                 Сенсоры
+##########################################################################################################################################
+
+    sensor:
+
+      - platform: template
+        sensors:
+          select_rooms_for_clean:
+            value_template: >
+              {% set rooms = expand('group.all_rooms_for_vac_clean') | selectattr('state', 'eq', 'on')
+              | map(attribute='entity_id') | list | join(',')
+              | replace('input_boolean.corridor_vacuum','[3,1,2,3,1]')
+              | replace('input_boolean.kitchen_vacuum','[4,1,2,3,1]')
+              | replace('input_boolean.bedroom_vacuum','[5,1,2,3,1]')
+              | replace('input_boolean.cabinet_vacuum','[2,1,2,3,1]')
+              | replace('input_boolean.livingroom_vacuum','[6,1,2,3,1]')
+              | replace('input_boolean.dressingroom_vacuum','[7,1,2,3,1]')
+              | replace('input_boolean.loggia_vacuum','[1,1,2,3,1]') %}
+                {"selects":[{{rooms}}]}
+            friendly_name: "Выбранные комнаты для пылесоса"
+            icon_template: mdi:vacuum
+
+##########################################################################################################################################
+#                                                                 Скрипты
+##########################################################################################################################################
+
+    script:
+
+# Запуск пылесоса на выбраные конкретные комнаты
+        clean_select_rooms:
+          alias: (Пылесос) Убрать выбранные комнаты
+          sequence:
+          - service: xiaomi_miot.call_action
+            data:
+              entity_id: vacuum.mc1808_cloud_753499
+              siid: 18
+              aiid: 1
+              params:
+                - piid: 1
+                  value: 18
+                - "{{ {'piid':21, 'value': states('sensor.select_rooms_for_clean') } }}"
+              force_params: true
+
+# Обнуление выбора комнат
+        clean_reset_select_rooms:
+          alias: (Пылесос) Ощистить выбор комнат
+          sequence:
+          - service: input_boolean.turn_off
+            data:
+              entity_id: 
+                - input_boolean.corridor_vacuum
+                - input_boolean.kitchen_vacuum
+                - input_boolean.bedroom_vacuum
+                - input_boolean.cabinet_vacuum
+                - input_boolean.livingroom_vacuum
+                - input_boolean.dressingroom_vacuum
+                - input_boolean.loggia_vacuum
+
+# Сервес запуска пылесоса на конкретную комнату координаты в ручную
+        clean_select_rooms_test:
+          alias: (Пылесос) Убрать выбранные комнаты через код
+          sequence:
+            service: xiaomi_miot.call_action
+            data:
+              entity_id: vacuum.mc1808_cloud_753499
+              siid: 18
+              aiid: 1
+              params:
+                - piid: 1
+                  value: 18
+                - piid: 21
+                  value: '{"selects":[[5,1,2,3,1],[2,1,2,3,1]]}'
+              force_params: true
+#              repeats: 1 
+
+
+
+# service: xiaomi_miot.set_miot_property
+# data:
+#   entity_id: vacuum.alice_vacuum_mop
+#   siid: 18
+#   piid: 6
+#   value: 1 # (0-3) - мощность
+# ____________________________________________
+
+# service: xiaomi_miot.set_miot_property
+# data:
+#   entity_id: vacuum.alice_vacuum_mop
+#   siid: 18
+#   piid: 20
+#   value: 3 # (1-3) - полив воды
+
+
+##########################################################################################################################################
+#                                                                 Автоматизации
+##########################################################################################################################################
+
+    automation:
+
+      - alias: (Пылесос) Обнулить выбор комнат
+        id: Reset select rooms
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: vacuum.mc1808_cloud_753499
+            to: 'docked'
+        action:
+          - service: script.clean_reset_select_rooms
+
+      - alias: (Пылесос) Убрать всплытое окно
+        id: Убрать всплытое окно
+        initial_state: true
+        trigger:
+            - platform: state
+              entity_id: script.clean_select_rooms
+              to: 'on'
+        action:
+            - delay: 00:00:01
+            - service: browser_mod.close_popup
+              data:
+                browser_id: d7f06977-f8e14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

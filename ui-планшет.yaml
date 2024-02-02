@@ -1,0 +1,1946 @@
+############################ Настройки Kioska ########################################
+kiosk_mode:
+#   non_admin_settings:
+#     hide_menubutton: true 
+#     hide_overflow: true 
+    # hide_header: true 
+    # ignore_entity_settings: true
+    kiosk: true
+    
+############################ Свайп для перелистования ########################################
+swipe_nav:
+  wrap: false
+  animate: swipe
+  prevent_default: true
+  swipe_amount: 50
+
+######################################## Картинка Фона ########################################
+background: "center / cover no-repeat fixed url('/local/background/3362.jpg')"
+
+########################################### Вкладки ##########################################
+views:
+  - !include lovelace/ui-планшет/1_main.yaml
+  - !include lovelace/ui-планшет/2_test.yaml
+  - !include lovelace/ui-планшет/3_rooms.yaml
+
+##############################################################################################################
+##############################################################################################################
+################################################ Шаблоны #####################################################
+##############################################################################################################
+##############################################################################################################
+
+button_card_templates:
+
+##############################################################################################################
+################################################# Заголовки ##################################################
+##############################################################################################################
+
+
+################################################# Общий ##################################################
+
+  button_zagolovok:
+    show_name: true
+    aspect_ratio: 12/1                                   # соотношение высоты и ширины
+    show_icon: false
+    tap_action:
+      action: none
+    styles:
+      name:
+        - font-size: 20px                                # размер шрифта
+#        - font-weight: 1000                             # толщина шрифта
+#        - justify-self: start/end                       # расположение текста
+      card:
+        - box-shadow: '0px 0px 3px 3px yellow'             # ширина тени спрва/снизу/размытие рамки/толщина рамки/цвет
+        - border-radius: 10px                            # радиус рамки
+#        - color:   blue                                  # цвет шрифта
+        - background-color: blue                   # цвет фона
+#        - opacity: 0.3                            # прозрачность
+
+
+################################################# Для двойного ##################################################
+  button_zagolovok_2:
+    show_name: true
+    aspect_ratio: 8.5/1                                   # соотношение высоты и ширины
+    show_icon: false
+    tap_action:
+      action: none
+    styles:
+      name:
+        - font-size: 20px                                # размер шрифта
+#        - font-weight: 1000                             # толщина шрифта
+#        - justify-self: start/end                       # расположение текста
+      card:
+        - box-shadow: '0px 0px 3px 3px yellow'             # ширина тени спрва/снизу/размытие рамки/толщина рамки/цвет
+        - border-radius: 10px                            # радиус рамки
+#        - color:   blue                                  # цвет шрифта
+        - background-color: blue                   # цвет фона
+#        - opacity: 0.3                            # прозрачность
+
+
+############################################################ Кнопка Выхода ##############################################################
+  button_return:
+    show_name: true
+    aspect_ratio: 7/1
+    show_icon: true
+    tap_action:
+      action: call-service
+      service: browser_mod.close_popup
+    styles:
+      name:
+        - font-weight: 30
+        - font-size: 45px
+        - font-weight: bold
+        - justify-self: start
+      icon:
+        - width: 50px
+        - color: 'yellow'
+      grid:
+        - grid-template-areas: '"i n n"'
+        - grid-template-columns: 130px
+        # - grid-template-rows: 1fr
+      card:
+        - box-shadow: '1px 1px 3px 3px yellow'
+        - border-radius: 0px 
+        - color: yellow
+        - background-color: blue
+        - padding: 0%
+        - margin: 3px 0px 0px 0px
+
+################################################# Кнопка Выхода больших названий ########################################################
+  button_return_big:
+    show_name: true
+    aspect_ratio: 7/1
+    show_icon: true
+    tap_action:
+      action: call-service
+      service: browser_mod.close_popup
+    styles:
+      name:
+        - font-weight: 30
+        - font-size: 42px
+        - font-weight: bold
+        - justify-self: start
+      icon:
+        - width: 50px
+        - color: 'yellow'
+      grid:
+        - grid-template-areas: '"i n n"'
+        - grid-template-columns: 80px
+        # - grid-template-rows: 1fr
+      card:
+        - box-shadow: '1px 1px 3px 3px yellow'
+        - border-radius: 0px 
+        - color: yellow
+        - background-color: blue
+        - padding: 0%
+        - margin: 3px 0px 0px 0px
+
+################################################# Кнопка Выхода маленькое названий ########################################################
+  button_return_small:
+    show_name: true
+    aspect_ratio: 16/1
+    show_icon: true
+    tap_action:
+      action: call-service
+      service: browser_mod.close_popup
+    styles:
+      name:
+        - font-weight: 30
+        - font-size: 45px
+        - font-weight: bold
+        - justify-self: start
+      icon:
+        - width: 50px
+        - color: 'yellow'
+      grid:
+        - grid-template-areas: '"i n n"'
+        - grid-template-columns: 80px
+        # - grid-template-rows: 1fr
+      card:
+        - box-shadow: '1px 1px 3px 3px yellow'
+        - border-radius: 0px 
+        - color: yellow
+        - background-color: blue
+        - padding: 0%
+        - margin: 3px 0px 0px 0px
+
+
+####################################### Кнопка для раскрытия меню ###########################################
+  button_zagolovok_menu:
+    show_name: true
+    aspect_ratio: 12/1                                   # соотношение высоты и ширины
+    show_icon: false
+    tap_action:
+      action: toggle
+    styles:
+      name:
+        - font-size: 20px                                # размер шрифта
+#        - font-weight: 1000                             # толщина шрифта
+#        - justify-self: start/end                       # расположение текста
+      card:
+        - box-shadow: '0px 0px 3px 3px yellow'             # ширина тени спрва/снизу/размытие рамки/толщина рамки/цвет
+        - border-radius: 10px                            # радиус рамки
+#        - color:   blue                                  # цвет шрифта
+        - background-color: blue                   # цвет фона
+#        - opacity: 0.3                            # прозрачность
+
+
+####################################################################################################
+##################################### Общий шаблон для датчиков ####################################
+####################################################################################################
+
+  button_sensor_name:
+    show_name: true
+    size: 40px
+    aspect_ratio: 3/1
+    tap_action:
+      action: none
+    styles:
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 3px 6px
+        - font-size: 12px
+      card:
+#        - box-shadow: '1px 1px 2px 1px #808080'
+        - box-shadow: '1px 1px 2px 1px yellow'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+        - grid-template-areas: '"i temp temp"'
+        - grid-template-columns: 35px 1fr 1fr 
+        - grid-template-rows: 1fr 1fr 1fr
+      custom_fields:
+        temp:
+          - font-weight: 450
+          - font-size: 16px
+          - justify-self: start
+          - padding-left: 15px
+    custom_fields:
+      temp: |
+        [[[
+          var temp = entity.state;
+          var temp_a = entity.attributes.unit_of_measurement;
+          return temp + ' ' + temp_a;
+        ]]]
+
+######################################## Датчики температуры #######################################
+
+  button_sensor:
+    show_name: false
+    size: 40px
+    aspect_ratio: 3.9/1
+    tap_action:
+      action: none
+    styles:
+      card:
+#        - box-shadow: '1px 1px 2px 1px #808080'
+        - box-shadow: '1px 1px 2px 1px yellow'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px                  
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+        - grid-template-areas: '"i temp temp"'
+        - grid-template-columns: 35px 1fr 1fr 
+        - grid-template-rows: 1fr
+      custom_fields:
+        temp:
+          - font-weight: 450
+          - font-size: 16px
+#          - justify-self: start
+          - padding-left: 15px
+    custom_fields:
+      temp: |
+        [[[
+          var temp = entity.state;
+          var temp_a = entity.attributes.unit_of_measurement;
+          return temp + ' ' + temp_a;
+        ]]]
+
+
+##################################### Датчики Окон/Дверей ####################################
+  button_sensor_door:
+    show_last_changed: true
+    show_name: true
+    size: 40px
+    aspect_ratio: 3/1
+    tap_action:
+      action: none
+    styles:
+      name:                                        # название датчика
+        - justify-self: end
+        - align-self: end
+        - padding: 2px 3px                    # отступ от низа/отступ от правого края
+        - font-size: 13px                    # размер шрифта
+      label:
+        # - justify-self: end
+        # - align-self: end
+        - padding: 3px 13px
+        - font-size: 10px
+        - color: '#6cace4'
+      card:
+#        - box-shadow: '1px 1px 2px 1px #808080'
+        - box-shadow: '1px 1px 2px 1px yellow'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+        - grid-template-areas: '"i temp temp" "i l l" "i n n"'
+        - grid-template-columns: 40px 1fr 1fr 
+        - grid-template-rows: 1fr 1fr 1fr
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 16px                          # размер шрифта
+          - justify-self: start                      # расположение шрифта
+          - padding-left: 3px                        # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return 'Закрыто';
+              if (temp == 'on') return 'Открыто';
+            ]]]
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px yellow'
+        #     - color: green
+        #   icon:
+        #     - color: orange
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #5ff71d'
+            - color: '#5ff71d'
+          icon:
+            - color: '#5ff71d'
+
+############################################ Датчики Движения #################################################
+  button_sensor_motion:
+    show_last_changed: true
+    show_name: true
+    size: 40px
+    aspect_ratio: 3/1
+    tap_action:
+      action: none
+    styles:
+      name:                                        # название датчика
+        - justify-self: end
+        - align-self: end
+        - padding: 2px 3px
+        - font-size: 13px
+      label:
+        # - justify-self: end
+        # - align-self: end
+        - padding: 3px 13px
+        - font-size: 10px
+        - color: '#6cace4'
+      card:
+#        - box-shadow: '1px 1px 2px 1px #808080'
+        - box-shadow: '1px 1px 2px 1px yellow'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+        - grid-template-areas: '"i temp temp" "i l l" "i n n"'
+        - grid-template-columns: 35px 1fr 1fr 
+        - grid-template-rows: 1fr 1fr 1fr
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 16px                          # размер шрифта
+          - justify-self: start                      # расположение шрифта
+          - padding-left: 3px                        # отступ от начала
+    custom_fields:                                          
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return 'Тишина';
+              if (temp == 'on') return 'Движение';
+            ]]]
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px yellow'
+        #     - color: green
+        #   icon:
+        #     - color: orange
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #5ff71d'
+            - color: '#5ff71d'
+          icon:
+            - color: '#5ff71d'
+
+#################################################### Протечки ############################################
+  button_sensor_Water_Leak:
+    show_name: true
+    size: 40px
+    aspect_ratio: 3/1
+    tap_action:
+      action: none
+    styles:
+      name:                                        # название датчика
+        - justify-self: end
+        - align-self: end
+        - padding: 2px 3px
+        - font-size: 13px
+      card:
+#        - box-shadow: '1px 1px 2px 1px #808080'
+        - box-shadow: '1px 1px 2px 1px yellow'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+        - grid-template-areas: '"i temp temp" "i n n"'
+        - grid-template-columns: 35px 1fr 1fr 
+        - grid-template-rows: 1fr
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 20px                          # размер шрифта
+          - justify-self: start                      # расположение шрифта
+          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return 'Сухо';
+              if (temp == 'on') return 'Протечки';
+            ]]]
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px yellow'
+        #     - color: green
+        #   icon:
+        #     - color: orange
+      - value: 'on'
+        styles:
+          card:
+            # - box-shadow: '1px 1px 1px 2px red'
+            - color: red
+            # - animation: blink 1s linear infinite
+            - animation: flasher 1s linear infinite
+          icon:
+            - color: red
+            - animation: blink 0.5s linear infinite
+    extra_styles: |
+      @keyframes flasher {
+        50% { background: radial-gradient(rgb(0, 0, 0, 10%) 20%, rgb(255, 0, 0, 50%));
+        box-shadow: 0px 0px 30px rgb(255, 0, 0, 100%);
+        border: 5px solid rgb(200, 150, 150)
+      }
+
+############################################################################################
+######################################## Выключатели #######################################
+############################################################################################
+
+
+########################################### Выкл Все ########################################
+
+  button_svet_all:
+    show_name: false
+    show_icon: true
+    aspect_ratio: 1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 2px
+        - padding: 2%
+      icon:
+        - width: 22px
+#        - transform: rotate(180deg)
+    state:
+      - value: 'on'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 3px 2px #faff00'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px                              # перемещение карточки
+#            - padding: 2%
+          icon:
+            - color: '#ff0000'
+            - animation: blink 4s linear infinite
+
+############################################# Рестарт камеры #######################################
+  button_camera_reboot:
+    show_last_changed: true
+    show_name: true
+    size: 40px
+    aspect_ratio: 7/1
+    tap_action:
+      action: toggle
+    styles:
+      name:                                        # название датчика
+        - justify-self: end
+        - align-self: end
+        - padding: 2px 3px                    # отступ от низа/отступ от правого края
+        - font-size: 13px                    # размер шрифта
+      label:
+        - justify-self: start
+        - align-self: start
+        - padding: 3px 13px
+        - font-size: 10px
+        - color: '#6cace4'
+      card:
+#        - box-shadow: '1px 1px 2px 1px #808080'
+        - box-shadow: '1px 1px 2px 1px yellow'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: 'red'
+      grid:
+        - grid-template-areas: '"i temp temp" "i l l" "i n n"'
+        - grid-template-columns: 30px 1fr 1fr 
+        - grid-template-rows: 1fr 1fr 1fr
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px yellow'
+        #     - color: green
+        #   icon:
+        #     - color: orange
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #5ff71d'
+            - color: '#5ff71d'
+          icon:
+            - color: '#5ff71d'
+
+#====================================================== Зеленые ==========================================#
+
+############################################# Выключатель #########################################
+  button_svet_green:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2.1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "i n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 40px
+#        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 14px
+        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 50px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #3aff41'
+          icon:
+            - color: '#3aff41'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+########################################### Выключатель icon на 180 ######################################
+  button_svet_green_180:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2.1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "i n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 40px
+        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 14px
+        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 50px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #3aff41'
+          icon:
+            - color: '#3aff41'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+
+#=================================================== Синие ================================================
+
+
+############################################### Выключатель ###############################################
+  button_svet_blue:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2.1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "i n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 40px
+#        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 14px
+        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 50px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #3c3cff'
+          icon:
+            - color: '#3c3cff'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+
+########################################### Выключатель icon на 180 #######################################
+  button_svet_blue_180:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2.1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "i n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 40px
+        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 14px
+        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 50px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #3c3cff'
+          icon:
+            - color: '#3c3cff'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+
+#==================================================== purpur ============================================
+
+################################################ Выключатель ############################################
+  button_svet_purpur:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2.1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "i n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 40px
+#        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 14px
+        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 50px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #F21872'
+          icon:
+            - color: '#F21872'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+        #   icon:
+        #     - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+
+######################################### Выключатель icon на 180 ########################################
+  button_svet_purpur_180:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2.1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "i n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 40px
+        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 14px
+        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 50px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #F21872'
+          icon:
+            - color: '#F21872'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+        #   icon:
+        #     - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+################################################### Вытяжка ##############################################
+  button_svet_purpur_fan:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2.1/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "i n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 40px
+#        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 11.5px
+        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 50px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #F21872'
+          icon:
+            - color: '#F21872'
+            - animation: rotating 1s linear infinite
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+
+
+#========================================================================================================#
+##########################################################################################################
+######################################## Кнопки главного Экрана ##########################################
+##########################################################################################################
+#========================================================================================================#
+
+
+################################################### Свет #################################################
+
+  button_main_light:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "n n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 30px
+#        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 9px
+#        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 30px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #3c3cff'
+          icon:
+            - color: '#3c3cff'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+# icon на 180
+  button_main_light_180:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "n n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 30px
+        - transform: rotate(180deg)
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 9px
+#        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 30px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #3c3cff'
+          icon:
+            - color: '#3c3cff'
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+# Вытяжка
+  button_main_light_fan:
+    show_last_changed: true
+    show_icon: true
+    show_label: true
+    show_name: true
+    aspect_ratio: 2/1
+    tap_action:
+      action: toggle
+    styles:
+      card:
+        - border-radius: 3px
+        - padding: 2%
+      grid:
+        - grid-template-areas: '"i l l" "i temp temp" "n n n"'
+        - grid-template-columns: 35px
+        - grid-template-rows: 1fr 4fr 2fr
+      icon:
+        - color: '#ffffff'
+        - width: 30px
+      label:
+        - font-size: 8px
+        - color: '#6cace4'
+#        - font-weight: bold
+      name:
+        - justify-self: end
+        - align-self: end
+        - padding: 0px 3px
+        - font-size: 9px
+#        - font-weight: bold
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 30px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 15px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return '―';
+              if (temp == 'on') return '―';
+            ]]]
+    state:
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+          temp:
+            - color: '#808080'
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 5px 3px #3c3cff'
+          icon:
+            - color: '#3c3cff'
+            - animation: rotating 1s linear infinite
+          custom_fields:
+            temp:
+             - color: 'red'
+      - value: 'off'
+        styles:
+          card:
+    #        - box-shadow: '1px 1px 2px 1px #808080'
+            - box-shadow: '1px 1px 2px 1px yellow'
+            - border-radius: 2px
+            - margin: 0px 0px 4px 0px
+            - padding: 2%
+          icon:
+            - filter: grayscale(100%)
+          custom_fields:
+            temp:
+             - color: 'green'
+
+
+#===========================================================================================================#
+################################################ Датчики ####################################################
+#===========================================================================================================#
+
+
+############################################ Датчики Окон/Дверей ############################################
+  button_main_sensor_door:
+    show_last_changed: true
+    show_name: true
+    size: 40px
+    aspect_ratio: 2/1
+    tap_action:
+      action: none
+    styles:
+      name:                                        # название датчика
+        - justify-self: end
+        - align-self: end
+#        - padding: 2px 3px                    # отступ от низа/отступ от правого края
+        - font-size: 11px                    # размер шрифта
+      label:
+        - justify-self: end
+        - align-self: end
+        - padding: 3px 0px
+        - font-size: 9px
+        - color: '#6cace4'
+      card:
+        - box-shadow: '1px 1px 2px 1px #43afff'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+#        - grid-template-areas: '"temp temp temp" "i l l" "i n n"'
+        - grid-template-areas: '"i n n" "i l l" "temp temp temp"'
+        - grid-template-columns: 25px 1fr 1fr 
+        - grid-template-rows: 1fr 1fr 1fr
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 12px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+          - padding-left: 10px                        # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return 'Закрыто';
+              if (temp == 'on') return 'Открыто';
+            ]]]
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          grid:
+            - grid-template-areas: '"i n n" "i l l"'
+            - grid-template-columns: 25px 1fr 
+            - grid-template-rows: 1fr 1fr 
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #43afff'
+        #     - color: green
+        #   icon:
+        #     - color: orange
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #5ff71d'
+            - color: '#5ff71d'
+          icon:
+            - color: '#5ff71d'
+
+
+############################################ Датчики Движения #################################################
+  button_main_sensor_motion:
+    show_last_changed: true
+    show_name: true
+    size: 40px
+    aspect_ratio: 2/1
+    tap_action:
+      action: none
+    styles:
+      name:                                        # название датчика
+        - justify-self: end
+        - align-self: end
+#        - padding: 2px 3px                    # отступ от низа/отступ от правого края
+        - font-size: 11px                    # размер шрифта
+      label:
+        - justify-self: end
+        - align-self: end
+        - padding: 3px 0px
+        - font-size: 9px
+        - color: '#6cace4'
+      card:
+        - box-shadow: '1px 1px 2px 1px #43afff'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+#        - grid-template-areas: '"temp temp temp" "i l l" "i n n"'
+        - grid-template-areas: '"i n n" "i l l" "temp temp temp"'
+        - grid-template-columns: 25px 1fr 1fr 
+        - grid-template-rows: 1fr 1fr 1fr
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 12px                          # размер шрифта
+#          - justify-self: start                      # расположение шрифта
+#          - padding-left: 10px                        # отступ от начала
+    custom_fields:                                          
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return 'Тишина';
+              if (temp == 'on') return 'Движение';
+            ]]]
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          grid:
+            - grid-template-areas: '"i n n" "i l l"'
+            - grid-template-columns: 25px 1fr 
+            - grid-template-rows: 1fr 1fr 
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #43afff'
+        #     - color: green
+        #   icon:
+        #     - color: orange
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #5ff71d'
+            - color: '#5ff71d'
+          icon:
+            - color: '#5ff71d'
+
+
+#################################################### Протечки ############################################
+  button_main_sensor_Water_Leak:
+    show_name: true
+    size: 40px
+    aspect_ratio: 2/1
+    tap_action:
+      action: none
+    styles:
+      name:                                        # название датчика
+        - justify-self: end
+        - align-self: end
+        - font-size: 11px
+      card:
+        - box-shadow: '1px 1px 2px 1px #43afff'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+        - grid-template-areas: '"i temp temp" "i n n"'
+        - grid-template-columns: 20px 1fr 1fr 
+        - grid-template-rows: 1fr
+      custom_fields:
+        temp:                                        # значение датчика
+          - font-weight: 450                         # толщина шрифта
+          - font-size: 16px                          # размер шрифта
+          - justify-self: start                      # расположение шрифта
+          - padding-left: 10px                       # отступ от начала
+    custom_fields:
+        temp: |
+            [[[
+              var temp = entity.state;
+              if (temp == 'off') return 'Сухо';
+              if (temp == 'on') return 'Протечки';
+            ]]]
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #43afff'
+        #     - color: green
+        #   icon:
+        #     - color: orange
+      - value: 'on'
+        styles:
+          card:
+            - color: red
+            - animation: flasher 1s linear infinite
+          icon:
+            - color: red
+            - animation: blink 0.5s linear infinite
+          custom_fields:
+            temp:                                        # значение датчика
+              - font-weight: 400                         # толщина шрифта
+              - font-size: 16px                          # размер шрифта
+              - justify-self: start                      # расположение шрифта
+              - padding-left: -10px                       # отступ от начала
+    extra_styles: |
+      @keyframes flasher {
+        50% { background: radial-gradient(rgb(0, 0, 0, 10%) 20%, rgb(255, 0, 0, 50%));
+        box-shadow: 0px 0px 30px rgb(255, 0, 0, 100%);
+        border: 5px solid rgb(200, 150, 150)
+      }
+
+
+#===========================================================================================================#
+################################################ Режимы #####################################################
+#===========================================================================================================#
+
+################################################ Режимы #####################################################
+  button_mode:
+    show_last_changed: true
+    show_name: true
+    size: 40px
+    aspect_ratio: 2/1
+    tap_action:
+      action: toggle
+    styles:
+      name:                                        # название датчика
+        # - justify-self: end
+        # - align-self: end
+#        - padding: 2px 3px                    # отступ от низа/отступ от правого края
+        - font-size: 12px                    # размер шрифта
+      label:
+        - justify-self: end
+        - align-self: end
+        - padding: 3px 0px
+        - font-size: 9px
+        - color: '#6cace4'
+      card:
+        - box-shadow: '1px 1px 2px 1px #43afff'
+        - border-radius: 2px
+        - margin: 0px 0px 4px 0px
+        - padding: 2%
+      icon:
+        - color: '#1872F2'
+      grid:
+        - grid-template-areas: '"n n n" "i l l" "i l l"'
+#        - grid-template-areas: '"i n n" "i l l" "temp temp temp"'
+        - grid-template-columns: 30px 1fr 1fr 
+        - grid-template-rows: 1fr 1fr 1fr
+    state:                                            # цвета каждого состояния датчиков
+      - value: 'unavailable'
+        styles:
+          grid:
+            - grid-template-areas: '"i n n" "i l l"'
+            - grid-template-columns: 25px 1fr 
+            - grid-template-rows: 1fr 1fr 
+          card:
+            - box-shadow: '1px 1px 1px 2px #808080'
+            - color: '#808080'
+          icon:
+            - color: '#808080'
+      - value: 'off'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px red'
+#            - color: red
+          icon:
+            - color: red
+      - value: 'on'
+        styles:
+          card:
+            - box-shadow: '1px 1px 1px 2px #5ff71d'
+            - color: '#5ff71d'
+          icon:
+            - color: '#5ff71d'
+
+
+#==============================================================================================================#
+################################################### Бар-Панель #################################################
+#==============================================================================================================#
+
+  button_bar:
+    show_name: false
+    show_icon: true
+    size: 30px
+    # tap_action:
+    #   action: none
+    # state:                                            # цвета каждого состояния датчиков
+    #   - value: 'on'
+    styles:
+      card:
+        - background: none
+        - box-shadow: none
+      icon: 
+        - color: red
+#            - width: 50px
+        - animation: blink 5s linear infinite
+
+
+#==============================================================================================================#
+##################################################### Жалюзи ###################################################
+#==============================================================================================================#
+
+################################################## Гостиная #####################################################
+  button_cover_purpur_full:
+        show_name: true
+        show_icon: true
+        show_label: true
+        tap_action:
+          action: toggle
+        styles:
+          card:
+            - height: 47px
+            - width: 120px
+            - border-radius: 3px
+            - padding: 2%
+          grid:
+            - grid-template-areas: '"i temp temp" "i n n" "i n n"'
+            - grid-template-columns: 35px
+            - grid-template-rows: 1fr 4fr 2fr
+          icon:
+            - color: '#fa1478'
+            - width: 60px
+          label:
+            - font-size: 8px
+            - color: '#6cace4'
+          name:
+            - padding: 0px 3px
+            - font-size: 16px
+            - font-weight: bold
+            - padding-left: 15px
+          custom_fields:
+            temp:                                        # значение датчика
+              - font-weight: 180                         # толщина шрифта
+              - font-size: 12px                          # размер шрифта
+        custom_fields:
+            temp: |
+                [[[
+                  var temp = entity.state;
+                  if (temp == 'off') return 'Откр на';
+                  if (temp == 'on') return 'Откр на';
+                ]]]
+
+  button_cover_purpur:
+        show_name: true
+        show_icon: true
+        show_label: true
+        aspect_ratio: 1/1
+        tap_action:
+          action: toggle
+        styles:
+          card:
+            - border-radius: 3px
+            - padding: 2%
+          grid:
+            - grid-template-areas: '"i i i" "temp temp temp" "n n n"'
+            - grid-template-columns: 35px
+            - grid-template-rows: 4fr 2fr 2fr
+          icon:
+            - color: '#fa1478'
+            - width: 100px
+          name:
+            - padding: 0px 3px
+            - font-size: 10px
+            - font-weight: bold
+#            - padding-left: 15px
+          custom_fields:
+            temp:                                        # значение датчика
+              - font-weight: 100                         # толщина шрифта
+              - font-size: 10px                          # размер шрифта
+        custom_fields:
+            temp: |
+                [[[
+                  var temp = entity.state;
+                  if (temp == 'off') return 'Откр на';
+                  if (temp == 'on') return 'Откр на';
+                ]]]
+
+################################################## Спальня #####################################################
+  button_cover_blue_full:
+        show_name: true
+        show_icon: true
+        show_label: true
+        tap_action:
+          action: toggle
+        styles:
+          card:
+            - height: 47px
+            - width: 120px
+            - border-radius: 3px
+            - padding: 2%
+          grid:
+            - grid-template-areas: '"i temp temp" "i n n" "i n n"'
+            - grid-template-columns: 35px
+            - grid-template-rows: 1fr 4fr 2fr
+          icon:
+            - color: '#265cff'
+            - width: 60px
+          label:
+            - font-size: 8px
+            - color: '#6cace4'
+          name:
+            - padding: 0px 3px
+            - font-size: 16px
+            - font-weight: bold
+            - padding-left: 15px
+          custom_fields:
+            temp:                                        # значение датчика
+              - font-weight: 180                         # толщина шрифта
+              - font-size: 12px                          # размер шрифта
+        custom_fields:
+            temp: |
+                [[[
+                  var temp = entity.state;
+                  if (temp == 'off') return 'Откр на';
+                  if (temp == 'on') return 'Откр на';
+                ]]]
+
+  button_cover_blue:
+        show_name: true
+        show_icon: true
+        show_label: true
+        aspect_ratio: 1/1
+        tap_action:
+          action: toggle
+        styles:
+          card:
+            - border-radius: 3px
+            - padding: 2%
+          grid:
+            - grid-template-areas: '"i i i" "temp temp temp" "n n n"'
+            - grid-template-columns: 35px
+            - grid-template-rows: 4fr 2fr 2fr
+          icon:
+            - color: '#265cff'
+            - width: 100px
+          name:
+            - padding: 0px 3px
+            - font-size: 10px
+            - font-weight: bold
+#            - padding-left: 15px
+          custom_fields:
+            temp:                                        # значение датчика
+              - font-weight: 100                         # толщина шрифта
+              - font-size: 10px                          # размер шрифта
+        custom_fields:
+            temp: |
+                [[[
+                  var temp = entity.state;
+                  if (temp == 'off') return 'Откр на';
+                  if (temp == 'on') return 'Откр на';
+                ]]]
+
+################################################## Кухня #####################################################
+  button_cover_green_full:
+        show_name: true
+        show_icon: true
+        show_label: true
+        tap_action:
+          action: toggle
+        styles:
+          card:
+            - height: 47px
+            - width: 120px
+            - border-radius: 3px
+            - padding: 2%
+          grid:
+            - grid-template-areas: '"i temp temp" "i n n" "i n n"'
+            - grid-template-columns: 35px
+            - grid-template-rows: 1fr 4fr 2fr
+          icon:
+            - color: '#78fa14'
+            - width: 60px
+          label:
+            - font-size: 8px
+            - color: '#6cace4'
+          name:
+            - padding: 0px 3px
+            - font-size: 16px
+            - font-weight: bold
+            - padding-left: 15px
+          custom_fields:
+            temp:                                        # значение датчика
+              - font-weight: 180                         # толщина шрифта
+              - font-size: 12px                          # размер шрифта
+        custom_fields:
+            temp: |
+                [[[
+                  var temp = entity.state;
+                  if (temp == 'off') return 'Откр на';
+                  if (temp == 'on') return 'Откр на';
+                ]]]
+
+  button_cover_green:
+        show_name: true
+        show_icon: true
+        show_label: true
+        aspect_ratio: 1/1
+        tap_action:
+          action: toggle
+        styles:
+          card:
+            - border-radius: 3px
+            - padding: 2%
+          grid:
+            - grid-template-areas: '"i i i" "temp temp temp" "n n n"'
+            - grid-template-columns: 35px
+            - grid-template-rows: 4fr 2fr 2fr
+          icon:
+            - color: '#78fa14'
+            - width: 100px
+          name:
+            - padding: 0px 3px
+            - font-size: 10px
+            - font-weight: bold
+#            - padding-left: 15px
+          custom_fields:
+            temp:                                        # значение датчика
+              - font-weight: 100                         # толщина шрифта
+              - font-size: 10px                          # размер шрифта
+        custom_fields:
+            temp: |
+                [[[
+                  var temp = entity.state;
+                  if (temp == 'off') return 'Откр на';
+                  if (temp == 'on') return 'Откр на';
+                ]]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

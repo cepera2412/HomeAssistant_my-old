@@ -1,0 +1,82 @@
+'0x00158d00083219e2':
+  friendly_name: кнопка на Кухне
+  retain: true
+'0xa4c1380ab77c21b5':
+  friendly_name: Планшет
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+'0xa4c138e66948ab84':
+  friendly_name: Розетка 2
+'0xa4c138da0f3b1dbd':
+  friendly_name: Розетка для Hyperion
+'0xa4c1383f9f745ea7':
+  friendly_name: Розетка 4
+'0x84b4dbfffeac2b87':
+  friendly_name: Свет в Квартире
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+'0xa4c1387f7ff2ea99':
+  friendly_name: Дверь на Балкон
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+'0x00158d00067919d1':
+  friendly_name: Движение в Туалете
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+  occupancy_timeout: 5
+'0x00158d00067963a8':
+  friendly_name: Движение в Ванной
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+  occupancy_timeout: 5
+'0xa4c138f04ce87fa4':
+  friendly_name: Релейка 01
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+'0x00158d0006337230':
+  friendly_name: Движение на Кухне
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+  occupancy_timeout: 5
+'0x00158d00062fdc4f':
+  friendly_name: Движение в Гардеробой
+  occupancy_timeout: 5
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+'0x00158d0003fb0f3a':
+  friendly_name: Движение в коридоре
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+  occupancy_timeout: 5
+'0xb4e8428626ed0000':
+  friendly_name: Кухня лампочка 1
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+'0x7cb94c76b54f0000':
+  friendly_name: Кухня лампочка 2
+  homeassistant: {}
+  legacy: false
+  optimistic: true
+  retain: true
+'0x7cb94c6351840000':
+  friendly_name: Кухня лампочка 3

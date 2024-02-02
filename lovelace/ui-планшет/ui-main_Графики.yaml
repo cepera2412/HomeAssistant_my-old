@@ -1,0 +1,442 @@
+###################################################################################################
+######################################### Кнопка Графики ##########################################
+###################################################################################################
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Графики                                ##
+          icon: mdi:finance
+          template: button_return
+
+#==================================== Улица =============================================
+### Свайп карт
+        - type: custom:swipe-card
+          start_card: 1                              # начальная карта
+          parameters:
+#            effect: cube
+            effect: flip
+          cards:
+
+### Температура
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138bfa633_temperature
+              name: Улица
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#0092ff'
+                  - value: 21
+                    color: '#84ff4e'
+                  - value: 25
+                    color: '#2d9101'
+                  - value: 28
+                    color: '#ec7221'
+                  - value: 30
+                    color: '#e1190f'
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+                  
+### Влажность
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138bfa633_humidity
+              name: Улица
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#e1190f'
+                  - value: 25
+                    color: '#ec7221'
+                  - value: 33
+                    color: '#84ff4e'
+                  - value: 40
+                    color: '#2d9101'
+                  - value: 60
+                    color: '#0092ff'
+    
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+
+
+#==================================== Спальня =============================================
+### Свайп карт
+        - type: custom:swipe-card
+          start_card: 1                              # начальная карта
+          parameters:
+#            effect: cube
+            effect: flip
+          cards:
+
+### Температура
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138c67cbc_temperature
+              name: Спальня
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#0092ff'
+                  - value: 21
+                    color: '#84ff4e'
+                  - value: 25
+                    color: '#2d9101'
+                  - value: 28
+                    color: '#ec7221'
+                  - value: 30
+                    color: '#e1190f'
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+                  
+### Влажность
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138c67cbc_humidity
+              name: Спальня
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#e1190f'
+                  - value: 25
+                    color: '#ec7221'
+                  - value: 33
+                    color: '#84ff4e'
+                  - value: 40
+                    color: '#2d9101'
+                  - value: 60
+                    color: '#0092ff'
+    
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+
+#==================================== Гостиная =============================================
+### Свайп карт
+        - type: custom:swipe-card
+          start_card: 1                              # начальная карта
+          parameters:
+#            effect: cube
+            effect: flip
+          cards:
+
+### Температура
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138f9ce31_temperature
+              name: Гостиная
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#0092ff'
+                  - value: 21
+                    color: '#84ff4e'
+                  - value: 25
+                    color: '#2d9101'
+                  - value: 28
+                    color: '#ec7221'
+                  - value: 30
+                    color: '#e1190f'
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+                  
+### Влажность
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138f9ce31_humidity
+              name: Гостиная
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#e1190f'
+                  - value: 25
+                    color: '#ec7221'
+                  - value: 33
+                    color: '#84ff4e'
+                  - value: 40
+                    color: '#2d9101'
+                  - value: 60
+                    color: '#0092ff'
+    
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+
+
+#==================================== Кухня =============================================
+### Свайп карт
+        - type: custom:swipe-card
+          start_card: 1                              # начальная карта
+          parameters:
+#            effect: cube
+            effect: flip
+          cards:
+
+### Температура
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138ea1a11_temperature
+              name: Кухня
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#0092ff'
+                  - value: 21
+                    color: '#84ff4e'
+                  - value: 25
+                    color: '#2d9101'
+                  - value: 28
+                    color: '#ec7221'
+                  - value: 30
+                    color: '#e1190f'
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+                  
+### Влажность
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138ea1a11_humidity
+              name: Кухня
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#e1190f'
+                  - value: 25
+                    color: '#ec7221'
+                  - value: 33
+                    color: '#84ff4e'
+                  - value: 40
+                    color: '#2d9101'
+                  - value: 60
+                    color: '#0092ff'
+    
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+
+
+#==================================== Коридор =============================================
+### Свайп карт
+        - type: custom:swipe-card
+          start_card: 1                              # начальная карта
+          parameters:
+#            effect: cube
+            effect: flip
+          cards:
+
+### Температура
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.jsq5_cloud_466808_temperature
+              name: Коридор
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#0092ff'
+                  - value: 21
+                    color: '#84ff4e'
+                  - value: 25
+                    color: '#2d9101'
+                  - value: 28
+                    color: '#ec7221'
+                  - value: 30
+                    color: '#e1190f'
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+                  
+### Влажность
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.jsq5_cloud_466808_humidity
+              name: Коридор
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#e1190f'
+                  - value: 25
+                    color: '#ec7221'
+                  - value: 33
+                    color: '#84ff4e'
+                  - value: 40
+                    color: '#2d9101'
+                  - value: 60
+                    color: '#0092ff'
+    
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,237 @@
+toilet:
+
+##########################################################################################################################################
+#                                                                      Шаблоны 
+##########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+# Вкл Вытяжки
+          - name: vytiazhki_on_motion
+            state: >
+              {{ is_state('binary_sensor.0x158d00028d3838_contact', 'off')
+                 and is_state('switch.vytiazhka_v_tualete', 'off')
+                 and is_state('binary_sensor.0x158d00067919d1_motion', 'on')
+              }}
+            icon: >
+              {% if is_state("binary_sensor.vytiazhki_on_motion", "on") %}
+              mdi:fan
+              {% else %}
+              mdi:fan-off
+              {% endif %}
+
+# Свет без движения
+          - name: auto_light_off_v_tualete
+            state: >
+              {{ is_state('switch.svet_v_tualete', 'on')  
+                 and is_state('binary_sensor.0x158d00067919d1_motion', 'off')
+              }}
+            delay_on: 00:15:00
+            icon: >
+              {% if is_state("binary_sensor.auto_light_off_v_tualete", "on") %}
+              mdi:lightbulb-off-outline
+              {% else %}
+              mdi:lightbulb-off-outline
+              {% endif %}
+
+# Принудительтное отключение Вытяжки днем
+          - name: auto_vytiazhka_off_v_tualete_day
+            state: >
+                  {{ is_state('switch.vytiazhka_v_tualete', 'on')
+                     and is_state('binary_sensor.domashnii_den', 'on')
+                     and is_state('binary_sensor.0x158d00067919d1_motion', 'off') }}
+            delay_on: 
+              minutes: 16
+            icon: >
+              {% if is_state("auto_vytiazhka_off_v_tualete_day", "on") %}
+              mdi:fan
+              {% else %}
+              mdi:fan-off
+              {% endif %}
+
+# Принудительтное отключение Вытяжки ночью
+          - name: auto_vytiazhka_off_v_tualete_night
+            state: >
+                  {{ is_state('switch.vytiazhka_v_tualete', 'on')
+                     and is_state('binary_sensor.domashnii_den', 'off')
+                     and is_state('binary_sensor.0x158d00067919d1_motion', 'off') }}
+            delay_on: 
+              minutes: 8
+            icon: >
+              {% if is_state("auto_vytiazhka_off_v_tualete_night", "on") %}
+              mdi:fan
+              {% else %}
+              mdi:fan-off
+              {% endif %}
+
+# Визуальный сенсор для Ui
+          - name: podsvetka_on_v_tualete
+            state: >
+                  {{ is_state('binary_sensor.0x158d00067919d1_motion', 'on')
+                     and is_state('binary_sensor.domashniaia_noch', 'on') }}               # сенсор прописан в коридоре
+
+##########################################################################################################################################
+#                                                                 Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+# Вкл свет при движении
+        - alias: (Туалет) Вкл свет при движении
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.0x158d00067919d1_motion
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_tualete
+             state: 'off'
+           - condition: state
+             entity_id: binary_sensor.domashnii_den                # сенсор прописан в коридоре
+             state: 'on'
+          action:
+           - service: switch.turn_on
+             entity_id: switch.svet_v_tualete
+
+# Выкл свет при движении
+        - alias: (Туалет) Выкл свет по отсутствию движения
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.0x158d00067919d1_motion
+             to: 'off'
+             for:
+               minutes: 0.5
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_tualete
+             state: 'on'
+           - condition: state
+             entity_id: binary_sensor.0x158d00028d3838_contact
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_tualete
+
+# Выкл свет при открытие двери
+        - alias: (Туалет) Выкл свет при открытие двери
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.0x158d00028d3838_contact
+             from: 'off'
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_tualete
+             state: 'on'
+          action:
+           - delay: 00:00:06
+           - service: switch.turn_off
+             entity_id: switch.svet_v_tualete
+
+# Вкл вытяжки при движении
+        - alias: (Туалет) Вкл вытяжки при движении
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: switch.svet_v_tualete
+             to: 'on'
+             for:
+               minutes: 1.5
+          condition:
+           - condition: state
+             entity_id: switch.vytiazhka_v_tualete
+             state: 'off'
+          action:
+           - service: switch.turn_on
+             entity_id: switch.vytiazhka_v_tualete
+
+# Вкл вытяжки при закрытие двери
+        - alias: (Туалет) Вкл вытяжки при закрытие двери
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.vytiazhki_on_motion
+             to: 'on'
+          action:
+            - delay: 00:01:00
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: switch.svet_v_tualete
+                    state: 'on'
+                  - condition: state
+                    entity_id: binary_sensor.domashnii_den
+                    state: 'on'
+                sequence:
+                  - service: switch.turn_on
+                    entity_id:
+                      - switch.vytiazhka_v_tualete
+              - conditions:
+                  - condition: state
+                    entity_id: switch.svet_v_tualete
+                    state: 'off'
+                  - condition: state
+                    entity_id: binary_sensor.domashnii_den
+                    state: 'off'
+                sequence:
+                  - service: switch.turn_on
+                    entity_id:
+                      - switch.vytiazhka_v_tualete
+
+# Выкл вытяжки при отключени света
+        - alias: (Туалет) Выкл вытяжки при отключени света
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: switch.svet_v_tualete
+             to: 'off'
+             for:
+               minutes: 1
+           - platform: state
+             entity_id: binary_sensor.0x158d00028d3838_contact
+             from: 'off'
+             to: 'on'
+             for:
+               minutes: 1
+          condition:
+           - condition: state
+             entity_id: switch.vytiazhka_v_tualete
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.vytiazhka_v_tualete
+
+# Выкл вытяжки принудительно
+        - alias: (Туалет) Выкл вытяжки принудительно
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_vytiazhka_off_v_tualete_day
+             to: 'on'
+           - platform: state
+             entity_id: binary_sensor.auto_vytiazhka_off_v_tualete_night
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.vytiazhka_v_tualete
+
+# Выкл света принудительно
+        - alias: (Туалет) Выкл света принудительно
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_light_off_v_tualete
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_tualete
+
+
+
+
+

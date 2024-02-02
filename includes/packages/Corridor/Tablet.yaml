@@ -1,0 +1,332 @@
+tablet:
+
+##########################################################################################################################################
+#                                                                     Шаблоны 
+##########################################################################################################################################
+
+    template:
+     
+      - binary_sensor:
+
+# Движение перед планшетом
+          - name: tablet_motion
+            state: >
+              {{ is_state('binary_sensor.0x158d0003fb0f3a_motion', 'on')
+                 and is_state('binary_sensor.28d1272f330d_motion', 'on')
+                 and is_state('group.vse_doma', 'on')
+              }}
+            icon: >
+              {% if is_state("binary_sensor.tablet_motion", "on") %}
+              mdi:run
+              {% else %}
+              mdi:run
+              {% endif %}
+
+# Движение нет на планшете
+          - name: d7f06977_f88fde14_off
+            state: >
+              {{ is_state('binary_sensor.d7f06977_f88fde14', 'off')
+                 or is_state('binary_sensor.d7f06977_f88fde14', 'unavailable')
+              }}
+            icon: >
+              {% if is_state("binary_sensor.d7f06977_f88fde14_off", "on") %}
+              mdi:tablet
+              {% else %}
+              mdi:tablet
+              {% endif %}
+
+# Запущен на экране не Киоск
+          - name: tablet_no_kiosk
+            state: >
+              {{ states ( 'sensor.galaxy_tab_a8_foreground_app' ) != 'de.ozerov.fully' }}
+
+# Запущен на экране не Ютуб
+          - name: tablet_no_youtube
+            state: >
+              {{ states ( 'sensor.galaxy_tab_a8_foreground_app' ) != 'com.vanced.android.youtube' }}
+
+
+##########################################################################################################################################
+#                                                                     Таймеры 
+##########################################################################################################################################
+
+    timer:
+
+        tablet_screen_off:
+          name: Выкл экрана планшета - 
+          duration: "00:00:30"
+
+
+##########################################################################################################################################
+#                                                                     Скрипты 
+##########################################################################################################################################
+
+    script:
+
+        autovikl_tablet_screen_off:
+          alias: (Планшет) Откл автовыкл экрана
+          icon: mdi:tablet
+          sequence:
+            - service: number.set_value
+              data:
+                value: '0'
+              target:
+                entity_id:
+                  - number.galaxy_tab_a8_screensaver_timer
+                  - number.galaxy_tab_a8_screen_off_timer
+
+        radial_menu_double_tap_on:
+          alias: (Планшет) Вкл автовыкл экрана
+          icon: mdi:tablet
+          sequence:
+            - service: number.set_value
+              data:
+                value: '30'
+              target:
+                entity_id:
+        #          - number.galaxy_tab_a8_screensaver_timer
+                  - number.galaxy_tab_a8_screen_off_timer
+            - service: automation.turn_on
+              data:
+                entity_id: automation.planshet_kiosk_na_perednii_plan
+
+
+
+#########################################################################################################################################
+#                                                              Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+# Зарядка
+        - id: Вкл. зарядки
+          alias: (Планшет) Вкл. зарядки
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: sensor.galaxy_tab_a8_battery_level
+              to: '15'
+            - platform: state
+              entity_id: sensor.galaxy_tab_a8_battery_level
+              to: '10'
+            - platform: state
+              entity_id: sensor.galaxy_tab_a8_battery_level
+              to: '9'
+            - platform: state
+              entity_id: sensor.galaxy_tab_a8_battery_level
+              to: '5'
+          action:
+          - service: switch.turn_on
+            entity_id: switch.planshet
+
+        - id: Выкл. зарядки
+          alias: (Планшет) Выкл. зарядки
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: sensor.galaxy_tab_a8_battery_level
+              to: '95'
+            - platform: state
+              entity_id: sensor.galaxy_tab_a8_battery_level
+              to: '99'
+            - platform: state
+              entity_id: sensor.galaxy_tab_a8_battery_level
+              to: '100'
+          action:
+          - service: switch.turn_off
+            entity_id: switch.planshet
+
+# Выкл. экрана
+        - id: Выкл. экрана
+          alias: (Планшет) Выкл. экрана
+          initial_state: true
+          trigger:
+            - platform: time
+              at: "00:30:00"
+            - platform: state
+              entity_id: group.Vse_doma
+              to: 'off'
+          condition:
+           - condition: state
+             entity_id: binary_sensor.tablet_no_youtube
+             state: 'on'
+          action:
+          - service: light.turn_off
+            entity_id: light.galaxy_tab_a8_screen
+
+# Выкл. экрана принудительно
+        - id: Выкл. экрана принудительно
+          alias: (Планшет) Выкл. экрана принудительно
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: light.galaxy_tab_a8_screen
+              to: 'on'
+              for:
+                minutes: 10
+          action:
+          - service: light.turn_off
+            entity_id: light.galaxy_tab_a8_screen
+
+# Выкл. экрана по таймеру
+        - id: Выкл. экрана запуск таймера 1
+          alias: (Планшет) Выкл. экрана запуск таймера 1
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: light.galaxy_tab_a8_screen
+              to: 'on'
+          action:
+          - service: script.autovikl_tablet_screen_off
+          - service: timer.cancel
+            entity_id: timer.tablet_screen_off
+          - delay: 00:00:01
+          - service: timer.start
+            entity_id: timer.tablet_screen_off
+
+        - id: Выкл. экрана запуск таймера 2
+          alias: (Планшет) Выкл. экрана запуск таймера 2
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.d7f06977_f88fde14_off
+              from: 'on'
+              to: 'off'
+          action:
+          - service: timer.cancel
+            entity_id: timer.tablet_screen_off
+          - delay: 00:00:01
+          - service: timer.start
+            entity_id: timer.tablet_screen_off
+
+        - id: Выкл. экрана по таймеру
+          alias: (Планшет) Выкл. экрана по таймеру
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: timer.finished
+            event_data:
+              entity_id: timer.tablet_screen_off
+          condition:
+           - condition: state
+             entity_id: light.galaxy_tab_a8_screen
+             state: 'on'
+           - condition: state
+             entity_id: binary_sensor.d7f06977_f88fde14_off
+             state: 'on'
+           - condition: state
+             entity_id: binary_sensor.tablet_no_youtube
+             state: 'on'
+          action:
+          - service: light.turn_off
+            entity_id: light.galaxy_tab_a8_screen
+
+# Вкл. экрана
+        - id: Вкл. экрана 
+          alias: (Планшет) Вкл. экрана 
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.tablet_motion
+              to: 'on'
+            - platform: state
+              entity_id: group.Vse_doma
+              to: 'on'
+          action:
+          - service: light.turn_on
+            entity_id: light.galaxy_tab_a8_screen
+
+# Вывод Киоск на передний план
+        - id: Киоск на передний план
+          alias: (Планшет) Киоск на передний план
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.tablet_no_kiosk
+              to: 'on'
+              for:
+                minutes: 5
+          condition:
+           - condition: state
+             entity_id: binary_sensor.tablet_no_youtube
+             state: 'on'
+          action:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.galaxy_tab_a8_bring_to_foreground
+
+# Переодически уберать всплывающие окна
+        - id: Убрать всплывающие окна
+          alias: (Планшет) Убрать всплывающие окна
+          initial_state: true
+          trigger:
+            - platform: time_pattern
+              minutes: '/59'
+          action:
+            - service: browser_mod.close_popup
+              data:
+                browser_id: d7f06977-f88fde14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # Снимает всплывающее окно после голосового ассистента
+#         - id: Убирает окно гол.ассис
+#           alias: (Планшет) Убирает окно гол.ассис
+#           initial_state: true
+#           trigger:
+#             - platform: state
+#               entity_id: sensor.galaxy_tab_a8_foreground_app
+#               to: 'com.google.android.googlequicksearchbox'
+#           action:
+#             - delay: 00:00:30
+#             - service: button.press
+#               data: {}
+#               target:
+#                 entity_id: button.galaxy_tab_a8_bring_to_foreground
+
+# служба для запуска spotify с Mi Speaker
+# service: spotcast.start
+# data:
+#   entity_id: media_player.mi_speaker
+#   uri: spotify:playlist:36l8o1LJ47txJimUATKfwW
+#   force_playback: true
+#   random_song: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

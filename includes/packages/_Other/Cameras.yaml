@@ -1,0 +1,220 @@
+cameras:
+
+#######################################################################################################################################
+#                                                                 Камеры 
+#######################################################################################################################################
+
+    camera:
+
+# Камеры Reolink
+      - platform: generic
+        name: Reolink_BedRoom
+        still_image_url: http:/.....
+        stream_source: rtsp://
+        
+      - platform: generic
+        name: Reolink_BedRoom_sub
+        still_image_url: http://
+        stream_source: rtsp://
+    
+      - platform: generic
+        name: Reolink_HallWay
+        still_image_url: http://
+        stream_source: rtsp://
+        
+      - platform: generic
+        name: Reolink_HallWay_sub
+        still_image_url: http://
+        stream_source: rtsp://
+    
+# Для Пылесоса
+      - platform: xiaomi_cloud_map_extractor
+        host: !secret xiaomi_vacuum_host
+        token: !secret xiaomi_vacuum_token
+        username: !secret xiaomi_cloud_username
+        password: !secret xiaomi_cloud_password
+        country: "cn"
+        store_map_raw: true
+        force_api: dreame
+        draw: ['all']
+        attributes:
+          - calibration_points
+
+#######################################################################################################################################
+#                                                             Сенсоры 
+#######################################################################################################################################
+
+#     sensor:
+
+#######################################################################################################################################
+#                                                              Скрипты 
+#######################################################################################################################################
+
+    script:
+
+# Снимок фото с Reolink
+      photo_reolink_hallway:
+        alias: Фотография с камеры Reolink HallWay
+        icon: mdi:camera
+        sequence:
+           - service: camera.snapshot
+             data:
+                  entity_id: camera.reolink_hallway_profile000_mainstream
+                  filename: "/config/www/camera/reolink_hallway.jpg"
+
+      photo_reolink_bedroom:
+        alias: Фотография с камеры Reolink BedRoom
+        icon: mdi:camera
+        sequence:
+           - service: camera.snapshot
+             data:
+                  entity_id: camera.reolink_bedroom_profile000_mainstream
+                  filename: "/config/www/camera/reolink_bedroom.jpg"
+                  
+                  
+# Вкл съемки видео с Reolink
+      video_reolink_hallway:
+        alias: Запись с камеры Reolink HallWay
+        icon: mdi:file-video
+        sequence:
+        - service: camera.record
+          data_template:
+            entity_id: camera.reolink_hallway_profile000_mainstream
+            filename: "/config/www/camera/reolink.mp4"
+            duration: 15
+
+      video_reolink_bedroom:
+        alias: Запись с камеры Reolink BedRoom
+        icon: mdi:file-video
+        sequence:
+        - service: camera.record
+          data_template:
+            entity_id: camera.reolink_bedroom_profile000_mainstream
+            filename: "/config/www/camera/reolink_bedroom.mp4"
+            duration: 15
+
+# Отправка фото с Reolink в телеграмм
+      photo_reolink_hallway_telegram:
+        alias: (Telegram) Фотография с Reolink HallWay
+        icon: mdi:camera
+        sequence:
+          - service: camera.snapshot
+            data:
+                  entity_id: camera.reolink_hallway_profile000_mainstream
+                  filename: "/config/www/camera/reolink_hallway.jpg"
+          - delay: 00:00:05
+          - service: telegram_bot.send_photo
+            data_template:
+              target:
+                - !secret telegram_ID_Cepera
+              file: "/config/www/camera/reolink_hallway.jpg" 
+
+      photo_reolink_bedroom_telegram:
+        alias: (Telegram) Фотография с Reolink BedRoom
+        icon: mdi:camera
+        sequence:
+          - service: camera.snapshot
+            data:
+                  entity_id: camera.reolink_bedroom_profile000_mainstream
+                  filename: "/config/www/camera/reolink_bedroom.jpg"
+          - delay: 00:00:05
+          - service: telegram_bot.send_photo
+            data_template:
+              target:
+                - !secret telegram_ID_Cepera
+              file: "/config/www/camera/reolink_bedroom.jpg" 
+
+# Отправка видео с Reolink в телеграмм
+      video_reolink_hallway_telegram:
+        alias: (Telegram) Запись с камеры Reolink HallWay
+        icon: mdi:file-video
+        sequence:
+        - service: camera.record
+          data_template:
+            entity_id: camera.reolink_hallway_profile000_mainstream
+            filename: "/config/www/camera/reolink_hallway.mp4"
+            duration: 15
+        - delay: 00:00:30
+        - service: telegram_bot.send_video
+          data_template:
+            target:
+                - !secret telegram_ID_Cepera
+            file: "/config/www/camera/reolink_hallway.mp4"
+
+      video_reolink_bedroom_telegram:
+        alias: (Telegram) Запись с камеры Reolink BedRoom
+        icon: mdi:file-video
+        sequence:
+        - service: camera.record
+          data_template:
+            entity_id: camera.reolink_bedroom_profile000_mainstream
+            filename: "/config/www/camera/reolink_bedroom.mp4"
+            duration: 15
+        - delay: 00:00:30
+        - service: telegram_bot.send_video
+          data_template:
+            target:
+                - !secret telegram_ID_Cepera
+            file: "/config/www/camera/reolink_bedroom.mp4"
+      
+      ptz_bedroom_reolink_bedroom:
+        alias: Поворот на Спальню камеры Reolink BedRoom
+        icon: mdi:webcam
+        sequence:
+        - service: onvif.ptz
+          data:
+            entity_id: camera.reolink_bedroom_profile000_mainstream
+            preset: '000'
+            move_mode: GotoPreset
+
+      ptz_door_reolink_bedroom:
+        alias: Поворот на Входную дверь камеры Reolink BedRoom
+        icon: mdi:webcam
+        sequence:
+        - service: onvif.ptz
+          data:
+            entity_id: camera.reolink_bedroom_profile000_mainstream
+            preset: '001'
+            move_mode: GotoPreset
+
+      ptz_garderobnaya_reolink_bedroom:
+        alias: Поворот на Гардеробную камеры Reolink BedRoom
+        icon: mdi:webcam
+        sequence:
+        - service: onvif.ptz
+          data:
+            entity_id: camera.reolink_bedroom_profile000_mainstream
+            preset: '002'
+            move_mode: GotoPreset
+
+
+#######################################################################################################################################
+#                                                           Автоматизации 
+#######################################################################################################################################
+
+    automation:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

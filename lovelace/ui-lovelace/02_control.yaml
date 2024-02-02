@@ -1,0 +1,180 @@
+title: Панель управления
+icon: mdi:keyboard
+cards:
+
+################### Выключатели ####################
+
+      - type: vertical-stack
+        cards:
+
+# Коридор
+        - type: entities
+          title: Коридор
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_koridore
+            icon: mdi:dome-light
+            secondary_info: last-changed
+          - entity: switch.lenta_v_koridore
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+        #   - entity: switch.elka
+        #     icon: mdi:pine-tree
+        #     secondary_info: last-changed
+# Туалет
+        - type: entities
+          title: Туалет
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_tualete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.vytiazhka_v_tualete
+            icon: mdi:fan
+            secondary_info: last-changed
+# Ванная            
+        - type: entities
+          title: Ванная
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_vannoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_vannoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+             
+      - type: vertical-stack
+        cards:
+# Гостинная
+        - type: entities
+          title: Гостинная
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_gostinoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_gostinoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.liustra_v_gostinoi
+            icon: mdi:dome-light
+            secondary_info: last-changed
+# Гардеробная
+        - type: entities
+          title: Гардеробная
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_garderobnoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+# Лоджия
+        - type: entities
+          title: Лоджия
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_na_lodzhii
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_na_lodzhii
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+# прикроватный ночник
+        - type: light
+          entity: light.bslamp2_cloud_402265
+
+      - type: vertical-stack
+        cards:
+# Спальня
+        - type: entities
+          title: Спальня
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_spalne
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_spalne
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+# Кабинет
+        - type: entities
+          title: Кабинет
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_kabinete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+# Кухня
+        - type: entities
+          title: Кухня
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_nad_stoleshnei
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_na_kukhne
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+          - entity: switch.svet_nad_stolom
+            icon: mdi:vanity-light
+            secondary_info: last-changed
+          - entity: switch.chainik
+            icon: mdi:kettle-steam
+            secondary_info: last-changed
+
+################### Сенсоры ####################
+
+      - type: vertical-stack
+        cards:
+
+        - type: glance
+          title: Сенсоры
+          show_state: false
+          state_color: true
+          entities:
+           - entity: binary_sensor.0x158d0003fb0f3a_motion
+             name: Коридор
+           - entity: binary_sensor.0x158d00067919d1_motion
+             name: Туалет
+           - entity: binary_sensor.0x158d00067963a8_motion
+             name: Ванная
+           - entity: binary_sensor.0x158d00062fdc4f_motion
+             name: Гардеробная
+           - entity: binary_sensor.0x158d0006337230_motion
+             name: Кухня
+           - entity: binary_sensor.28d1272f330d_motion
+             name: НС Коридор
+           - entity: binary_sensor.28d1272d46cc_motion
+             name: НС Гостинная
+           - entity: binary_sensor.0x158d0001dff57f_contact
+             name: Входная
+           - entity: binary_sensor.0x158d00028d3838_contact
+             name: Туалет
+           - entity: binary_sensor.0x158d00069b0949_contact
+             name: Ванная
+           - entity: binary_sensor.54ef44e5d062_water_leak
+             name: Ванная
+           - entity: binary_sensor.54ef44e5ca71_water_leak
+             name: Туалет
+           - entity: binary_sensor.54ef44e5d0d9_water_leak
+             name: Кухня
+
+

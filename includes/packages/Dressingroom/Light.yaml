@@ -1,0 +1,180 @@
+dressingroom:
+
+    # homeassistant:
+    #   customize:
+
+    #     binary_sensor.dressingroom_motion:
+    #       friendly_name: Движение в Гардеробной
+    #       icon: mdi:run
+
+    #     binary_sensor.auto_light_off_v_garderobnoi:
+    #       friendly_name: (Авто) Выкл света в гардеробной
+    #       icon: mdi:lightbulb-off-outline
+
+#########################################################################################################################################
+#                                                              Шаблоны 
+#########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+# Вкл света при движение
+          - name: dressingroom_motion
+            state: >
+              {{ is_state('binary_sensor.0x158d00062fdc4f_motion', 'on')
+                 and is_state('group.vse_doma', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.dressingroom_motion", "on") %}
+              mdi:run
+              {% else %}
+              mdi:run
+              {% endif %}
+
+# Принудительтное отключение света
+          - name: auto_light_off_v_garderobnoi
+            state: >
+                  {{ is_state('switch.svet_v_garderobnoi', 'on')
+                     and is_state('binary_sensor.0x158d00062fdc4f_motion', 'off')
+                     and is_state('input_boolean.syshka', 'off') }}
+            delay_on:
+              minutes: 20
+            icon: >
+              {% if is_state("auto_light_off_v_garderobnoi", "on") %}
+              mdi:lightbulb-off-outline
+              {% else %}
+              mdi:lightbulb-off-outline
+              {% endif %}
+
+##########################################################################################################################################
+#                                                      Бинарные сенсоры 
+##########################################################################################################################################
+
+    binary_sensor:
+
+        - platform: tod
+          name: Автовкл света в гардеробной
+          after: '9:00'
+          before: '23:30'
+
+#########################################################################################################################################
+#                                                      Логическое переключатель
+#########################################################################################################################################
+
+    input_boolean:
+    
+# Переключатель для Сушки
+      syshka:
+        name: Режим сушка
+        icon: mdi:iron-board
+
+#########################################################################################################################################
+#                                                           Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+# Вкл свет при движение
+        - alias: (Гардеробная) Вкл свет при движении
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.dressingroom_motion
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_garderobnoi
+             state: 'off'
+           - condition: state
+             entity_id: binary_sensor.avtovkl_sveta_v_garderobnoi
+             state: 'on'
+          action:
+           - service: switch.turn_on
+             entity_id: switch.svet_v_garderobnoi
+
+# Выкл свет при движение
+        - alias: (Гардеробная) Выкл свет по отсутствию движения
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.0x158d00062fdc4f_motion
+             to: 'off'
+             for:
+               minutes: 0.3
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_garderobnoi
+             state: 'on'
+           - condition: state
+             entity_id: input_boolean.syshka
+             state: 'off'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_garderobnoi
+
+# Восстоновление автоматизации и выкл света
+        - alias: (Гардеробная) Откл. режима сушки и выкл света
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: input_boolean.syshka
+             from: 'on'
+             to: 'off'
+             for:
+               minutes: 0.1
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_garderobnoi
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_garderobnoi
+
+# Авто выкл режима Сушка
+        - alias: (Гардеробная) Авто выкл режима Сушка
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: input_boolean.syshka
+             to: 'on'
+             for:
+               minutes: 8
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_garderobnoi
+             state: 'on'
+          action:
+           - service: input_boolean.toggle
+             entity_id: input_boolean.syshka
+
+# Выкл свет принудительно
+        - alias: (Гардеробная) Выкл свет принудительно
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_light_off_v_garderobnoi
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_garderobnoi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

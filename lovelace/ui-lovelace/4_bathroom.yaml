@@ -1,0 +1,119 @@
+title: Санузел
+icon: mdi:toilet
+cards:
+
+###################  ####################
+
+      - type: vertical-stack
+        cards:
+
+# Туалет
+        - type: entities
+          title: Туалет
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_tualete
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.vytiazhka_v_tualete
+            icon: mdi:fan
+            secondary_info: last-changed
+
+        - type: entities
+          title: дверь
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.0x158d00028d3838_contact
+            secondary_info: last-changed
+          - entity: sensor.0x158d00028d3838_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: движение
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.0x158d00067919d1_motion
+            secondary_info: last-changed
+          - entity: sensor.0x158d00067919d1_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: протечки
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.54ef44e5ca71_water_leak
+            secondary_info: last-changed
+          - entity: sensor.54ef44e5ca71_battery
+            secondary_info: last-updated
+
+
+      - type: vertical-stack
+        cards:
+            
+# Ванная            
+        - type: entities
+          title: Ванная
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_vannoi
+            icon: mdi:lightbulb-on-outline
+            secondary_info: last-changed
+          - entity: switch.lenta_v_vannoi
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+
+        - type: entities
+          title: дверь
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.0x158d00069b0949_contact
+            secondary_info: last-changed
+          - entity: sensor.0x158d00069b0949_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: движение
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.0x158d00067963a8_motion
+            secondary_info: last-changed
+          - entity: sensor.0x158d00067963a8_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: протечки
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.54ef44e5d062_water_leak
+            secondary_info: last-changed
+          - entity: sensor.54ef44e5d062_battery
+            secondary_info: last-updated
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+            

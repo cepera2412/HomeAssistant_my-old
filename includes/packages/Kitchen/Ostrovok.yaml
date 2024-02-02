@@ -1,0 +1,465 @@
+phone_ostrovok:
+
+##########################################################################################################################################
+#                                                                     Шаблоны 
+##########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+# Запущен на экране не Киоск
+          - name: phone_no_kiosk
+            state: >
+              {{ states ( 'sensor.cepera_foreground_app' ) != 'de.ozerov.fully' }}
+
+# Движение нет на телефоне
+          - name: phone_ostrovok_off
+            state: >
+              {{ is_state('binary_sensor.phone_ostrovok', 'off')
+                 or is_state('binary_sensor.phone_ostrovok', 'unavailable')
+              }}
+            icon: >
+              {% if is_state("binary_sensor.phone_ostrovok_off", "on") %}
+              mdi:cellphone-off
+              {% else %}
+              mdi:cellphone
+              {% endif %}
+
+# Играет музыка на телефоне
+          - name: phone_spotify_on
+            state: >
+              {{ is_state('media_player.spotify_cepera', 'playing')
+                 or is_state_attr('media_player.spotify_cepera', 'source', CeperA)
+              }}
+            icon: >
+              {% if is_state("binary_sensor.phone_spotify_on", "on") %}
+              mdi:music-note-bluetooth
+              {% else %}
+              mdi:music-note-bluetooth-off
+              {% endif %}
+            delay_off: 00:15:00
+
+# Количество Автоматизаций
+      - trigger:
+          - platform: state
+            entity_id: input_button.automation_reload
+          - platform: time_pattern
+            hours: "/6"
+        sensor:
+          - name: count_automation_Ostrovok
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.automation if (entity.entity_id.startswith("automation.telefon_ostrovok_")) %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.automation if (entity.entity_id.startswith("automation.telefon_ostrovok_")) %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+##########################################################################################################################################
+#                                                                     Таймеры 
+##########################################################################################################################################
+
+    timer:
+
+        phone_screen_off:
+          name: Выкл экрана телефона - 
+          duration: "00:00:30"
+
+#########################################################################################################################################
+#                                                      Логическое переключатель
+#########################################################################################################################################
+
+    input_boolean:
+
+        kitchen_light_button_single:
+            name: Кнопка Свет 1 нажатие
+
+        kitchen_light_button_double:
+            name: Кнопка Свет 2 нажатие
+
+        kitchen_light_button_triple:
+            name: Кнопка Свет 3 нажатие
+
+        kitchen_light_button_hold:
+            name: Кнопка Свет зажатие
+
+##########################################################################################################################################
+#                                                                    Скрипты 
+##########################################################################################################################################
+
+    script:
+
+# Вкл spotify
+        spotify_on_phone:
+          alias: (Телефон-Островок) Вкл spotify
+          icon: mdi:spotify
+          sequence:
+              - service: fullykiosk.start_application
+                data:
+                  entity_id: media_player.cepera_media_player
+                  application: com.spotify.music
+              - delay: 00:00:01
+              - service: fullykiosk.volume_set
+                data:
+                  entity_id: media_player.cepera_media_player
+                  volume_level: 0.5
+                  stream: 3
+              - delay: 00:00:05
+              - service: spotcast.start
+                data:
+                  spotify_device_id: "a6f609fa9e3bd2b2eec002337b76a216d3ff"
+                  uri: "spotify:playlist:37i9d15i3d3upwXj"
+                  force_playback: true
+                  random_song: true
+                  shuffle: true
+
+# Вкл spotify + Блю колонки
+        spotify_on_phone_ble:
+          alias: (Телефон-Островок) Вкл spotify + блю колонки
+          icon: mdi:spotify
+          sequence:
+              - service: switch.turn_on
+                entity_id: switch.ostrovok_bp_12v
+              - delay: 00:00:01
+              - service: switch.turn_on
+                entity_id: switch.esp32_ostrovok_relay_ble_music
+              - service: light.turn_on
+                entity_id: light.cepera_screen
+              - delay: 00:00:02
+              - service: script.turn_on
+                entity_id: script.spotify_on_phone
+
+
+#########################################################################################################################################
+#                                                              Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+#1
+# Вывод Киоск на передний план
+        - id: Киоск на передний план телефона
+          alias: (Телефон-Островок) Киоск на передний план
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.phone_no_kiosk
+              to: 'on'
+              for:
+                minutes: 1
+          action:
+            - service: button.press
+              data: {}
+              target:
+                entity_id: button.cepera_bring_to_foreground
+
+#2
+# Зарядка
+        - id: Вкл. зарядку телефона
+          alias: (Телефон-Островок) Вкл. зарядку
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: sensor.cepera_battery_level
+              to: '15'
+            - platform: state
+              entity_id: sensor.cepera_battery_level
+              to: '10'
+            - platform: state
+              entity_id: sensor.cepera_battery_level
+              to: '5'
+          action:
+          - service: switch.turn_on
+            entity_id: switch.esp32_ostrovok_relay_charger_phone
+
+#3
+        - id: Выкл. зарядку телефона
+          alias: (Телефон-Островок) Выкл. зарядку
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: sensor.cepera_battery_level
+              to: '95'
+            - platform: state
+              entity_id: sensor.cepera_battery_level
+              to: '90'
+            - platform: state
+              entity_id: sensor.cepera_battery_level
+              to: '100'
+          action:
+          - service: switch.turn_off
+            entity_id: switch.esp32_ostrovok_relay_charger_phone
+
+#4
+# Выкл. экрана принудительно
+        - id: Выкл. экрана телефона принудительно
+          alias: (Телефон-Островок) Выкл. экрана принудительно
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: light.cepera_screen
+              to: 'on'
+              for:
+                minutes: 3
+          action:
+          - service: light.turn_off
+            entity_id: light.cepera_screen
+
+#5
+# Выкл. экрана по таймеру
+        - id: Выкл. экрана телефона запуск таймера 1
+          alias: (Телефон-Островок) Выкл. экрана запуск таймера 1
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: light.cepera_screen
+              to: 'on'
+          action:
+          - service: timer.cancel
+            entity_id: timer.phone_screen_off
+          - delay: 00:00:01
+          - service: timer.start
+            entity_id: timer.phone_screen_off
+
+#6
+        - id: Выкл. экрана телефона по таймеру
+          alias: (Телефон-Островок) Выкл. экрана по таймеру
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: timer.finished
+            event_data:
+              entity_id: timer.phone_screen_off
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: binary_sensor.phone_ostrovok_off
+                    state: 'off'
+                sequence:
+                  - service: timer.cancel
+                    entity_id: timer.phone_screen_off
+                  - delay: 00:00:01
+                  - service: timer.start
+                    entity_id: timer.phone_screen_off
+              - conditions:
+                  - condition: state
+                    entity_id: binary_sensor.phone_ostrovok_off
+                    state: 'on'
+                sequence:
+                  - service: light.turn_off
+                    entity_id: light.cepera_screen
+
+#7
+# Запуск Spotify
+        - id: Запуск Spotify энкодером на телефоне
+          alias: (Телефон-Островок) Запуск Spotify энкодером
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.esp32_ostrovok_phone_encoder_button
+              to: 'on'
+          action:
+            - delay: 00:00:01
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: binary_sensor.esp32_ostrovok_phone_encoder_button
+                    state: 'on'
+                sequence:
+                  - service: switch.turn_off
+                    entity_id: switch.esp32_ostrovok_relay_ble_music
+              - conditions:
+                  - condition: state
+                    entity_id:  binary_sensor.esp32_ostrovok_phone_encoder_button
+                    state: 'off'
+                sequence:
+                  - service: switch.turn_on
+                    entity_id: switch.ostrovok_bp_12v
+                  - delay: 00:00:01
+                  - service: switch.turn_on
+                    entity_id: switch.esp32_ostrovok_relay_ble_music
+                  - service: light.turn_on
+                    entity_id: light.cepera_screen
+                  - delay: 00:00:02
+                  - service: script.turn_on
+                    entity_id: script.spotify_on_phone
+
+#8
+# Управление громкостью
+        - id: Управление громкостью телефона
+          alias: (Телефон-Островок) Управление громкостью
+          trigger:
+            - platform: state
+              entity_id: sensor.esp32_ostrovok_rotary_encoder
+          action:
+            - service: media_player.volume_set
+              entity_id: media_player.cepera_media_player
+              data_template:
+                volume_level: "{{ states.sensor.esp32_ostrovok_rotary_encoder.state | float / 100 }}"
+
+#9
+#чайник
+        - id: Вкл. чайника
+          alias: (Телефон-Островок) Вкл. чайника
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.esp32_ostrovok_touch_chainik
+              to: 'on'
+          action:
+          - service: switch.toggle
+            entity_id: switch.chainik
+
+#10
+# USB
+        - id: Вкл. USB розеток
+          alias: (Телефон-Островок) USB розеток
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.esp32_ostrovok_touch_ble_music
+              to: 'on'
+          action:
+          - service: switch.toggle
+            entity_id: switch.ostrovok_bp_12v
+
+#11
+# BLE колонки
+        - id: Выкл. BLE колонки при бездействии
+          alias: (Телефон-Островок) Выкл. BLE колонки при бездействии
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.phone_spotify_on
+              to: 'off'
+          action:
+          - service: switch.turn_off
+            entity_id: switch.esp32_ostrovok_relay_ble_music
+
+# Свет
+        - alias: (Телефон-Островок) Кнопка Свет 1 нажатие
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: input_boolean.kitchen_light_button_single
+              to: 'on'
+          action:
+            - service: light.toggle
+              entity_id: light.svet_na_kukhne
+
+        - alias: (Телефон-Островок) Кнопка Свет 2 нажатия
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: input_boolean.kitchen_light_button_double
+              to: 'on'
+          action:
+            - service: light.toggle
+              entity_id: light.lenta_na_kukhne
+
+        - alias: (Телефон-Островок) Кнопка Свет 3 нажатия
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: input_boolean.kitchen_light_button_triple
+              to: 'on'
+          action:
+            - service: light.toggle
+              entity_id: light.liustra_na_kukhne
+
+        - alias: (Телефон-Островок) Кнопка Свет зажатие
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: input_boolean.kitchen_light_button_hold
+              to: 'on'
+          action:
+            - service: light.turn_off
+              entity_id: 
+                - light.liustra_na_kukhne
+                - light.lenta_na_kukhne
+                - light.svet_na_kukhne
+
+# Лента
+        - id: Вкл. ленты
+          alias: (Телефон-Островок) Вкл. Ленту на кухне
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.esp32_ostrovok_touch_led
+              to: 'on'
+          action:
+          - service: light.toggle
+            entity_id: light.wled_kitchen_stoleshnya
+            data:
+                brightness: 130
+                rgb_color: [255,255,255]
+
+
+
+# Управление Жалюзями
+        - id: Управление Жалюзями с энкодера СТОП
+          alias: (Телефон-Островок) Жалюзями с энкодера СТОП
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.esp32_ostrovok_blinds_encoder_button
+              to: 'on'
+          action:
+            - service: cover.stop_cover
+              data: {}
+              target:
+                entity_id: cover.kitchen_blinds
+
+        - id: Управление Жалюзями с энкодера ОТКР-ЗАКР
+          alias: (Телефон-Островок) Жалюзями с энкодера ОТКР-ЗАКР
+          trigger:
+            - platform: state
+              entity_id: sensor.esp32_ostrovok_blinds_rotary_encoder
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: sensor.esp32_ostrovok_blinds_rotary_encoder
+                    state: '-1'
+                sequence:
+                  - service: cover.close_cover
+                    entity_id: cover.kitchen_blinds
+              - conditions:
+                  - condition: state
+                    entity_id:  sensor.esp32_ostrovok_blinds_rotary_encoder
+                    state: '1'
+                sequence:
+                  - service: cover.open_cover
+                    entity_id: cover.kitchen_blinds
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

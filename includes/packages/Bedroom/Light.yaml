@@ -1,0 +1,68 @@
+bedroom:
+
+######################################################################################################
+#                                            Шаблоны 
+######################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+          - name: no_presence_doma
+            state: >
+              {{ is_state('media_player.androidbox', 'unavailable')
+                 and is_state('binary_sensor.0x158d00067963a8_motion', 'off')
+                 and is_state('binary_sensor.0x158d00062fdc4f_motion', 'off')
+                 and is_state('binary_sensor.0x158d0003fb0f3a_motion', 'off')
+                 and is_state('binary_sensor.0x158d00067919d1_motion', 'off')
+                 and is_state('binary_sensor.0x158d0006337230_motion', 'off')
+                 and is_state('binary_sensor.28d1272f330d_motion', 'off')
+              }}
+            delay_on: 03:00:00
+
+######################################################################################################
+#                                       Автоматизации 
+######################################################################################################
+
+    automation:
+
+        - id: Принудительное выкл света в спальне
+          alias: (Спальня) Принудительное выкл света
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.no_presence_doma
+              from: 'off'
+              to: 'on'
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: switch.svet_v_spalne
+                    state: 'on'
+                sequence:
+                  - service: switch.turn_off
+                    entity_id:
+                      - switch.svet_v_spalne
+              - conditions:
+                  - condition: state
+                    entity_id: switch.lenta_v_spalne
+                    state: 'on'
+                sequence:
+                  - service: switch.turn_off
+                    entity_id:
+                      - switch.lenta_v_spalne
+
+
+
+
+
+
+
+
+
+
+
+
+
+

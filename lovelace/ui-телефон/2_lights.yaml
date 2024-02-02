@@ -1,0 +1,233 @@
+title: lights
+path: lights
+icon: mdi:lightbulb-group-outline
+cards:
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: back
+      - type: entity
+        entity: sensor.count_light_on
+        icon_color: yellow
+        use_entity_picture: false
+      - type: entity
+        entity: sensor.light_unavailable
+        icon_color: red
+        icon: mdi:lightbulb-alert-outline
+    alignment: center
+  - type: custom:mushroom-title-card
+    title: Гостиная
+    alignment: center
+    subtitle: ''
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.svet_v_gostinoi
+        layout: vertical
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        icon: mdi:wall-sconce-round
+        name: Свет
+        icon_color: purple
+        fill_container: false
+      - type: custom:mushroom-light-card
+        entity: light.lenta_v_gostinoi
+        name: 'Лента '
+        icon: mdi:led-strip-variant
+        layout: vertical
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        icon_color: purple
+      - type: custom:mushroom-light-card
+        entity: light.liustra_v_gostinoi
+        name: Люстра
+        icon: mdi:vanity-light
+        layout: vertical
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        icon_color: purple
+      - type: custom:mushroom-light-card
+        entity: light.svet_v_garderobnoi
+        name: Гардероб
+        icon_color: purple
+        layout: vertical
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+  - type: custom:mushroom-light-card
+    entity: light.bslamp2_cloud_402265
+    icon: mdi:lightbulb-night-outline
+    fill_container: true
+    secondary_info: last-changed
+    use_light_color: true
+    show_brightness_control: true
+    show_color_control: true
+    show_color_temp_control: true
+    collapsible_controls: false
+
+  - type: custom:mushroom-title-card
+    title: Спальня
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.svet_v_spalne
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        name: 'Свет '
+        icon: mdi:vanity-light
+        icon_color: blue
+      - type: custom:mushroom-light-card
+        entity: light.lenta_v_spalne
+        icon: mdi:led-strip-variant
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        name: 'Лента '
+        icon_color: blue
+  - type: custom:mushroom-title-card
+    title: Коридор
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.svet_v_koridore
+        name: Свет
+        icon: mdi:dome-light
+        secondary_info: last-changed
+        tap_action:
+          action: toggle
+        use_light_color: true
+      - type: custom:mushroom-light-card
+        entity: light.lenta_v_koridore
+        name: Лента
+        icon: mdi:led-strip-variant
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+  - type: custom:mushroom-title-card
+    title: Санузел
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.svet_v_tualete
+        name: Туалет
+        icon: mdi:wall-sconce-round
+        icon_color: pink
+        layout: vertical
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-entity-card
+        entity: fan.vytiazhka_v_tualete
+        name: Вытяжка
+        layout: vertical
+        secondary_info: last-changed
+        tap_action:
+          action: toggle
+        icon_color: pink
+      - type: custom:mushroom-light-card
+        entity: light.svet_v_vannoi
+        name: Ванная
+        icon: mdi:wall-sconce-round
+        layout: vertical
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        icon_color: pink
+      - type: custom:mushroom-light-card
+        entity: light.lenta_v_vannoi
+        name: Лента
+        icon: mdi:led-strip-variant
+        icon_color: pink
+        layout: vertical
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+  - type: custom:mushroom-title-card
+    title: Кабинеты
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.svet_v_kabinete
+        name: Надин
+        icon: mdi:lightbulb-on-10
+        layout: horizontal
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        icon_color: blue
+      - type: custom:mushroom-light-card
+        entity: light.svet_na_lodzhii
+        name: Серегин
+        icon: mdi:lightbulb-on-10
+        layout: horizontal
+        icon_color: purple
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+  - type: custom:mushroom-title-card
+    title: Кухня
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.svet_na_kukhne
+        name: Свет
+        icon: mdi:wall-sconce-round
+        icon_color: green
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        layout: vertical
+      - type: custom:mushroom-light-card
+        entity: light.lenta_na_kukhne
+        name: Лента
+        icon: mdi:led-strip-variant
+        icon_color: green
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        layout: vertical
+      - type: custom:mushroom-light-card
+        entity: light.liustra_na_kukhne
+        name: Люстра
+        icon: mdi:ceiling-light-multiple-outline
+        icon_color: green
+        secondary_info: last-changed
+        use_light_color: true
+        tap_action:
+          action: toggle
+        layout: vertical
+
+
+
+
+
+
+
+
+
+
+
+
+

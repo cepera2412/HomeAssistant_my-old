@@ -1,0 +1,64 @@
+external_converters: []
+devices:
+  - devices.yaml
+homeassistant: true
+permit_join: false
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: mqtt
+  password: mqtt
+serial:
+  port: /dev/ttyUSB0
+  adapter: ezsp
+advanced:
+  log_level: info
+  timestamp_format: YYYY-MM-DD HH:mm:ss
+  log_directory: data/log/%TIMESTAMP%
+  log_file: log.txt
+  log_rotation: true
+  pan_id: 6754
+  channel: 11
+  network_key:
+    - 1
+    - 3
+    - 5
+    - 7
+    - 9
+    - 11
+    - 13
+    - 15
+    - 0
+    - 2
+    - 4
+    - 6
+    - 8
+    - 10
+    - 12
+    - 13
+  availability_blocklist: []
+  availability_passlist: []
+  last_seen: ISO_8601
+  homeassistant_legacy_entity_attributes: false
+  legacy_api: false
+  legacy_availability_payload: false
+device_options:
+  legacy: false
+blocklist: []
+passlist: []
+queue: {}
+frontend:
+  port: 8099
+experimental: {}
+availability: 
+  active:
+    timeout: 10
+  passive:
+    timeout: 720
+
+
+
+
+
+
+
+

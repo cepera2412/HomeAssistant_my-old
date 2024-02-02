@@ -1,0 +1,273 @@
+title: Главная
+icon: mdi:cellphone-text
+cards:
+
+######################################################### Иконки ########################################################################
+
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.cepera_battery_level
+            icon_color: green
+            tap_action:
+              action: navigate
+              navigation_path: /config
+            double_tap_action:
+              action: navigate
+              navigation_path: /developer-tools
+          - type: entity
+            entity: sensor.a4c138ea1a11_temperature
+            content_info: state
+            icon: mdi:home-thermometer-outline
+            use_entity_picture: false
+          - type: entity
+            entity: sensor.a4c138ea1a11_humidity
+            icon: ''
+            use_entity_picture: false
+          - type: light
+            entity: sensor.count_light_on
+            content_info: state
+            icon: mdi:lightbulb-group
+            #   action: call-service
+            #   service: browser_mod.more_info
+            #   data:
+            #       entity: sensor.all_light_on
+          - type: weather
+            entity: weather.my_smart_home
+            show_conditions: true
+            show_temperature: true
+        alignment: center
+
+########################################################## Навигационные кнопки #########################################################
+
+      - type: custom:stack-in-card
+        mode: vertical
+        cards:
+
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: group.light_all
+                icon: mdi:lightbulb-group
+                icon_color: orange
+                layout: vertical
+                secondary_info: none
+                tap_action:
+                  action: navigate
+                  navigation_path: lights
+                name: Свет
+              - type: custom:mushroom-entity-card
+                entity: sensor.count_switch_on
+                layout: vertical
+                secondary_info: none
+                name: Реле
+                icon_color: blue
+                tap_action:
+                  action: navigate
+                  navigation_path: switchs
+              - type: custom:mushroom-entity-card
+                entity: sensor.position_left_blinds_k
+                layout: vertical
+                secondary_info: none
+                name: Окна
+                icon: ''
+                icon_color: green
+                tap_action:
+                  action: navigate
+                  navigation_path: blinds
+              - type: custom:mushroom-entity-card
+                entity: media_player.spotify_cepera
+                name: Media
+                layout: vertical
+                icon_color: cyan
+                icon: mdi:motion-play
+                secondary_info: none
+                tap_action:
+                  action: navigate
+                  navigation_path: Media
+              - type: custom:mushroom-entity-card
+                entity: sensor.count_camera
+                icon: mdi:cctv
+                layout: vertical
+                secondary_info: none
+                name: Cams
+                icon_color: red
+                tap_action:
+                  action: navigate
+                  navigation_path: Camers
+
+############################################################## муз-прееры ##############################################################
+
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: media_player.spotify_cepera
+                name: 'Spotify '
+                layout: horizontal
+                secondary_info: none
+                icon_color: green
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  data:
+                    entity_id: media_player.cepera_media_player
+                    application: com.spotify.music
+                double_tap_action:
+                  action: call-service
+                  service: switch.turn_off
+                  data:
+                    entity_id: switch.esp32_ostrovok_relay_ble_music
+                hold_action:
+                  action: call-service
+                  service: script.spotify_on_phone_ble
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.tablet_no_youtube
+                name: YouTube Music
+                icon: mdi:motion-play
+                icon_color: red
+                layout: horizontal
+                secondary_info: none
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  data:
+                    entity_id: media_player.cepera_media_player
+                    application: com.google.android.apps.youtube.music
+
+################################################################ Свет на кухне ##########################################################
+
+      - type: custom:stack-in-card
+        mode: vertical
+        cards:
+
+          - type: markdown
+            style: |
+              ha-card {
+                 color: #00BFFF;
+                 font-size: 26px;
+              }          
+            content: >
+             **Свет**
+
+
+        #   - type: custom:mushroom-title-card
+        #     title: Свет
+        #     alignment: center
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-light-card
+                entity: light.svet_na_kukhne
+                name: Свет
+                icon: mdi:wall-sconce-round
+                layout: vertical
+                secondary_info: none
+                use_light_color: true
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-light-card
+                entity: light.liustra_na_kukhne
+                name: Люстра
+                icon: mdi:ceiling-light-outline
+                layout: vertical
+                secondary_info: none
+                use_light_color: true
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-light-card
+                entity: light.lenta_na_kukhne
+                name: Лента
+                icon: mdi:led-strip-variant
+                layout: vertical
+                secondary_info: none
+                tap_action:
+                  action: toggle
+
+################################################################ Розетки на кухне ##########################################################
+
+      - type: custom:stack-in-card
+        mode: vertical
+        cards:
+
+          - type: markdown
+            style: |
+              ha-card {
+                 color: #FA8072;
+                 font-size: 26px;
+              }          
+            content: >
+             **Розетки**
+
+        #   - type: custom:mushroom-title-card
+        #     title: Розетки
+        #     alignment: center
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.chainik
+                layout: vertical
+                secondary_info: none
+                tap_action:
+                  action: toggle
+                icon: mdi:kettle
+                name: Чайник
+                icon_color: pink
+              - type: custom:mushroom-entity-card
+                entity: switch.ostrovok_bp_12v
+                name: USB
+                icon: mdi:usb-flash-drive-outline
+                layout: vertical
+                secondary_info: none
+                icon_color: green
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: call-service
+                  service: switch.toggle
+                  data:
+                    entity_id: switch.esp32_ostrovok_relay_ble_music
+              - type: custom:mushroom-entity-card
+                entity: switch.mini_kholodilnik
+                name: Холодольник
+                icon: mdi:fridge-industrial
+                icon_color: blue
+                layout: vertical
+                secondary_info: none
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.ostrovok_rozetki
+                layout: vertical
+                icon_color: yellow
+                secondary_info: none
+                name: Розетки
+                tap_action:
+                  action: toggle
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.esp32_ostrovok_relay_ble_music
+                icon: mdi:speaker-bluetooth
+                name: Колонки
+                icon_color: indigo
+                secondary_info: last-changed
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.esp32_ostrovok_relay_charger_phone
+                name: Зарядка тел.
+                icon: mdi:battery-charging
+                icon_color: green
+                secondary_info: last-changed
+                tap_action:
+                  action: toggle
+
+
+
+
+
+
+
+
+
+
+

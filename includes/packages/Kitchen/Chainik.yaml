@@ -1,0 +1,134 @@
+chainik:
+
+##########################################################################################################################################
+#                                                                 Шаблон 
+##########################################################################################################################################
+    template:
+
+      - binary_sensor:
+
+          - name: chainik_on_v_off
+            state: >
+              {{ is_state('sensor.chainik_current', '0.0')
+                 and is_state('switch.chainik', 'on')
+              }}
+            delay_on: 
+                minutes: 3
+
+##########################################################################################################################################
+#                                                                 Виртуальные настройки
+##########################################################################################################################################
+
+    input_datetime:
+    
+          chainik:
+            name: Таймер чайника
+            has_date: false
+            has_time: true
+
+
+    input_boolean:
+
+          timer_chainik:
+            name: Таймер Чайника
+            icon: mdi:kettle-steam-outline
+
+##########################################################################################################################################
+#                                                              Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+# Выкл Питания
+
+        # - id: Выкл. Питания при отключении
+        #   alias: (Чайник) Выкл. Питания
+        #   initial_state: false
+        #   trigger:
+        #     - platform: state
+        #       entity_id: switch.chainik
+        #       to: 'on'
+        #       for:
+        #         minutes: 7
+        #   action:
+        #     - service: switch.turn_off
+        #       entity_id: switch.chainik
+
+
+        - id: Выкл. Питания при отключении
+          alias: (Чайник) Выкл. Питания
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.chainik_on_v_off
+              to: 'on'
+          action:
+            - service: switch.turn_off
+              entity_id: switch.chainik
+
+        - id: Выкл. Питания при ложном вкл розетки
+          alias: (Чайник) Выкл. Питания при ложном вкл розетки
+          initial_state: true
+          trigger:
+            - platform: time_pattern
+              minutes: '/5'
+          condition:
+            - condition: state
+              entity_id: binary_sensor.chainik_on_v_off
+              state: 'on'
+          action:
+            - service: switch.turn_off
+              entity_id: switch.chainik
+
+# Установить время вкл
+
+        - id: Вкл. по таймеру
+          alias: (Чайник) Вкл. по таймеру
+          initial_state: true
+          trigger:
+            platform: time
+            at: input_datetime.chainik
+          condition:
+           - condition: state
+             entity_id: input_boolean.timer_chainik
+             state: 'on'
+          action:
+            service: switch.turn_on
+            target:
+              entity_id: switch.chainik
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

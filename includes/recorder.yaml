@@ -1,0 +1,63 @@
+  db_url: mysql://hass:hass@core-mariadb/homeassistant?charset=utf8
+  purge_keep_days: 3
+  auto_purge: true
+  include:
+    domains:
+      - switch
+      - light
+    entity_globs:
+      - binary_sensor.*_occupancy
+      - binary_sensor.*_motion
+      - binary_sensor.*_presence
+      - binary_sensor.*_contact
+      - binary_sensor.*_water_leak
+    entities: 
+#Объем БД
+        - sensor.maria_db_size
+
+#Сенсоры температуры и влажности
+        - sensor.a4c138bfa633_temperature
+        - sensor.a4c138f9ce31_temperature
+        - sensor.a4c138c67cbc_temperature
+        - sensor.a4c138ea1a11_temperature
+        - sensor.a4c138bfa633_humidity
+        - sensor.a4c138f9ce31_humidity
+        - sensor.a4c138c67cbc_humidity
+        - sensor.a4c138ea1a11_humidity
+
+# Шлюз и охраны
+        - binary_sensor.54ef4424240b_gateway
+        - alarm_control_panel.54ef4424240b_alarm
+        - alarm_control_panel.zvonok_alarm
+
+# Пылесос
+        - vacuum.mc1808_cloud_753499
+
+# Google Cast
+        - media_player.androidbox
+        - media_player.mi_speaker
+
+# Присутствие
+        - input_boolean.nadiusha
+        - device_tracker.ping_nadya
+        - input_boolean.serega
+        - binary_sensor.cepera_home
+        - binary_sensor.nadya_home
+        - binary_sensor.nadiusha_mi_band_4
+
+# Остальное
+        - sensor.online
+        - binary_sensor.netishin_air
+
+
+
+
+
+
+
+
+
+
+
+
+

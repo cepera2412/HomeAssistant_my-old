@@ -1,0 +1,735 @@
+cabinet_blinds:
+
+#########################################################################################################################################
+#                                                                 Шаблоны 
+#########################################################################################################################################
+
+    template:
+
+# Положение левой жалюзи
+        - sensor:
+          - name: position_left_blinds_br
+            state: >
+                {% if states('sensor.blinds_bedroom_position_left_blinds_br') | float == 0.0 %}
+                  Открыто
+                {% elif states('sensor.blinds_bedroom_position_left_blinds_br') | float == 8500.0 %}
+                  Открыто на 75%
+                {% elif states('sensor.blinds_bedroom_position_left_blinds_br') | float == 16500.0 %}
+                  Открыто на 50%
+                {% elif states('sensor.blinds_bedroom_position_left_blinds_br') | float == 21600.0 %}
+                  Открыто на 33%
+                {% elif states('sensor.blinds_bedroom_position_left_blinds_br') | float == 26200.0 %}
+                  Открыто на 25%
+                {% elif states('sensor.blinds_bedroom_position_left_blinds_br') | float == 38000.0 %}
+                  Закрыто
+                {% else %}
+                  {% if is_state('sensor.position_left_blinds_br', 'Открыто') or is_state('sensor.position_left_blinds_br', 'Открыто на 75%') or is_state('sensor.position_left_blinds_br', 'Открыто на 50%') or is_state('sensor.position_left_blinds_br', 'Открыто на 33%') or is_state('sensor.position_left_blinds_br', 'Открыто на 25%') or is_state('sensor.position_left_blinds_br', 'Закрывается') %}
+                    Закрывается
+                  {% else %}
+                    Открывается
+                  {% endif %}
+                {% endif %}
+            icon: >
+              {% if is_state('sensor.position_left_blinds_br', 'Открыто') %}
+                phu:shutter-10
+              {% elif is_state('sensor.position_left_blinds_br', 'Открыто на 75%') %}
+                phu:shutter-30
+              {% elif is_state('sensor.position_left_blinds_br', 'Открыто на 50%') %}
+                phu:shutter-50
+              {% elif is_state('sensor.position_left_blinds_br', 'Открыто на 33%') %}
+                phu:shutter-70
+              {% elif is_state('sensor.position_left_blinds_br', 'Открыто на 25%') %}
+                phu:shutter-80
+              {% elif is_state('sensor.position_left_blinds_br', 'Закрыто') %}
+                phu:shutter-100
+              {% elif is_state('sensor.position_left_blinds_br', 'Закрывается') %}
+                mdi:archive-arrow-down
+              {% elif is_state('sensor.position_left_blinds_br', 'Открывается') %}
+                mdi:archive-arrow-up
+              {% else %}
+                mdi:alert-circle
+              {% endif %}
+
+# Положение центральной жалюзи
+        - sensor:
+          - name: position_central_blinds_br
+            state: >
+                {% if states('sensor.blinds_bedroom_position_central_blinds_br') | float == 0.0 %}
+                  Открыто
+                {% elif states('sensor.blinds_bedroom_position_central_blinds_br') | float == -8000.0 %}
+                  Открыто на 75%
+                {% elif states('sensor.blinds_bedroom_position_central_blinds_br') | float == -15700.0 %}
+                  Открыто на 50%
+                {% elif states('sensor.blinds_bedroom_position_central_blinds_br') | float == -21100.0 %}
+                  Открыто на 33%
+                {% elif states('sensor.blinds_bedroom_position_central_blinds_br') | float == -25100.0 %}
+                  Открыто на 25%
+                {% elif states('sensor.blinds_bedroom_position_central_blinds_br') | float == -36600.0 %}
+                  Закрыто
+                {% else %}
+                  {% if is_state('sensor.position_central_blinds_br', 'Открыто') or is_state('sensor.position_central_blinds_br', 'Открыто на 75%') or is_state('sensor.position_central_blinds_br', 'Открыто на 50%') or is_state('sensor.position_central_blinds_br', 'Открыто на 33%') or is_state('sensor.position_central_blinds_br', 'Открыто на 25%') or is_state('sensor.position_central_blinds_br', 'Закрывается') %}
+                    Закрывается
+                  {% else %}
+                    Открывается
+                  {% endif %}
+                {% endif %}
+            icon: >
+              {% if is_state('sensor.position_central_blinds_br', 'Открыто') %}
+                phu:shutter-10
+              {% elif is_state('sensor.position_central_blinds_br', 'Открыто на 75%') %}
+                phu:shutter-30
+              {% elif is_state('sensor.position_central_blinds_br', 'Открыто на 50%') %}
+                phu:shutter-50
+              {% elif is_state('sensor.position_central_blinds_br', 'Открыто на 33%') %}
+                phu:shutter-70
+              {% elif is_state('sensor.position_central_blinds_br', 'Открыто на 25%') %}
+                phu:shutter-80
+              {% elif is_state('sensor.position_central_blinds_br', 'Закрыто') %}
+                phu:shutter-100
+              {% elif is_state('sensor.position_central_blinds_br', 'Закрывается') %}
+                mdi:archive-arrow-down
+              {% elif is_state('sensor.position_central_blinds_br', 'Открывается') %}
+                mdi:archive-arrow-up
+              {% else %}
+                mdi:alert-circle
+              {% endif %}
+
+# Положение правой жалюзи
+        - sensor:
+          - name: position_right_blinds_br
+            state: >
+                {% if states('sensor.blinds_bedroom_position_right_blinds_br') | float == 0.0 %}
+                  Открыто
+                {% elif states('sensor.blinds_bedroom_position_right_blinds_br') | float == -8300.0 %}
+                  Открыто на 75%
+                {% elif states('sensor.blinds_bedroom_position_right_blinds_br') | float == -15900.0 %}
+                  Открыто на 50%
+                {% elif states('sensor.blinds_bedroom_position_right_blinds_br') | float == -21400.0 %}
+                  Открыто на 33%
+                {% elif states('sensor.blinds_bedroom_position_right_blinds_br') | float == -25700.0 %}
+                  Открыто на 25%
+                {% elif states('sensor.blinds_bedroom_position_right_blinds_br') | float == -37600.0 %}
+                  Закрыто
+                {% else %}
+                  {% if is_state('sensor.position_right_blinds_br', 'Открыто') or is_state('sensor.position_right_blinds_br', 'Открыто на 75%') or is_state('sensor.position_right_blinds_br', 'Открыто на 50%') or is_state('sensor.position_right_blinds_br', 'Открыто на 33%') or is_state('sensor.position_right_blinds_br', 'Открыто на 25%') or is_state('sensor.position_right_blinds_br', 'Закрывается') %}
+                    Закрывается
+                  {% else %}
+                    Открывается
+                  {% endif %}
+                {% endif %}
+            icon: >
+              {% if is_state('sensor.position_right_blinds_br', 'Открыто') %}
+                phu:shutter-10
+              {% elif is_state('sensor.position_right_blinds_br', 'Открыто на 75%') %}
+                phu:shutter-30
+              {% elif is_state('sensor.position_right_blinds_br', 'Открыто на 50%') %}
+                phu:shutter-50
+              {% elif is_state('sensor.position_right_blinds_br', 'Открыто на 33%') %}
+                phu:shutter-70
+              {% elif is_state('sensor.position_right_blinds_br', 'Открыто на 25%') %}
+                phu:shutter-80
+              {% elif is_state('sensor.position_right_blinds_br', 'Закрыто') %}
+                phu:shutter-100
+              {% elif is_state('sensor.position_right_blinds_br', 'Закрывается') %}
+                mdi:archive-arrow-down
+              {% elif is_state('sensor.position_right_blinds_lr', 'Открывается') %}
+                mdi:archive-arrow-up
+              {% else %}
+                mdi:alert-circle
+              {% endif %}
+
+# Положение балконной жалюзи
+        - sensor:
+          - name: position_door_blinds_br
+            state: >
+                {% if states('sensor.blinds_bedroom_position_door_blinds_br') | float == 0.0 %}
+                  Открыто
+                {% elif states('sensor.blinds_bedroom_position_door_blinds_br') | float == -6700.0 %}
+                  Открыто на 75%
+                {% elif states('sensor.blinds_bedroom_position_door_blinds_br') | float == -12600.0 %}
+                  Открыто на 50%
+                {% elif states('sensor.blinds_bedroom_position_door_blinds_br') | float == -16600.0 %}
+                  Открыто на 33%
+                {% elif states('sensor.blinds_bedroom_position_door_blinds_br') | float == -19400.0 %}
+                  Открыто на 25%
+                {% elif states('sensor.blinds_bedroom_position_door_blinds_br') | float == -27000.0 %}
+                  Закрыто
+                {% else %}
+                  {% if is_state('sensor.position_door_blinds_br', 'Открыто') or is_state('sensor.position_door_blinds_br', 'Открыто на 75%') or is_state('sensor.position_door_blinds_br', 'Открыто на 50%') or is_state('sensor.position_door_blinds_br', 'Открыто на 33%') or is_state('sensor.position_door_blinds_br', 'Открыто на 25%') or is_state('sensor.position_door_blinds_br', 'Закрывается') %}
+                    Закрывается
+                  {% else %}
+                    Открывается
+                  {% endif %}
+                {% endif %}
+            icon: >
+              {% if is_state('sensor.position_door_blinds_br', 'Открыто') %}
+                phu:shutter-10
+              {% elif is_state('sensor.position_door_blinds_br', 'Открыто на 75%') %}
+                phu:shutter-30
+              {% elif is_state('sensor.position_door_blinds_br', 'Открыто на 50%') %}
+                phu:shutter-50
+              {% elif is_state('sensor.position_door_blinds_br', 'Открыто на 33%') %}
+                phu:shutter-70
+              {% elif is_state('sensor.position_door_blinds_br', 'Открыто на 25%') %}
+                phu:shutter-80
+              {% elif is_state('sensor.position_door_blinds_br', 'Закрыто') %}
+                phu:shutter-100
+              {% elif is_state('sensor.position_door_blinds_br', 'Закрывается') %}
+                mdi:archive-arrow-down
+              {% elif is_state('sensor.position_door_blinds_br', 'Открывается') %}
+                mdi:archive-arrow-up
+              {% else %}
+                mdi:alert-circle
+              {% endif %}
+
+#########################################################################################################################################
+#                                                                 Скрипты 
+#########################################################################################################################################
+
+    script:
+
+############################################################# Открытые  #################################################################
+
+# Левая
+        bedroom_blinds_left_open:
+          alias: (Роллеты в Спальне) Откр левую
+          icon: phu:shutter-10
+          sequence:
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+# Центральная
+        bedroom_blinds_central_open:
+          alias: (Роллеты в Спальне) Откр центральную
+          icon: phu:shutter-10
+          sequence:
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+# Правая
+        bedroom_blinds_right_open:
+          alias: (Роллеты в Спальне) Откр правую
+          icon: phu:shutter-10
+          sequence:
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+
+# Балкон
+        bedroom_blinds_door_open:
+          alias: (Роллеты в Спальне) Откр балкон
+          icon: phu:shutter-10
+          sequence:
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+# Все
+        bedroom_blinds_full_open:
+          alias: (Роллеты в Спальне) Откр все
+          icon: phu:shutter-10
+          sequence:
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+          - service: number.set_value
+            data:
+              value: "0"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+############################################################# Открытие на 25% ###########################################################
+
+# Левая
+        bedroom_blinds_left_25:
+          alias: (Роллеты в Спальне) Откр на 25% левую
+          icon: phu:shutter-80
+          sequence:
+          - service: number.set_value
+            data:
+              value: "26200"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+# Центральная
+        bedroom_blinds_central_25:
+          alias: (Роллеты в Спальне) Откр на 25% центральную
+          icon: phu:shutter-80
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-25100"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+# Правая
+        bedroom_blinds_right_25:
+          alias: (Роллеты в Спальне) Откр на 25% правую
+          icon: phu:shutter-80
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-25700"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+
+# Балкон
+        bedroom_blinds_door_25:
+          alias: (Роллеты в Спальне) Откр на 25% балкон
+          icon: phu:shutter-80
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-19400"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+# Все
+        bedroom_blinds_full_25:
+          alias: (Роллеты в Спальне) Откр на 25% все
+          icon: phu:shutter-80
+          sequence:
+          - service: number.set_value
+            data:
+              value: "26200"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+          - service: number.set_value
+            data:
+              value: "-25100"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+          - service: number.set_value
+            data:
+              value: "-25700"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+          - service: number.set_value
+            data:
+              value: "-19400"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+############################################################# Открытие на 33% ###########################################################
+
+# Левая
+        bedroom_blinds_left_33:
+          alias: (Роллеты в Спальне) Откр на 33% левую
+          icon: phu:shutter-70
+          sequence:
+          - service: number.set_value
+            data:
+              value: "21600"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+# Центральная
+        bedroom_blinds_central_33:
+          alias: (Роллеты в Спальне) Откр на 33% центральную
+          icon: phu:shutter-70
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-21100"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+# Правая
+        bedroom_blinds_right_33:
+          alias: (Роллеты в Спальне) Откр на 33% правую
+          icon: phu:shutter-70
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-21400"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+
+# Балкон
+        bedroom_blinds_door_33:
+          alias: (Роллеты в Спальне) Откр на 33% балкон
+          icon: phu:shutter-70
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-16600"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+# Все
+        bedroom_blinds_full_33:
+          alias: (Роллеты в Спальне) Откр на 33% все
+          icon: phu:shutter-70
+          sequence:
+          - service: number.set_value
+            data:
+              value: "21600"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+          - service: number.set_value
+            data:
+              value: "-21100"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+          - service: number.set_value
+            data:
+              value: "-21400"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+          - service: number.set_value
+            data:
+              value: "-16600"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+############################################################# Открытие на 50% ###########################################################
+
+# Левая
+        bedroom_blinds_left_50:
+          alias: (Роллеты в Спальне) Откр на 50% левую
+          icon: phu:shutter-50
+          sequence:
+          - service: number.set_value
+            data:
+              value: "16500"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+# Центральная
+        bedroom_blinds_central_50:
+          alias: (Роллеты в Спальне) Откр на 50% центральную
+          icon: phu:shutter-50
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-15700"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+# Правая
+        bedroom_blinds_right_50:
+          alias: (Роллеты в Спальне) Откр на 50% правую
+          icon: phu:shutter-50
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-15900"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+
+# Балкон
+        bedroom_blinds_door_50:
+          alias: (Роллеты в Спальне) Откр на 50% балкон
+          icon: phu:shutter-50
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-12600"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+# Все
+        bedroom_blinds_full_50:
+          alias: (Роллеты в Спальне) Откр на 50% все
+          icon: phu:shutter-50
+          sequence:
+          - service: number.set_value
+            data:
+              value: "16500"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+          - service: number.set_value
+            data:
+              value: "-15700"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+          - service: number.set_value
+            data:
+              value: "-15900"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+          - service: number.set_value
+            data:
+              value: "-12600"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+############################################################# Открытие на 75% ###########################################################
+
+# Левая
+        bedroom_blinds_left_75:
+          alias: (Роллеты в Спальне) Откр на 75% левую
+          icon: phu:shutter-30
+          sequence:
+          - service: number.set_value
+            data:
+              value: "8500"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+# Центральная
+        bedroom_blinds_central_75:
+          alias: (Роллеты в Спальне) Откр на 75% центральную
+          icon: phu:shutter-30
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-8000"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+# Правая
+        bedroom_blinds_right_75:
+          alias: (Роллеты в Спальне) Откр на 75% правую
+          icon: phu:shutter-30
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-8300"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+
+# Балкон
+        bedroom_blinds_door_75:
+          alias: (Роллеты в Спальне) Откр на 75% балкон
+          icon: phu:shutter-30
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-6700"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+# Все
+        bedroom_blinds_full_75:
+          alias: (Роллеты в Спальне) Откр на 75% все
+          icon: phu:shutter-30
+          sequence:
+          - service: number.set_value
+            data:
+              value: "8500"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+          - service: number.set_value
+            data:
+              value: "-8000"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+          - service: number.set_value
+            data:
+              value: "-8300"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+          - service: number.set_value
+            data:
+              value: "-6700"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+############################################################# Закрытие ################################################################
+
+# Левая
+        bedroom_blinds_left_close:
+          alias: (Роллеты в Спальне) Закр левую
+          icon: phu:shutter-100
+          sequence:
+          - service: number.set_value
+            data:
+              value: "38000"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+# Центральная
+        bedroom_blinds_central_close:
+          alias: (Роллеты в Спальне) Закр центральную
+          icon: phu:shutter-100
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-36600"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+# Правая
+        bedroom_blinds_right_close:
+          alias: (Роллеты в Спальне) Закр правую
+          icon: phu:shutter-100
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-37600"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+
+# Балкон
+        bedroom_blinds_door_close:
+          alias: (Роллеты в Спальне) Закр балкон
+          icon: phu:shutter-100
+          sequence:
+          - service: number.set_value
+            data:
+              value: "-27000"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+# Все
+        bedroom_blinds_full_close:
+          alias: (Роллеты в Спальне) Закр все
+          icon: phu:shutter-100
+          sequence:
+          - service: number.set_value
+            data:
+              value: "38000"
+            target:
+              entity_id: number.blinds_bedroom_control_left_blinds_br
+          - service: number.set_value
+            data:
+              value: "-36600"
+            target:
+              entity_id: number.blinds_bedroom_control_central_blinds_br
+          - service: number.set_value
+            data:
+              value: "-37600"
+            target:
+              entity_id: number.blinds_bedroom_control_right_blinds_br
+          - service: number.set_value
+            data:
+              value: "-27000"
+            target:
+              entity_id: number.blinds_bedroom_control_door_blinds_br
+
+#########################################################################################################################################
+#                                                                 Cover 
+#########################################################################################################################################
+
+    cover:
+      - platform: group
+        name: Bedroom blinds
+        entities:
+          - cover.blinds_bedroom_left_blinds_br
+          - cover.blinds_bedroom_central_blinds_br
+          - cover.blinds_bedroom_right_blinds_br
+          - cover.blinds_bedroom_door_blinds_br
+
+#########################################################################################################################################
+#                                                               Автоматизации 
+#########################################################################################################################################
+
+    automation:
+ 
+ # Открытие всех полностью по времени
+        - id: Открытие жалюзей в Кабинете по времени
+          alias: (Кабинет-Жалюзи) Открытие по времени
+          initial_state: true
+          trigger:
+            - platform: sun
+              event: sunrise
+  #          - platform: time
+  #            at: "10:40:00"
+          action:
+            - service: cover.open_cover
+              data: {}
+              target:
+                entity_id: cover.Bedroom_blinds
+
+# Закрытие всех полностью по времени
+        - id: Закрытие жалюзей в Кабинете по времени
+          alias: (Кабинет-Жалюзи) Закрытие по времени
+          initial_state: true
+          trigger:
+            - platform: sun
+              # Possible values: sunset, sunrise
+              event: sunset
+              # Optional time offset. This example will trigger 45 minutes before sunset.
+#              offset: "-00:30:00"
+          action:
+            - service: cover.close_cover
+              data: {}
+              target:
+                entity_id: cover.Bedroom_blinds
+
+# Закрытие из-за солнца
+        - id: Закрытие жалюзей в Кабинет из-за солнца
+          alias: (Кабинет-Жалюзи) Закрытие из-за солнца
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: sensor.blinds_livingroom_lux_windows_lr
+            to: '205.20'
+            for:
+              minutes: 2
+          action:
+            - parallel:
+                - choose:
+                  - conditions:
+                      - condition: state
+                        entity_id: sensor.blinds_livingroom_position_left_blinds_lr
+                        state: '0.0'
+                    sequence:
+                        - service: script.livingroom_blinds_left_50
+                - choose:
+                  - conditions:
+                      - condition: state
+                        entity_id: sensor.blinds_livingroom_position_central_blinds_lr
+                        state: '0.0'
+                    sequence:
+                        - service: script.livingroom_blinds_central_75
+                - choose:
+                  - conditions:
+                      - condition: state
+                        entity_id: sensor.blinds_livingroom_position_right_blinds_lr
+                        state: '0.0'
+                    sequence:
+                        - service: script.livingroom_blinds_right_75
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

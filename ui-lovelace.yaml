@@ -1,0 +1,35 @@
+title: Home Assistant
+background: var(--background-image)
+#background: "center / cover no-repeat fixed url('/local/background/abstrakciya-3319.jpeg')"
+views:
+
+  - !include lovelace/ui-lovelace/01_main.yaml
+  - !include lovelace/ui-lovelace/02_control.yaml
+  - !include lovelace/ui-lovelace/03_system.yaml
+  - !include lovelace/ui-lovelace/04_Mi_Robot.yaml
+  - !include lovelace/ui-lovelace/05_weather.yaml
+  - !include lovelace/ui-lovelace/06_remote.yaml
+  - !include lovelace/ui-lovelace/07_telegram.yaml
+  - !include lovelace/ui-lovelace/08_cameras.yaml
+  
+  - !include lovelace/ui-lovelace/1_livingroom.yaml
+  - !include lovelace/ui-lovelace/2_bedroom.yaml
+  - !include lovelace/ui-lovelace/3_corridor.yaml
+  - !include lovelace/ui-lovelace/3.1_kitchen.yaml
+  - !include lovelace/ui-lovelace/4_bathroom.yaml
+  
+  - !include lovelace/ui-lovelace/test.yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+

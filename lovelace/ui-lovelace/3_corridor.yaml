@@ -1,0 +1,154 @@
+title: Коридор
+icon: mdi:human-male-female-child
+cards:
+
+################### Выключатели ####################
+
+      - type: vertical-stack
+        cards:
+
+
+# Коридор
+        - type: entities
+          title: Коридор
+          icon: mdi:nintendo-switch
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: switch.svet_v_koridore
+            icon: mdi:dome-light
+            secondary_info: last-changed
+          - entity: switch.lenta_v_koridore
+            icon: mdi:led-strip-variant
+            secondary_info: last-changed
+        #   - entity: switch.elka
+        #     icon: mdi:pine-tree
+        #     secondary_info: last-changed
+
+
+################### Датчики и сенсоры ####################
+
+      - type: vertical-stack
+        cards:
+
+        - type: entities
+          title: входная дверь
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.0x158d0001dff57f_contact
+            secondary_info: last-changed
+          - entity: sensor.0x158d0001dff57f_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: кнопка коридор
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: sensor.0x158d0006ba1c1d_battery
+            secondary_info: last-updated
+
+        - type: entities
+          title: Коридор
+          show_header_toggle: true
+          state_color: true
+          entities:
+          - entity: binary_sensor.0x158d0003fb0f3a_motion
+            secondary_info: last-changed
+          - entity: sensor.0x158d0003fb0f3a_battery
+            secondary_info: last-updated
+
+
+################### Устройства ####################
+
+      - type: vertical-stack
+        cards:
+
+# Камера Reolink на лесничной клетке
+        # - type: horizontal-stack
+        #   cards:
+              - type: picture-entity
+                entity: camera.reolink_hallway_profile000_mainstream
+                camera_view: live
+                name: Камера Reolink Холл
+                show_state: false
+                show_name: true
+
+# Камера Reolink в спальне - коридор
+        # - type: horizontal-stack
+        #   cards:
+              - type: picture-glance
+                title: Камера Bedroom
+                camera_image: camera.reolink_bedroom_profile000_mainstream
+                camera_view: live
+                entities:
+                  - entity: camera.reolink_bedroom_profile000_mainstream
+                    icon: mdi:sofa
+                    tap_action:
+                      action: call-service
+                      service: onvif.ptz
+                      service_data:
+                        entity_id: camera.reolink_bedroom_profile000_mainstream
+                        preset: '000'
+                        move_mode: GotoPreset
+                  - entity: camera.reolink_bedroom_profile000_mainstream
+                    icon: mdi:door
+                    tap_action:
+                      action: call-service
+                      service: onvif.ptz
+                      service_data:
+                        entity_id: camera.reolink_bedroom_profile000_mainstream
+                        preset: '001'
+                        move_mode: GotoPreset
+                  - entity: camera.reolink_bedroom_profile000_mainstream
+                    icon: mdi:wardrobe-outline
+                    tap_action:
+                      action: call-service
+                      service: onvif.ptz
+                      service_data:
+                        entity_id: camera.reolink_bedroom_profile000_mainstream
+                        preset: '002'
+                        move_mode: GotoPreset
+
+      - type: vertical-stack
+        cards:
+              - type: custom:vacuum-card
+                entity: vacuum.mc1808_cloud_753499
+            #        image: /local/images/mi_robot.jpg
+                compact_view: false
+                show_status: true
+                show_toolbar: true
+                stats:
+                  default:
+                  - attribute: filter_filter_life_level
+                    unit: '%'
+                    subtitle: Фильтр
+                  cleaning:
+                  - attribute: cleaned_area
+                    unit: m2
+                    subtitle: Cleaning area
+                  - attribute: cleaning_time
+                    unit: minutes
+                    subtitle: Cleaning time
+                actions:
+                  start:
+            
+              - type: markdown
+                content: |
+                  Входной Замок
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

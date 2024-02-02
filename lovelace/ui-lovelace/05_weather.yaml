@@ -1,0 +1,103 @@
+title: Погода
+icon: mdi:weather-partly-lightning
+cards:
+
+############################## Погода от openweathermap #########################################
+
+      - type: vertical-stack
+        cards:
+        
+        - type: weather-forecast
+          entity: weather.openweathermap
+
+        - type: entities
+          entities:
+              - entity: sensor.openweathermap_wind_speed_kmh
+                icon: mdi:weather-windy
+                name: Скорость ветра
+              - entity: sensor.openweathermap_humidity
+                icon: mdi:water-percent
+                name: Влажность
+              - entity: sensor.openweathermap_forecast_pressure_mmhg
+                name: Давление
+              - entity: sensor.openweathermap_rain
+                icon: mdi:weather-pouring
+                name: Дождь
+              - entity: sensor.openweathermap_snow
+                icon: mdi:weather-snowy-heavy
+                name: Снег
+              - entity: sensor.openweathermap_precipitation_kind
+                icon: 
+                name: Осадки
+              - entity: sensor.openweathermap_forecast_wind_speed_kmh
+                icon: mdi:windsock
+                name: Прогноз по ветру
+  
+  
+############################## Датчики #########################################
+
+      - type: vertical-stack
+        cards:
+        
+        - type: glance
+          title: Температура - Влажность
+          columns: 4
+          entities:
+            - entity: sensor.a4c138bfa633_temperature
+              name: Улица
+            - entity: sensor.a4c138f9ce31_temperature
+              name: Гостиная
+            - entity: sensor.a4c138c67cbc_temperature
+              name: Спальня
+            - entity: sensor.a4c138ea1a11_temperature
+              name: Кухня
+              
+            - entity: sensor.a4c138bfa633_humidity
+              name: Улица
+            - entity: sensor.a4c138f9ce31_humidity
+              name: Гостиная
+            - entity: sensor.a4c138c67cbc_humidity
+              name: Спальня
+            - entity: sensor.a4c138ea1a11_humidity
+              name: Кухня
+
+############################## Графики #########################################
+
+      - type: vertical-stack
+        cards:
+
+         - type: custom:mini-graph-card
+           title: 'Температура'
+           entities:
+            - entity: sensor.a4c138bfa633_temperature
+              name: Улица
+            - entity: sensor.a4c138f9ce31_temperature
+              name: Гостиная
+            - entity: sensor.a4c138c67cbc_temperature
+              name: Спальня
+            - entity: sensor.a4c138ea1a11_temperature
+              name: Кухня
+
+         - type: custom:mini-graph-card
+           title: 'Влажность'
+           entities:
+            - entity: sensor.a4c138bfa633_humidity
+              name: Улица
+            - entity: sensor.a4c138f9ce31_humidity
+              name: Гостиная
+            - entity: sensor.a4c138c67cbc_humidity
+              name: Спальня
+            - entity: sensor.a4c138ea1a11_humidity
+              name: Кухня
+
+
+
+
+
+
+
+
+
+
+
+

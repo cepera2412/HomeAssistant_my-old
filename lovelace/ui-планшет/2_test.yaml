@@ -1,0 +1,414 @@
+title: Планшет
+icon: mdi:home-assistant
+cards:
+
+################################################################################################
+########################################### Спальня ############################################
+################################################################################################
+
+    - type: custom:layout-card
+      layout_type: vertical
+      layout:
+        max_cols: 1
+        width: 200
+      cards:
+
+
+# ################################### Всплывающие окна ###########################################
+
+#         - type: custom:button-card
+#           name: "Комната"
+#           tap_action:
+#             action: fire-dom-event
+#             browser_mod:
+#                 command: popup
+#                 title: []
+#                 hide_header: true
+#                 large: false
+#                 card:
+#                       type: custom:layout-card
+#                       layout_type: vertical
+#                       layout:
+#                         max_cols: 1
+#                         width: 200
+#                       cards:
+#                             - !include /config/lovelace/ui-планшет/ui-спальня.yaml
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Спальня                                ##
+          icon: mdi:bed
+          template: button_return
+
+################################### Выключить все ###########################################
+
+
+################################### Какие устройства вкл. ###########################################
+
+        - type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+              grid-template-columns: 87% auto
+          cards:
+
+            - type: conditional
+              conditions:
+                  - entity: group.spalnia                      ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  name: Включеные приборы
+                  template: button_zagolovok_2
+
+#=================================== Кнопка Выключить все ==========================================
+            - type: conditional
+              conditions:
+                  - entity: group.spalnia                         ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  icon: mdi:lightbulb-group-off
+                  entity: group.spalnia                           ##
+                  template: button_svet_all
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                        entity_id: group.spalnia                   ##
+                    confirmation:
+                        text: 'Выключить весь свет в спальне?'
+#============================================================================================
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+    
+            - type: conditional
+              conditions:
+                  - entity: switch.svet_v_spalne                       ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.svet_v_spalne                            ##
+                  icon: mdi:vanity-light
+                  name: Люстра
+                  template: button_svet_green
+
+            - type: conditional
+              conditions:
+                  - entity: switch.lenta_v_spalne                  ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.lenta_v_spalne                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента
+                  template: button_svet_green
+
+################################### Выключатель ###########################################
+        - type: custom:button-card
+          name: Освещение
+          template: button_zagolovok
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+
+            # - type: custom:button-card
+            #   entity: switch.svet_nad_stoleshnei
+            #   icon: mdi:lightbulb-spot
+            #   name: Свет
+            #   template: button_svet_green_180
+
+            - type: custom:button-card
+              entity: switch.svet_v_spalne
+              icon: mdi:vanity-light
+              name: Люстра
+              template: button_svet_green
+
+            - type: custom:button-card
+              entity: switch.lenta_v_spalne
+              icon: mdi:led-strip-variant
+              name: Лента
+              template: button_svet_green
+
+################################### Датчики, Сенсоры ###########################################
+        - type: custom:button-card
+          name: Датчики
+          template: button_zagolovok
+    
+        - type: grid
+          columns: 2
+          square: false
+          cards:
+    
+            - type: custom:button-card
+              entity: sensor.a4c138c67cbc_temperature
+              template: button_sensor
+    
+            - type: custom:button-card
+              entity: sensor.a4c138c67cbc_humidity
+              template: button_sensor
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d0001dff57f_contact
+              name: Входная 
+              template: button_sensor_door
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d0003fb0f3a_motion
+              name: коридор 
+              template: button_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.54ef44e5d062_water_leak
+              name: ванная 
+              template: button_sensor_Water_Leak
+
+# ################################### Графики ###########################################
+
+        - type: custom:button-card
+          name: Графики
+          template: button_zagolovok
+
+### Свайп карт
+        - type: custom:swipe-card
+          start_card: 1                              # начальная карта
+          parameters:
+#            effect: cube
+            effect: flip
+          cards:
+
+### Температура
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138bfa633_temperature
+              name: Спальня
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#0092ff'
+                  - value: 21
+                    color: '#84ff4e'
+                  - value: 25
+                    color: '#2d9101'
+                  - value: 28
+                    color: '#ec7221'
+                  - value: 30
+                    color: '#e1190f'
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+                  
+### Влажность
+            - type: custom:mini-graph-card
+              entities:
+                - entity: sensor.a4c138bfa633_humidity
+              name: Спальня
+              group: false                       # Отключите paddings и box-shadow
+              tap_action:
+                action: none
+              hours_to_show: 24                  # Сколько часовна графике
+              points_per_hour: 1                 # Количество точек в час
+              height: 100                        # высоту графика
+              line_width: 5                      # толщину линии
+              color_thresholds_transition: hard  # цвет меняется жеско или плавно hard/smooth 
+              color_thresholds:                  # пороги для значений по цвету
+                  - value: 0
+                    color: '#e1190f'
+                  - value: 25
+                    color: '#ec7221'
+                  - value: 33
+                    color: '#84ff4e'
+                  - value: 40
+                    color: '#2d9101'
+                  - value: 60
+                    color: '#0092ff'
+    
+              hour24: true                      # Время в 24
+              font_size: 40                     # размер значения
+              font_size_header: 14              # размер заголовка
+    #          align_header:                    # расположение имя
+              align_icon: left                     # расположение иконки
+              align_state: center                     # расположение значения
+              show:
+                  fill: fade                          # основание под графиком (затухающее)
+                  name_adaptive_color: true              # цвет имя как график
+                  icon_adaptive_color: true              # цвет иконки как график
+
+################################### Автоматизации ###########################################
+
+        - type: custom:button-card
+          entity: input_boolean.ui_hide_automation
+          name: Автоматизации
+          template: button_zagolovok_menu
+
+        - type: custom:state-switch
+          entity: input_boolean.ui_hide_automation
+          transition: slide-left
+#          transition_time: 1000
+          states:
+              "on":
+                type: entities
+                entities:
+                  - entity: automation.vkl_svet_v_tualete_pri_dvizhenii
+                  - entity: automation.vykl_svet_v_tualete_po_otsutstviiu_dvizheniia
+                  - entity: automation.vykl_svet_v_tualete_pri_otkrytie_dveri
+                  - entity: automation.vykl_sveta_v_tualete_prinuditelno
+
+
+
+
+
+
+# ################################### Скрипты ###########################################
+#         - type: custom:button-card
+#           name: Информ
+#           template: button_zagolovok
+
+#         - type: grid
+#           columns: 3
+#           square: false
+#           cards:
+
+#             - type: custom:button-card
+#               entity: script.climate_report_cepera
+#             #   - script.climate_report_cepera
+#             #   - script.climate_report_nadya
+#             #   - script.group_off
+#             #   - entity: script.group_off_all
+#             #   - entity: script.group_on
+#             #   - entity: script.mpd_message
+#             #   - entity: script.mpd_rington
+#             #   - entity: script.mpd_sensors
+#             #   - entity: script.photo_reolink_bedroom
+#             #   - entity: script.photo_reolink_bedroom_telegram
+#             #   - entity: script.photo_reolink_hallway
+#             #   - entity: script.photo_reolink_hallway_telegram
+#             #   - entity: script.ptz_door_reolink_bedroom
+#             #   - entity: script.ptz_garderobnaya_reolink_bedroom
+#             #   - entity: script.ptz_bedroom_reolink_bedroom
+#             #   - entity: script.restart_ha
+#             #   - entity: script.send_message_1
+#             #   - entity: script.system_report
+#             #   - entity: script.video_reolink_bedroom
+#             #   - entity: script.video_reolink_bedroom_telegram
+#             #   - entity: script.video_reolink_hallway
+#             #   - entity: script.video_reolink_hallway_telegram
+# #              icon: mdi:lightbulb-spot
+#               name: Скрипты
+#               template: button_script
+
+
+
+
+################################### Многофункциональная карточка ###########################################
+
+# title: button
+# icon: mdi:card
+# cards:
+
+#       - type: custom:button-card
+#         styles:
+#             grid:
+#               - grid-template-columns: 5px 1.8fr 5px 4fr 5px 1fr 5px 1fr 5px
+#               - grid-template-rows: 5px 2fr 5px 1fr 1fr 5px 
+# ## обратите внимание на следующую строку Ютуб не дает вставить "знак больше"
+#               - grid-template-areas:                           ## между ": " и "-" поставьте "знак больше"
+#                     "n1 n1 n1 n1 n1 n1 n1 n1 n1" 
+#                     "n3 a1 n4 b1 n6 d1 n8 d2 n10"
+#                     "n3 a1 n4 n5 n6 n7 n8 n9 n10" 
+#                     "n3 a1 n4 c1 n6 d3 n8 d4 n10"
+#                     "n3 a1 n4 c2 n6 d3 n8 d4 n10"
+#                     "n2 n2 n2 n2 n2 n2 n2 n2 n2" 
+#             custom_fields:
+#                 a1:
+#                     - background-color: gray
+#                 b1:
+#                     - background-color: gray
+#                 c1:
+#                     - background-color: gray
+#                 c2:
+#                     - background-color: gray
+#                 d1:
+#                     - background-color: gray
+#                 d2:
+#                     - background-color: gray
+#                 d3:
+#                     - background-color: gray
+#                 d4:
+#                     - background-color: gray
+#         custom_fields:
+#             a1: 'a1'
+#             b1: 'b1'
+#             c1: 'c1'
+#             c2: 'c2'
+#             d1: 'd1'
+#             d2: 'd2'
+#             d3: 'd3'
+#             d4: 'd4'
+#         tap_action:
+#             action: fire-dom-event
+#             browser_mod:
+#                 command: popup
+#                 title: []
+#                 hide_header: true
+#                 large: false
+#                 deviceID:
+#                   - this
+#                 card:
+#                     type: custom:layout-card
+#                     layout_type: vertical
+#                     layout:
+#                         max_cols: 1
+#                         width: 280
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

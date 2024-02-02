@@ -1,0 +1,312 @@
+kitchen:
+
+##########################################################################################################################################
+#                                                                       Шаблоны 
+##########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+# Отвалился датчик на кухне по свету
+          - name: sensor_kitchen_occupancy_unavailable
+            state: >
+              {{ is_state('binary_sensor.0x158d0006337230_motion', 'unavailable')
+                 or is_state('binary_sensor.kitchen_ld2410_occupancy', 'unavailable')
+                 or is_state('binary_sensor.kitchen_occupancy', 'unavailable')
+                 or is_state('binary_sensor.kitchen_motion', 'unavailable')
+              }}
+            device_class: problem
+
+# Присутствие на Кухне
+          - name: kitchen_occupancy
+            state: >
+              {{ is_state('binary_sensor.0x158d0006337230_motion', 'on')
+                 or is_state('binary_sensor.kitchen_ld2410_occupancy', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.kitchen_occupancy", "on") %}
+              phu:homekit
+              {% else %}
+              mdi:home-off-outline
+              {% endif %}
+
+# Вкл света при движение
+          - name: kitchen_motion
+            state: >
+              {{ is_state('binary_sensor.0x158d0006337230_motion', 'on')
+                 and is_state('group.vse_doma', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.kitchen_motion", "on") %}
+              mdi:run
+              {% else %}
+              mdi:run
+              {% endif %}
+
+# Принудительтное отключение света
+          - name: light_on_na_kukhne
+            state: >
+              {{ is_state('switch.svet_nad_stoleshnei', 'on')
+                 or is_state('switch.svet_nad_stolom', 'on')
+                 or is_state('switch.lenta_na_kukhne', 'on')
+              }}
+            icon: >
+              {% if is_state("auto_light_off_na_kukhne", "on") %}
+              phu:ls-spot-iris-group-v2
+              {% else %}
+              phu:ls-sultan-iris-group-v2
+              {% endif %}
+
+          - name: auto_light_off_na_kukhne
+            state: >
+              {{ is_state('binary_sensor.light_on_na_kukhne', 'on')
+                 and is_state('binary_sensor.kitchen_occupancy', 'off')
+              }}
+            delay_on:
+              minutes: 20
+            icon: >
+              {% if is_state("auto_light_off_na_kukhne", "on") %}
+              phu:bulb-group-sultan-lightstrip-off
+              {% else %}
+              phu:bulb-group-sultan-lightstrip
+              {% endif %}
+
+##########################################################################################################################################
+#                                                       Бинарные сенсоры 
+##########################################################################################################################################
+
+    binary_sensor:
+
+################################## в планах настройка по освещенности
+# Периоды света (НОВОЕ)
+      - platform: tod
+        name: Вкл света на кухне
+        after: sunset
+        before: '00:01'
+
+# Периоды времени (НОВОЕ)
+      - platform: tod
+        name: Вкл ленты на кухне
+        after: '00:01'
+        before: sunrise
+
+##########################################################################################################################################
+#                                                         Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+# Вкл света при движение
+        - alias: (Кухня) Отвалился датчик
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.sensor_kitchen_occupancy_unavailable
+             to: 'on'
+          action:
+            - delay: "00:01:00"
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: binary_sensor.0x158d0006337230_motion
+                    state: 'unavailable'
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Датчик Движения на Кухне - недоступный
+              - conditions:
+                  - condition: state
+                    entity_id: binary_sensor.kitchen_ld2410_occupancy
+                    state: 'unavailable'
+                  - service: telegram_bot.send_message
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      message: |
+                          {{"\U0001F4E8"}} Состояние системы
+                          {{"\U000026A0"}} Внимание!
+                          {{"\U0000274C"}} Датчик Присутствия на Кухне - недоступный
+            #   - conditions:
+            #       - condition: or
+            #         conditions:
+            #           - condition: state
+            #             entity_id: binary_sensor.kitchen_occupancy
+            #             state: 'unavailable'
+            #           - condition: state
+            #             entity_id: binary_sensor.kitchen_motion
+            #             state: 'unavailable'
+            #       - service: telegram_bot.send_message
+            #         data_template:
+            #           target:
+            #             - !secret telegram_ID_group
+            #           message: |
+            #               {{"\U0001F4E8"}} Состояние системы
+            #               {{"\U000026A0"}} Внимание!
+            #               {{"\U0000274C"}} Датчики шаблонов Присутствия на Кухне - недоступный
+
+# Вкл света при движение
+        - alias: (Кухня) Вкл света при движении вечером
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.kitchen_motion
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: binary_sensor.vkl_sveta_na_kukhne
+             state: 'on'
+           - condition: state
+             entity_id: switch.lenta_na_kukhne
+             state: 'off'
+           - condition: state
+             entity_id: switch.svet_nad_stoleshnei
+             state: 'off'
+           - condition: state
+             entity_id: switch.svet_nad_stolom
+             state: 'off'
+          action:
+           - service: light.turn_on
+             entity_id: light.svet_na_kukhne
+
+# Вкл ленты при движение
+        - alias: (Кухня) Вкл ленты при движении вечером
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.kitchen_motion
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: binary_sensor.vkl_lenty_na_kukhne
+             state: 'on'
+           - condition: state
+             entity_id: switch.lenta_na_kukhne
+             state: 'off'
+           - condition: state
+             entity_id: switch.svet_nad_stoleshnei
+             state: 'off'
+           - condition: state
+             entity_id: switch.svet_nad_stolom
+             state: 'off'
+          action:
+           - service: light.turn_on
+             entity_id: light.lenta_na_kukhne
+
+# Выкл ленты при осутствии движения
+        - alias: (Кухня) Выкл ленты по отсутствию движения
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.kitchen_occupancy
+             to: 'off'
+             for:
+               seconds: 4
+          action:
+            - service: light.turn_off
+              entity_id: light.lenta_na_kukhne
+
+
+# Выкл света при осутствии движения
+        - alias: (Кухня) Выкл света по отсутствию движения
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.kitchen_occupancy
+             to: 'off'
+             for:
+               minutes: 5
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: switch.svet_nad_stolom
+                    state: 'on'
+                sequence:
+                    - service: light.turn_off
+                      entity_id: light.liustra_na_kukhne
+              - conditions:
+                  - condition: state
+                    entity_id: switch.svet_nad_stoleshnei
+                    state: 'on'
+                sequence:
+                    - service: light.turn_off
+                      entity_id: light.svet_na_kukhne
+
+# Переключения выключателем
+        - alias: (Кухня) Выкл ленты по вкл света
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: switch.svet_nad_stoleshnei
+             to: 'on'
+           - platform: state
+             entity_id: switch.svet_nad_stolom
+             to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.lenta_na_kukhne
+             state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.lenta_na_kukhne
+
+        - alias: (Кухня) Выкл света при вкл ленты
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: switch.lenta_na_kukhne
+            to: 'on'
+          condition:
+            condition: or
+            conditions:
+              - condition: state
+                entity_id: switch.svet_nad_stoleshnei
+                state: 'on'
+              - condition: state
+                entity_id: switch.svet_nad_stolom
+                state: 'on'
+          action:
+          - service: switch.turn_off
+            entity_id: switch.svet_nad_stoleshnei
+          - service: switch.turn_off
+            entity_id: switch.svet_nad_stolom
+
+# Выкл света принудительно без движения
+        - alias: (Кухня) Выкл света по отсутствию движения
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_light_off_na_kukhne
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             target:
+                entity_id:
+                  - switch.svet_nad_stoleshnei
+                  - switch.svet_nad_stolom
+                  - switch.lenta_na_kukhne
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

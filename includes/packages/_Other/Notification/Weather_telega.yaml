@@ -1,0 +1,120 @@
+weather_telega:
+
+#########################################################################################################################################
+#                                                            Сенсоры 
+#########################################################################################################################################
+
+    sensor:
+
+# Перевод в мм. рт. столба
+      - platform: template
+        sensors:
+          openweathermap_forecast_pressure_mmhg:
+            friendly_name: "Атмосферное давление на улице"
+            unit_of_measurement: 'мм.рт.ст'
+            value_template: "{{ (states('sensor.openweathermap_forecast_pressure')|float * 0.7500637)|round(0) }}"
+            icon_template: mdi:gauge
+
+# Перевод м/с в км/ч
+      - platform: template
+        sensors:
+          openweathermap_wind_speed_kmh:
+            friendly_name: "Ветер в км/ч"
+            unit_of_measurement: 'км/ч'
+            value_template: "{{ (states('sensor.openweathermap_wind_speed')|float * 3.6)|round(1) }}"
+            icon_template: mdi:gauge
+
+# Перевод м/с в км/ч
+      - platform: template
+        sensors:
+          openweathermap_forecast_wind_speed_kmh:
+            friendly_name: "Прогноз по ветру в км/ч"
+            unit_of_measurement: 'км/ч'
+            value_template: "{{ (states('sensor.openweathermap_forecast_wind_speed')|float * 3.6)|round(1) }}"
+            icon_template: mdi:gauge
+
+#########################################################################################################################################
+#                                                            Скрипты 
+#########################################################################################################################################
+
+    script:
+
+      climate_report_cepera:
+        alias: (Telegram) Отчет о погоде Сереге
+        icon: mdi:weather-partly-snowy-rainy
+        sequence:
+         - service: notify.Telegram_Cepera
+           data:
+             message: | 
+                 {{"\U0001F3E0"}} Отчет погоды за {{ states('sensor.custom_time_data') }}
+                 {{"\U000026C5"}} Погода:   {{ states('sensor.openweathermap_weather') }}
+                 {{"\U0001F321"}} Температура:   {{ states('sensor.openweathermap_temperature') }} °C
+                 {{"\U0001F321"}} На улице:   {{ states('sensor.a4c138bfa633_temperature') }} °C
+                 {{"\U0001F321"}} Прогноз на сутки: {{ states('sensor.openweathermap_forecast_temperature') }} °C / {{ states('sensor.openweathermap_forecast_temperature_low') }} °C
+                 {{"\U0001F4A7"}} Влажность:   {{ states('sensor.openweathermap_humidity') }} %
+                 {{"\U0001F4A8"}} Ветер:   {{ states('sensor.openweathermap_wind_speed_kmh') }} км/ч
+                 {{"\U0001F4AA"}} Давление:   {{ states('sensor.openweathermap_forecast_pressure_mmhg') }} мм рт. ст
+                 {{"\U0001F327"}} Прогноз дождя:   {{ states('sensor.openweathermap_rain') }}
+                 {{"\U0001F328"}} Прогноз снега:   {{ states('sensor.openweathermap_snow') }}
+
+                 {{"\U0001F609"}} Приятного Вам дня!!! {{"\U0001F618"}}
+
+      climate_report_nadya:
+        alias: (Telegram) Отчет о погоде
+        icon: mdi:weather-partly-snowy-rainy
+        sequence:
+         - service: notify.Telegram_Nadya
+           data:
+             message: | 
+                 {{"\U0001F3E0"}} Отчет погоды за {{ states('sensor.custom_time_data') }}
+                 {{"\U000026C5"}} Погода:   {{ states('sensor.openweathermap_weather') }}
+                 {{"\U0001F321"}} Температура:   {{ states('sensor.openweathermap_temperature') }} °C
+                 {{"\U0001F321"}} Прогноз Температуры:   {{ states('sensor.openweathermap_forecast_temperature') }} °C / {{ states('sensor.openweathermap_forecast_temperature_low') }} °C
+                 {{"\U0001F4A7"}} Влажность:   {{ states('sensor.openweathermap_humidity') }} %
+                 {{"\U0001F4A8"}} Ветер:   {{ states('sensor.openweathermap_wind_speed_kmh') }} км/ч
+                 {{"\U0001F4AA"}} Давление:   {{ states('sensor.openweathermap_forecast_pressure_mmhg') }} мм рт. ст
+                 {{"\U0001F327"}} Прогноз дождя:   {{ states('sensor.openweathermap_rain') }}
+                 {{"\U0001F328"}} Прогноз снега:   {{ states('sensor.openweathermap_snow') }}
+                 
+                 {{"\U0001F609"}} Приятного Вам дня!!! {{"\U0001F618"}}
+
+#########################################################################################################################################
+#                                                            Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+        - id: Авто отправка погоды 
+          alias: (Telegram) Авто отправка погоды 
+          initial_state: true
+          trigger:
+          - platform: time
+            at: '13:00:00'
+          action:
+           - service: script.turn_on
+             entity_id: 
+                - script.climate_report_nadya
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

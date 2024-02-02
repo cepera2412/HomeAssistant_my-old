@@ -1,0 +1,113 @@
+#####################################################################################################
+######################################### Кнопка Media_player ##########################################
+#####################################################################################################
+
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+          - type: custom:button-card
+            name: Media Player                                ##
+            icon: mdi:spotify
+            template: button_return_big
+            hold_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  service_data:
+                    entity_id: media_player.galaxy_tab_a8_media_player
+                    application: com.spotify.music
+
+# Проигрователь Spotify
+          - type: custom:spotify-card
+            limit: 10
+            hide_top_header: true
+            hide_playback_controls: true
+            always_play_random_song: true
+
+# Проигрователь Mi Speaker
+          - type: custom:mini-media-player
+            entity: media_player.mi_speaker
+            icon: mdi:speaker
+            hide:
+              power_state: false
+              icon_state: false
+              shuffle: false
+              source: false
+              sound_mode: false
+            group: false
+            volume_stateless: false
+            artwork: material
+            source: full
+            sound_mode: full
+            info: scroll
+            idle_view:
+              when_idle: true
+              when_paused: true
+              when_standby: true
+
+# Проигрователь Mi TV
+          - type: custom:mini-media-player
+            entity: media_player.androidbox
+            icon: mdi:television
+            hide:
+              power_state: false
+              icon_state: false
+              shuffle: false
+              source: false
+              sound_mode: false
+            group: false
+            volume_stateless: false
+            artwork: material
+            source: full
+            sound_mode: full
+            info: scroll
+            idle_view:
+              when_idle: true
+              when_paused: true
+              when_standby: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

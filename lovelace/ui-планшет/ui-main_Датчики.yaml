@@ -1,0 +1,100 @@
+###################################################################################################
+######################################### Кнопка Датчики ##########################################
+###################################################################################################
+
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Датчики                                ##
+          icon: mdi:leak
+          template: button_return
+
+################################### Датчики, Сенсоры ###########################################
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+
+# Протечки
+            - type: custom:button-card
+              entity: binary_sensor.54ef44e5ca71_water_leak
+              name: Туалет 
+              template: button_main_sensor_Water_Leak
+
+            - type: custom:button-card
+              entity: binary_sensor.54ef44e5d062_water_leak
+              name: Ванная 
+              template: button_main_sensor_Water_Leak
+
+            - type: custom:button-card
+              entity: binary_sensor.54ef44e5d0d9_water_leak
+              name: Кухня 
+              template: button_main_sensor_Water_Leak
+
+# Двери
+            - type: custom:button-card
+              entity: binary_sensor.0x158d0001dff57f_contact
+              name: Входная 
+              template: button_main_sensor_door
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d00028d3838_contact
+              name: Туалет 
+              template: button_main_sensor_door
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d00069b0949_contact
+              name: Ванная 
+              template: button_main_sensor_door
+
+# Движение
+            - type: custom:button-card
+              entity: binary_sensor.0x158d0003fb0f3a_motion
+              name: Коридор 
+              template: button_main_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.28d1272f330d_motion
+              name: ночник Коридор
+              template: button_main_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d00067963a8_motion
+              name: Ванная 
+              template: button_main_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d00067919d1_motion
+              name: Туалет 
+              template: button_main_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d0006337230_motion
+              name: Кухня 
+              template: button_main_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d00062fdc4f_motion
+              name: Гардеробная 
+              template: button_main_sensor_motion
+
+            - type: custom:button-card
+              entity: binary_sensor.28d1272d46cc_motion
+              name: ночник Гостиная
+              template: button_main_sensor_motion
+
+
+
+
+
+

@@ -1,0 +1,469 @@
+knopki:
+
+##########################################################################################################################################
+#                                                      Бинарные сенсоры 
+##########################################################################################################################################
+
+    binary_sensor:
+
+####################################################### Периоды времени ##################################################################
+
+        - platform: tod
+          name: Time_zvonok_golos_on
+          after: '10:00'
+          before: '00:00'
+
+##########################################################################################################################################
+#                                                         Сенсоры 
+##########################################################################################################################################
+
+
+
+##########################################################################################################################################
+#                                                          Скрипты 
+##########################################################################################################################################
+
+    script:
+    
+# Выкл весь свет
+        light_all_off:
+          alias: Выкл весь свет в квартире
+          icon: mdi:home-lightbulb
+          sequence:
+            - service: homeassistant.turn_off
+              data:
+                entity_id: group.light_all
+
+
+# Выкл все в квартире
+        all_in_the_home_off:
+          alias: Выкл все в квартире
+          icon: mdi:home-lightning-bolt
+          sequence:
+            - service: homeassistant.turn_off
+              data:
+                entity_id: group.all_in_the_home
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox 
+                command: POWER  
+
+# Выкл spotify в квартире
+        spotify_off:
+          alias: Выкл spotify квартире
+          icon: mdi:spotify
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.0
+              target:
+                entity_id: media_player.mi_speaker
+            - service: spotcast.start
+              data:
+                entity_id: media_player.mi_speaker
+                uri: spotify:playlist:36l8o1LJ47txJimUATKfwW
+                force_playback: true
+                random_song: true
+                shuffle: true
+            - delay: 00:00:05
+            - service: media_player.turn_off
+              data: {}
+              target:
+                entity_id: media_player.mi_speaker
+            - delay: 00:00:02
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.5
+              target:
+                entity_id: media_player.mi_speaker
+
+##########################################################################################################################################
+#                                                           Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+########################################################### Кнопка в Гостинной ##########################################################
+
+#      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Временно кнопка Жалюзей в Кабинете !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# Кнопка 1 нажатие
+        - alias: Кнопка в Кабинете 1 клик (Правая ролета)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ea5f45_action
+              click_type: single
+          action:
+            - service: cover.toggle
+              data: {}
+              target:
+                entity_id: cover.blinds_bedroom_right_blinds_br
+
+# Кнопка 2 нажатия
+        - alias: Кнопка в Кабинете 2 клик (Центральной ролета)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ea5f45_action
+              click_type: double
+          action:
+            - service: cover.toggle
+              data: {}
+              target:
+                entity_id: cover.blinds_bedroom_central_blinds_br
+
+# Кнопка 3 нажатия
+        - alias: Кнопка в Кабинете 3 клик (Левая ролета)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ea5f45_action
+              click_type: triple
+          action:
+            - service: cover.toggle
+              data: {}
+              target:
+                entity_id: cover.blinds_bedroom_left_blinds_br
+
+# Кнопка много нажатий
+        - alias: Кнопка в Кабинете много клик (Балкон ролета)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ea5f45_action
+              click_type: many
+          action:
+            - service: cover.toggle
+              data: {}
+              target:
+                entity_id: cover.blinds_bedroom_door_blinds_br
+
+# Кнопка зажатие
+        - alias: Кнопка в Кабинете зажатие (Стоп ролеты)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ea5f45_action
+              click_type: hold
+          action:
+            - service: cover.stop_cover
+              data: {}
+              target:
+                entity_id: cover.Bedroom_blinds
+
+# # Кнопка 1 нажатие
+#         - alias: Кнопка в Гостиной 1 клик (Ночник)
+#           initial_state: true
+#           trigger:
+#           - platform: event
+#             event_type: xiaomi_aqara.click
+#             event_data:
+#               entity_id: sensor.0x158d0006ea5f45_action
+#               click_type: single
+#           action:
+#           - service: light.toggle
+#             entity_id: 
+#               - light.bslamp2_cloud_402265
+#             data_template:
+#               brightness_pct: 20
+#               rgb_color: [136, 0, 248]
+
+# # Кнопка 2 нажатия
+#         - alias: Кнопка в Гостиной 2 клик (свет)
+#           initial_state: true
+#           trigger:
+#           - platform: event
+#             event_type: xiaomi_aqara.click
+#             event_data:
+#               entity_id: sensor.0x158d0006ea5f45_action
+#               click_type: double
+#           action:
+#           - service: switch.toggle
+#             entity_id: switch.svet_v_gostinoi
+        
+# # Кнопка много нажатий
+#         - alias: Кнопка в Гостиной много клик (лента)
+#           initial_state: true
+#           trigger:
+#           - platform: event
+#             event_type: xiaomi_aqara.click
+#             event_data:
+#               entity_id: sensor.0x158d0006ea5f45_action
+#               click_type: many
+#           action:
+#           - service: switch.toggle
+#             entity_id: switch.lenta_v_gostinoi
+        
+# # Кнопка зажатие
+#         - alias: Кнопка в Гостиной зажатие
+#           initial_state: true
+#           trigger:
+#           - platform: event
+#             event_type: xiaomi_aqara.click
+#             event_data:
+#               entity_id: sensor.0x158d0006ea5f45_action
+#               click_type: hold
+#           action:
+#           - service: switch.turn_off
+#             entity_id: group.light_all
+
+
+############################################################ Кнопка в Спальне ###########################################################
+
+# Кнопка 1 нажатие
+        - alias: Кнопка в Спальне 1 клик (Ночник)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ba1ba3_action
+              click_type: single
+          action:
+          - service: light.toggle
+            entity_id: light.bslamp2_cloud_402265
+        
+# Кнопка 2 нажатия
+        - alias: Кнопка в Спальне 2 клик (свет)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ba1ba3_action
+              click_type: double
+          action:
+          - service: switch.toggle
+            entity_id: switch.svet_v_spalne
+
+# Кнопка много нажатий
+        - alias: Кнопка в Гостиной много клик (лента)
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ba1ba3_action
+              click_type: many
+          action:
+          - service: switch.toggle
+            entity_id: switch.lenta_v_spalne
+
+# Кнопка зажатие
+        - alias: Кнопка в Спальне зажатие
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ba1ba3_action
+              click_type: hold
+          action:
+          - service: switch.turn_off
+            entity_id: group.light_all
+
+
+########################################################### Кнопка в Коридоре ###########################################################
+        
+# Кнопка 1 нажатие......................вкл/выкл музыки на планшете
+
+        - alias: Кнопка в Коридоре 1 клик
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ba1c1d_action
+              click_type: single
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: media_player.spotify_cepera
+                    state: 'idle'
+                sequence:
+                  - service: light.turn_on
+                    entity_id: light.galaxy_tab_a8_screen
+                  - delay: 00:00:01
+                  - service: fullykiosk.start_application
+                    data:
+                      entity_id: media_player.galaxy_tab_a8_media_player
+                      application: com.spotify.music
+                  - delay: 00:00:02
+                  - service: fullykiosk.volume_set
+                    data:
+                      entity_id: media_player.galaxy_tab_a8_media_player
+                      volume_level: 0.5
+                      stream: 3
+                  - delay: 00:00:05
+                  - service: spotcast.start
+                    data:
+                      spotify_device_id: "700f45f4f047243c97e368e4784bb4cba02348e7"
+                      uri: "spotify:playlist:6fBj1j9Nz1CABsDXgPngrP"
+                      force_playback: true
+                      random_song: true
+                      shuffle: true
+              - conditions:
+                  - condition: state
+                    entity_id: media_player.spotify_cepera
+                    state: 'playing'
+                sequence:
+                  - service: script.spotify_off
+
+            #   - service: script.spotify_off
+
+        # - alias: Кнопка в Коридоре 1 клик
+        #   initial_state: true
+        #   trigger:
+        #   - platform: event
+        #     event_type: xiaomi_aqara.click
+        #     event_data:
+        #       entity_id: sensor.0x158d0006ba1c1d_action
+        #       click_type: single
+        #   action:
+        #       - service: spotcast.start
+        #         data:
+        #           entity_id: media_player.mi_speaker
+        #           uri: spotify:playlist:6fBj1j9Nz1CABsDXgPngrP
+        #           force_playback: true
+        #           random_song: true
+        #           shuffle: true
+        
+
+# Кнопка 2 нажатия
+        - alias: Кнопка в Коридоре 2 клик
+          initial_state: true
+          trigger:
+          - platform: event
+            event_type: xiaomi_aqara.click
+            event_data:
+              entity_id: sensor.0x158d0006ba1c1d_action
+              click_type: double
+          action:
+          - service: switch.toggle
+            entity_id: switch.rele_troinoi_rozetki
+
+# Кнопка зажатие
+        - alias: Кнопка в Коридоре зажатие
+          initial_state: true
+          trigger:
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x158d0006ba1c1d_action
+                click_type: hold
+          action:
+            - service: script.all_in_the_home_off
+            - service: script.spotify_off
+
+########################################################### Кнопка на Кухне ############################################################
+        
+# Кнопка 1 нажатие
+        - alias: Кнопка на Кухне 1 клик
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: sensor.0x00158d00083219e2_action
+            to: 'single'
+          action:
+          - service: switch.toggle
+            entity_id: switch.svet_nad_stoleshnei
+
+# Кнопка 2 нажатие
+        - alias: Кнопка на Кухне 2 клика
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: sensor.0x00158d00083219e2_action
+            to: 'double'
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: media_player.spotify_cepera
+                    state: 'idle'
+                sequence:
+                  - service: light.turn_on
+                    entity_id: light.galaxy_tab_a8_screen
+                  - delay: 00:00:01
+                  - service: fullykiosk.start_application
+                    data:
+                      entity_id: media_player.galaxy_tab_a8_media_player
+                      application: com.spotify.music
+                  - delay: 00:00:02
+                  - service: fullykiosk.volume_set
+                    data:
+                      entity_id: media_player.galaxy_tab_a8_media_player
+                      volume_level: 0.5
+                      stream: 3
+                  - delay: 00:00:05
+                  - service: spotcast.start
+                    data:
+                      spotify_device_id: "700f45f4f047243c97e368e4784bb4cba02348e7"
+                      uri: "spotify:playlist:6fBj1j9Nz1CABsDXgPngrP"
+                      force_playback: true
+                      random_song: true
+                      shuffle: true
+              - conditions:
+                  - condition: state
+                    entity_id: media_player.spotify_cepera
+                    state: 'playing'
+                sequence:
+                  - service: script.spotify_off
+
+
+
+############################################################## Звонок ##################################################################
+
+# Кнопка находиться в ....Devices/Zvonok.yaml
+
+############################################################### Кубик ##################################################################
+
+
+
+
+############################################ Чайник ###################################
+        
+# Вкл чайника на утреннюю смену
+        - alias: (Чайник) Вкл на утреннюю смену
+          initial_state: false
+          trigger:
+           - platform: time
+             at: "05:48:00"
+          action:
+          - service: switch.turn_on
+            entity_id: switch.chainik
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,206 @@
+bathroom:
+
+##########################################################################################################################################
+#                                                                    Шаблоны 
+##########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+
+# Выкл забытого Света
+          - name: auto_light_off_v_vannoi
+            state: >
+                  {{ is_state('switch.svet_v_vannoi', 'on')
+                     and is_state('binary_sensor.vannaya_bathroom_presence', 'off')
+                     and is_state('binary_sensor.0x158d00067963a8_motion', 'off') }}
+            delay_on:
+              minutes: 10
+            icon: >
+              {% if is_state("auto_light_off_v_vannoi", "on") %}
+              mdi:lightbulb-off-outline
+              {% else %}
+              mdi:lightbulb-off-outline
+              {% endif %}
+
+# Выкл забытой Ленты
+          - name: auto_lenta_off_v_vannoi
+            state: >
+                  {{ is_state('switch.svet_v_vannoi', 'on')
+                     and is_state('binary_sensor.vannaya_bathroom_presence', 'off')
+                     and is_state('binary_sensor.0x158d00067963a8_motion', 'off') }}
+            delay_on:
+              minutes: 10
+            icon: >
+              {% if is_state("auto_lenta_off_v_vannoi", "on") %}
+              mdi:lightbulb-off-outline
+              {% else %}
+              mdi:lightbulb-off-outline
+              {% endif %}
+
+##########################################################################################################################################
+#                                                                  Бинарные сенсоры 
+##########################################################################################################################################
+
+#    binary_sensor:
+
+# Периоды времени 
+
+        #   - platform: tod
+        #     name: Time_ytro_vannaya
+        #     after: '09:00'
+        #     before: '12:00'
+
+##########################################################################################################################################
+#                                                               Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+# Вкл свет при движение
+        - alias: (Ванная) Вкл света
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.0x158d00067963a8_motion
+              to: 'on'
+            # - platform: state
+            #   entity_id: binary_sensor.vannaya_bathroom_presence
+            #   to: 'on'
+            #   for:
+            #     seconds: 2
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_vannoi
+             state: 'off'
+           - condition: state
+             entity_id: switch.lenta_v_vannoi
+             state: 'off'
+          action:
+           - service: switch.turn_on
+             entity_id: switch.svet_v_vannoi
+        
+# Выкл свет при движение
+        - alias: (Ванная) Выкл света
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.vannaya_bathroom_presence
+             to: 'off'
+             for:
+               minutes: 0.1
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_vannoi
+             state: 'on'
+        #   - condition: state
+        #      entity_id: binary_sensor.0x158d00069b0949_contact
+        #      state: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_vannoi
+
+# # Выкл свет при открытие двери
+#         - alias: (Ванная) Выкл света в ванной при открытие двери
+#           initial_state: true
+#           trigger:
+#           - platform: state
+#              entity_id: binary_sensor.0x158d00069b0949_contact
+#              to: 'on'
+#              for:
+#               minutes: 0.6
+#           condition:
+#           - condition: state
+#              entity_id: switch.svet_v_vannoi
+#              state: 'on'
+#           action:
+#             - choose:
+#               - conditions:
+#                   - condition: state
+#                     entity_id: binary_sensor.0x158d00067963a8_motion
+#                     state: 'off'
+#                 sequence:
+#                   - service: switch.turn_off
+#                     entity_id:
+#                       - switch.svet_v_vannoi
+
+# Переключение Свет - Лента
+        - alias: (Ванная) Переключение Свет - Лента
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: switch.lenta_v_vannoi
+            to: 'on'
+          condition:
+          - condition: state
+            entity_id: switch.svet_v_vannoi
+            state: 'on'
+          action:
+          - service: switch.turn_off
+            entity_id: switch.svet_v_vannoi
+
+# Переключение Лента - Свет
+        - alias: (Ванная) Переключение Лента - Свет
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: switch.svet_v_vannoi
+            to: 'on'
+          condition:
+          - condition: state
+            entity_id: switch.lenta_v_vannoi
+            state: 'on'
+          action:
+          - service: switch.turn_off
+            entity_id: switch.lenta_v_vannoi
+
+# Выкл лента
+        - alias: (Ванная) Выкл ленты
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.vannaya_bathroom_presence
+             to: 'off'
+             for:
+               minutes: 0.5
+          action:
+           - service: switch.turn_off
+             entity_id: switch.lenta_v_vannoi
+
+# Выкл света принудительно
+        - alias: (Ванная) Выкл света принудительно
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_light_off_v_vannoi
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.svet_v_vannoi
+
+# Выкл лента принудительно
+        - alias: (Ванная) Выкл ленты  принудительно
+          initial_state: true
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.auto_lenta_off_v_vannoi
+             to: 'on'
+          action:
+           - service: switch.turn_off
+             entity_id: switch.lenta_v_vannoi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

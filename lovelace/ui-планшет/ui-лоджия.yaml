@@ -1,0 +1,113 @@
+################################################################################################
+########################################### Лоджия ############################################
+################################################################################################
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Лоджия                                ##
+          icon: mdi:balcony
+          template: button_return
+
+################################### Выключить все ###########################################
+
+
+################################### Какие устройства вкл. ###########################################
+
+        - type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+              grid-template-columns: 87% auto
+          cards:
+
+            - type: conditional
+              conditions:
+                  - entity: group.lodzhiia                      ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  name: Включеные приборы
+                  template: button_zagolovok_2
+
+#=================================== Кнопка Выключить все ==========================================
+            - type: conditional
+              conditions:
+                  - entity: group.lodzhiia                         ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  icon: mdi:lightbulb-group-off
+                  entity: group.lodzhiia                           ##
+                  template: button_svet_all
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                        entity_id: group.lodzhiia                  ##
+                    confirmation:
+                        text: 'Выключить весь свет на Лоджии?'
+#============================================================================================
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+    
+            - type: conditional
+              conditions:
+                  - entity: switch.svet_na_lodzhii                       ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.svet_na_lodzhii                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет
+                  template: button_svet_purpur_180
+
+            - type: conditional
+              conditions:
+                  - entity: switch.lenta_na_lodzhii                  ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.lenta_na_lodzhii                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента
+                  template: button_svet_purpur_180
+
+################################### Выключатель ###########################################
+        - type: custom:button-card
+          name: Освещение
+          template: button_zagolovok
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+
+                - type: custom:button-card
+                  entity: switch.svet_na_lodzhii                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет
+                  template: button_svet_purpur_180
+
+                - type: custom:button-card
+                  entity: switch.lenta_na_lodzhii                           ##
+                  icon: mdi:led-strip-variant
+                  name: Лента
+                  template: button_svet_purpur_180
+
+
+
+
+
+
+
+

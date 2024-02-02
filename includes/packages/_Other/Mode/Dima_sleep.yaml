@@ -1,0 +1,84 @@
+dima_sleep:
+
+#########################################################################################################################################
+#                                                      Логическое переключатель
+#########################################################################################################################################
+
+    input_boolean:
+
+# Переключатель для режима Дима спит
+        dima_sleep:
+          name: Режим Дима спит
+          icon: mdi:sleep
+
+##########################################################################################################################################
+#                                                           Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+      - alias: (Дима) Спит
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: input_boolean.dima_sleep
+            to: 'on'
+        action:
+          - service: automation.turn_off
+            data: {}
+            target:
+              entity_id:
+#                - automation.zvonok_knopka_zvonka_mi_speaker
+                - automation.zvonok_knopka_zvonka_mi_zvuk
+                - automation.trevoga_svetovoe_i_golosovoe_uvedomlenie_trevogi_v_kvartire
+                - automation.trevoga_svetovoe_i_golosovoe_uvedomlenie_otboia_v_kvartire_2
+          - delay: 00:00:01
+          - service: automation.turn_on
+            data: {}
+            target:
+              entity_id: automation.zvonok_knopka_zvonka_mi_zvuk_tikho
+
+      - alias: (Дима) Встал
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: input_boolean.dima_sleep
+            to: 'off'
+        action:
+          - service: automation.turn_off
+            data: {}
+            target:
+              entity_id: automation.zvonok_knopka_zvonka_mi_zvuk_tikho
+          - delay: 00:00:01
+          - service: automation.turn_on
+            data: {}
+            target:
+              entity_id: 
+                - automation.zvonok_knopka_zvonka_mi_speaker
+                - automation.zvonok_knopka_zvonka_mi_zvuk
+                - automation.trevoga_svetovoe_i_golosovoe_uvedomlenie_trevogi_v_kvartire
+                - automation.trevoga_svetovoe_i_golosovoe_uvedomlenie_otboia_v_kvartire_2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

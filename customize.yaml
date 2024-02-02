@@ -1,0 +1,73 @@
+
+# Период обновления и имя датчикам движения
+binary_sensor.0x158d00067963a8_motion:
+  occupancy_timeout: 5
+  friendly_name: Движение в Ванной
+binary_sensor.28d1272f330d_motion: # ночной свет в коридоре
+  occupancy_timeout: 45
+binary_sensor.0x158d0003fb0f3a_motion:
+  occupancy_timeout: 5
+  friendly_name: Движение в Коридоре
+binary_sensor.0x158d00067919d1_motion:
+  occupancy_timeout: 5
+  friendly_name: Движение в Туалете
+binary_sensor.0x158d00062fdc4f_motion:
+  occupancy_timeout: 5
+  friendly_name: Движение в Гардеробной
+binary_sensor.0x158d0006337230_motion:
+  occupancy_timeout: 5
+  friendly_name: Движение на Кухне
+
+
+# Переименование датчиков
+binary_sensor.0x158d00069b0949_contact:
+  friendly_name: Дверь в Ванную
+binary_sensor.0x158d00028d3838_contact:
+  friendly_name: Дверь в Туалет
+binary_sensor.0x158d0001dff57f_contact:
+  friendly_name: Входная дверь
+binary_sensor.54ef44e5ca71_water_leak:
+  friendly_name: Протечка в Туалете
+binary_sensor.54ef44e5d062_water_leak:
+  friendly_name: Протечка в Ванной
+binary_sensor.54ef44e5d0d9_water_leak:
+  friendly_name: Протечка на Кухне
+
+binary_sensor.cepera_home:
+  friendly_name: Серега
+binary_sensor.nadya_home:
+  friendly_name: Надюша
+
+# Назначение класса устройству
+switch.planshet:
+  device_class: outlet
+switch.rele_dlia_mi_robota:
+  device_class: outlet
+
+switch.rele_napriazheniia:
+  device_class: outlet
+switch.rele_troinoi_rozetki:
+  device_class: outlet
+
+switch.0x84b4dbfffeac2b87:
+  device_class: outlet
+switch.chainik:
+  device_class: outlet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

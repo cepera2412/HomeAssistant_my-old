@@ -1,0 +1,81 @@
+speaker:
+
+######################################################################################################
+#                                       Шаблоны 
+######################################################################################################
+
+    # template:
+     
+    #   - binary_sensor:
+
+
+
+######################################################################################################
+#                                       Сенсоры 
+######################################################################################################
+
+#    sensor:
+
+######################################################################################################
+#                                       Скрипты 
+######################################################################################################
+
+    script:
+
+        mpd_message:
+          icon: mdi:music
+          sequence:
+            - service: tts.google_translate_say
+              data:
+                  entity_id: media_player.mi_speaker
+                  language: "uk"
+                  message: "привіт "
+        
+        mpd_rington:
+          icon: mdi:music
+          sequence:
+            - service: media_player.play_media
+              data:
+                media_content_id: http://192.168.31.100:8123/local/music/rington/sova.mp3
+                media_content_type: audio/mp3
+              target:
+                entity_id: media_player.mi_speaker
+        
+        mpd_sensors:
+          icon: mdi:music
+          sequence:
+            - service: tts.google_translate_say
+              data:
+        #          entity_id: media_player.mpd
+                  entity_id: media_player.mi_speaker
+        #          language: "uk"
+                  message: >-
+                    Температура зараз {{ states('sensor.a4c138c67cbc_temperature')|int }}
+
+
+
+######################################################################################################
+#                                       Автоматизации 
+######################################################################################################
+
+    automation:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

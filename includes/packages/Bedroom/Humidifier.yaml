@@ -1,0 +1,254 @@
+humidifier:
+
+#########################################################################################################################################
+#                                                                 Шаблоны 
+#########################################################################################################################################
+
+    template:
+
+      - binary_sensor:
+        
+        - name: humidifier_work
+          state: >
+            {{ not is_state ('fan.humidifier_xiaomi', 'unavailable') }}
+          icon: >
+              {% if is_state('binary_sensor.humidifier_work', 'on') %}
+                mdi:air-humidifier
+              {% else %}
+                mdi:air-humidifier-off
+              {% endif %}
+
+
+##########################################################################################################################################
+#                                                              Бинарные сенсоры 
+##########################################################################################################################################
+
+    binary_sensor:
+    
+      - platform: template
+        sensors:
+          humidifier_water:
+            friendly_name: Нет воды в Mi Увлажнителе
+            value_template: '{{ states.fan.humidifier_xiaomi.attributes.no_water }}'
+          humidifier_water_tank:
+            friendly_name: Снят резервуар для воды Mi Увлажнителя
+            value_template: '{{ states.fan.humidifier_xiaomi.attributes.water_tank_detached }}'
+
+##########################################################################################################################################
+#                                                                   Сенсоры 
+##########################################################################################################################################
+
+    sensor:
+
+      - platform: template
+        sensors:
+          humidifier_temperature:
+            friendly_name: Температура на Mi Увлажнителе
+            value_template: '{{ states.fan.humidifier_xiaomi.attributes.temperature }}'
+            unit_of_measurement: '°C'
+          humidifier_humidity:
+            friendly_name: Влажность на Mi Увлажнителе
+            value_template: '{{ states.fan.humidifier_xiaomi.attributes.humidity }}'
+            unit_of_measurement: '%'
+          humidifier_mode:
+            friendly_name: Режим на Mi Увлажнителе
+            value_template: '{{ states.fan.humidifier_xiaomi.attributes.preset_mode }}'
+          humidifier_target_humidity:
+            friendly_name: Увлажнить до
+            value_template: '{{ states.fan.humidifier_xiaomi.attributes.target_humidity }}'
+            unit_of_measurement: '%'
+            icon_template: mdi:water-percent
+
+##########################################################################################################################################
+#                                                                   Выключатели 
+##########################################################################################################################################
+
+    switch:
+
+      - platform: template
+        switches:
+          xiaomi_humidifier:
+            friendly_name: "on/off Mi Увлажнитель"
+            value_template: "{{ is_state('fan.humidifier_xiaomi', 'on') }}"
+            turn_on:
+              service: homeassistant.turn_on
+              data:
+                entity_id: fan.humidifier_xiaomi
+            turn_off:
+              service: homeassistant.turn_off
+              data:
+                entity_id: fan.humidifier_xiaomi
+            icon_template: "mdi:air-humidifier"
+    
+          xiaomi_humidifier_led:
+            friendly_name: "LED Mi Увлажнитель"
+            value_template: "{{ is_state_attr('fan.humidifier_xiaomi', 'led', true) }}"
+            turn_on:
+              service: xiaomi_miio_airpurifier.fan_set_led_on
+              data:
+                entity_id: fan.humidifier_xiaomi
+            turn_off:
+              service: xiaomi_miio_airpurifier.fan_set_led_off
+              data:
+                entity_id: fan.humidifier_xiaomi
+            icon_template: "mdi:led-off"
+    
+          xiaomi_humidifier_buzzer:
+            friendly_name: "Звук Mi Увлажнитель"
+            value_template: "{{ is_state_attr('fan.humidifier_xiaomi', 'buzzer', true) }}"
+            turn_on:
+              service: xiaomi_miio_airpurifier.fan_set_buzzer_on
+              data:
+                entity_id: fan.humidifier_xiaomi
+            turn_off:
+              service: xiaomi_miio_airpurifier.fan_set_buzzer_off
+              data:
+                entity_id: fan.humidifier_xiaomi
+            icon_template: "mdi:volume-high"
+
+#########################################################################################################################################
+#                                                             Селектор ввода
+#########################################################################################################################################
+
+    input_select:
+      humidifier_mode:
+        name: Режимы Mi Увлажнителя
+        options:
+         - Low
+         - Mid
+         - High
+         - Auto
+
+#########################################################################################################################################
+#                                                              Вводной номер
+#########################################################################################################################################
+
+    input_number:
+      airhumidifier_target_humidity:
+        name: Задать влажность
+        min: 1
+        max: 99
+        step: 1
+
+#########################################################################################################################################
+#                                                                Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+# Автоматизация селектора режимов работы увлажнителя
+      - alias: (Увлажнитель) Выбор режима работы Mi Увлажнителя
+        initial_state: true
+        trigger:
+          platform: state
+          entity_id: input_select.humidifier_mode
+        action:
+          service: fan.set_preset_mode
+          data_template:
+            entity_id: fan.humidifier_xiaomi
+            preset_mode: '{{ states.input_select.humidifier_mode.state }}'
+
+      - alias: (Увлажнитель) Мониторинг режима работы увлажнителя
+        initial_state: true
+        trigger:
+          platform: state
+          entity_id: fan.humidifier_xiaomi
+        action:
+          service: input_select.select_option
+          entity_id: input_select.humidifier_mode
+          data_template:
+            option: '{{ states.fan.humidifier_xiaomi.attributes.preset_mode }}'
+
+# Автоматизация задать влажность
+      - alias: (Увлажнитель) Выбор влажности Mi Увлажнителя
+        initial_state: true
+        trigger:
+          platform: state
+          entity_id: input_number.airhumidifier_target_humidity
+        action:
+          - service: xiaomi_miio_airpurifier.fan_set_target_humidity
+            data_template:
+              entity_id: fan.humidifier_xiaomi
+              humidity: '{{ states.input_number.airhumidifier_target_humidity.state|int }}'
+    
+      - alias: (Увлажнитель) Мониторинг заданой влажности Mi Увлажнителя
+        initial_state: true
+        trigger:
+          platform: state
+          entity_id: sensor.humidifier_target_humidity
+        action:
+          service: input_number.set_value
+          entity_id: input_number.airhumidifier_target_humidity
+          data_template:
+            value: '{{ states.fan.humidifier_xiaomi.attributes.target_humidity }}'
+
+############################################################## Оповещения ############################################################### 
+
+# Нет воды в Mi Увлажнителе
+      - id: Нет воды в Mi Увлажнителе
+        alias: (Увлажнитель) Закончилась воды в Mi Увлажнителе
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.humidifier_water
+            to: 'on'
+        condition:
+          - condition: state
+            entity_id: binary_sensor.humidifier_work
+            state: 'on'
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U000026A0"}} Закончилась воды в Mi Увлажнителе! Залейте воду!
+
+# Влажность
+      - id: Влажность в спальне низкая
+        alias: (Увлажнитель) Влажность в спальне низкая
+        initial_state: true
+        trigger:
+          - platform: numeric_state
+            entity_id: sensor.a4c138c67cbc_humidity
+            below: 33
+        condition:
+          - condition: state
+            entity_id: binary_sensor.humidifier_work
+            state: 'on'
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U000026A0"}} {{"\U0001F4A7"}} Влажность очень низкая, рекомендую вкл. Увлажнитель!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

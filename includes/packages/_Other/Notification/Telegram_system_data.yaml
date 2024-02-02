@@ -1,0 +1,929 @@
+telegram_system_data:
+
+#########################################################################################################################################
+#                                                       Виртуальная Кнопка 
+#########################################################################################################################################
+
+    input_button:
+
+      system_data_reload:
+        name: Обновление системных данных
+        icon: mdi:reload
+
+#########################################################################################################################################
+#                                                            Шаблоны 
+#########################################################################################################################################
+
+    template:
+
+############################################################# Вкл. свет ################################################################# 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor:
+          - name: all_light_on
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.light if is_state(entity.entity_id, 'on')
+                  and not (entity.entity_id.endswith("_virtual"))  %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.light if is_state(entity.entity_id, 'on')
+                  and not (entity.entity_id.endswith("_virtual"))  %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+##################################################### Недоступный свет ##################################################################
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+          - platform: time_pattern
+            minutes: "/59"
+        sensor:
+          - name: all_light_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.light if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.light if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+############################################################# Вкл. розетки ################################################################# 
+
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor: 
+          - name: all_switch_on
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.switch if is_state(entity.entity_id, 'on')
+                and is_state_attr(entity.entity_id, 'device_class', 'outlet') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.switch if is_state(entity.entity_id, 'on')   
+                  and is_state_attr(entity.entity_id, 'device_class', 'outlet') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}  
+
+##################################################### Недоступные розетки ############################################################## 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor:                
+          - name: all_switch_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.switch if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.switch if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+##################################################### Недоступные бинарные ############################################################# 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor: 
+          - name: all_binary_sensor_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                  and not (entity.entity_id.endswith("d7f06977_f88fde14"))
+                  and not (entity.entity_id.endswith("06f59f58_d1c0441c"))  %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'unavailable')
+                  and not (entity.entity_id.endswith("d7f06977_f88fde14"))
+                  and not (entity.entity_id.endswith("06f59f58_d1c0441c"))  %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+##################################################### Недоступные сенсоры ############################################################# 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor: 
+          - name: all_sensor_unavailable
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.sensor if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.sensor if is_state(entity.entity_id, 'unavailable')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+###################################################### Активно движение ################################################################ 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor: 
+          - name: motion_detected
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')
+                and is_state_attr(entity.entity_id, 'device_class', 'motion') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')   
+                  and is_state_attr(entity.entity_id, 'device_class', 'motion') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}  
+
+########################################################### Кто дома ################################################################## 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor: 
+          - name: presence_detected
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')
+                and is_state_attr(entity.entity_id, 'device_class', 'presence') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')   
+                  and is_state_attr(entity.entity_id, 'device_class', 'presence') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+######################################################## Откр двери ################################################################### 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor:
+          - name: open_door
+            state: >
+              {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')
+                and is_state_attr(entity.entity_id, 'device_class', 'door') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.binary_sensor if is_state(entity.entity_id, 'on')   
+                  and is_state_attr(entity.entity_id, 'device_class', 'door') %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+##################################################### Среднее Напряжение ################################################################ 
+
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+          - platform: time_pattern
+            minutes: "/30"
+        sensor: 
+          - name: volt_medium
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% set voltage = namespace(value = 0) %}
+                {% for entity in states.sensor if is_state_attr(entity.entity_id, 'device_class', 'voltage')
+                and states(entity.entity_id) not in ['unavailable','unknown','None']  %}
+                {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% set voltage.value = voltage.value |int + entity.state |int %}
+                {% endfor %}
+                {{ (voltage.value / (variable.value | length) ) |round(2) }}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.sensor if is_state_attr(entity.entity_id, 'device_class', 'voltage')
+                and states(entity.entity_id) not in ['unavailable','unknown','None']  %}
+                {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }} 
+            unit_of_measurement: 'V'
+
+##################################################### Батарейки < 10% ################################################################## 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor: 
+          - name: battery_lower_10
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.sensor if is_state_attr(entity.entity_id, 'device_class', 'battery')
+                and states(entity.entity_id) not in ['Charging','unknown','None','charging','Not Charging','1']
+                  and states(entity.entity_id) |int(0) < 11 %}
+                  {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.sensor if is_state_attr(entity.entity_id, 'device_class', 'battery')
+                and states(entity.entity_id) not in ['Charging','unknown','None','charging','Not Charging','1']
+                  and states(entity.entity_id) |int(0) < 11 %}
+                  {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+################################################################# Обновы ############################################################### 
+      - trigger:
+          - platform: state
+            entity_id: input_button.system_data_reload
+        sensor: 
+          - name: update_yes
+            state: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.update if is_state(entity.entity_id, 'on')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {% if (variable.value | length) | int > 0 %}
+                {{ variable.value | length }}
+                {% else %}
+                 0
+                {% endif %}
+            attributes:
+              list_entities: >
+                {% set variable = namespace(value = {}) %}
+                {% for entity in states.update if is_state(entity.entity_id, 'on')   %}
+                 {% set variable.value = dict(variable.value, **{entity.name: entity.state }) %}
+                {% endfor %}
+                {{ variable.value |dictsort(false, 'value') }}
+
+
+#########################################################################################################################################
+#                                                        Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+########################################################### Запуск Системы ##############################################################
+
+      - id: Отчет при запуске системы
+        alias: (Telegram) Запуск сервера
+        initial_state: true
+        trigger:
+          - platform: homeassistant
+            event: start
+        # condition:
+        #   - condition: state
+        #     entity_id: input_boolean.serega
+        #     state: 'off'
+        action:
+          - service: notify.Telegram_Cepera
+            data:
+                message: | 
+                    {{"\U0001F4AC"}} Сервер Умного Дома
+                    {{"\U0001F567"}} Зафиксирован запуск в {{ states('sensor.custom_time_data') }} 
+                    {{"\U0001F4C3"}} Отчет о состоянии будет через 2 минуты
+          - delay: 00:02:00
+          - service: input_button.press
+            entity_id: input_button.system_data_reload
+          - delay: 00:00:02
+          - service: notify.Telegram_Cepera
+            data:
+              message: | 
+                {{"\U0001F4AC"}} Состояние системы
+                {{"\U0001F55D"}} Отчет за {{ states('sensor.custom_time_data') }}
+                {{'\U00002708'}} *Тревога* - {% if is_state('binary_sensor.netishin_air', 'on') %} {{'\U0001F480'}} *Опасность воздушного удара* {% else %} Безопасно {% endif %}
+                {{'\U0001F4A7'}} *Протечка* - {% if (states('sensor.water_leak_detect') | int) > 0 %} {{'\U000026A0'}} *Обнаружено* {% else %} {{'\U0001F197'}} {% endif %}
+                {{'\U0001F4A1'}} *Светильники* - {% if (states('sensor.all_light_on') | int) > 0 %} включено {{ states('sensor.all_light_on') }} {% else %} все выключены {% endif %}, {% if (states('sensor.all_light_unavailable') | int) > 0 %} Недоступно - {{ states('sensor.all_light_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                {{'\U0001F50C'}} *Розетки* - {% if (states('sensor.all_switch_on') | int) > 0 %} активно {{ states('sensor.all_switch_on') }} {% else %} нет активных {% endif %}, {% if (states('sensor.all_switch_unavailable') | int) > 0 %} Недоступно - {{ states('sensor.all_switch_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                {{'\U0001F51F'}} *Бинарные сенсоры* - {% if (states('sensor.all_binary_sensor_unavailable') | int) > 0 %}недоступно {{ states('sensor.all_binary_sensor_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                {{'\U0001F520'}} *Сенсоры* - {% if (states('sensor.all_sensor_unavailable') | int) > 0 %}недоступно - {{ states('sensor.all_sensor_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                {{'\U0001F3E0'}} *Присутствие* - {% if (states('sensor.presence_detected') | int) > 0 %} {{ states('sensor.presence_detected') }} человек {% else %} присутствия нет {% endif %}
+                {{'\U0001F3C3'}} *Движение* - {% if (states('sensor.motion_detected') | int) > 0 %} {{ states('sensor.motion_detected') }} датчиков {% else %} движения нет {% endif %}
+                {{'\U0001F6AA'}} *Двери* - {% if (states('sensor.open_door') | int) > 0 %}открыто {{ states('sensor.open_door') }} {% else %} все закрыты {% endif %}
+                {{'\U0001F50B'}} *Батарейки < 10%* {% if (states('sensor.battery_lower_10') | int) > 0 %} - {{ states('sensor.battery_lower_10') }} {% else %} {{'\U00002705'}} {% endif %}
+                {{'\U0001F199'}} *Обновления HA и Add-on*{% if (states('sensor.update_yes') | int) > 0 %}: есть - {{ states('sensor.update_yes') }} {% else %} - {{'\U0001F197'}} {% endif %}
+                {{'\U0001F199'}} *Обновления Hacs*{% if (states('sensor.hacs') | int) > 0 %}: есть - {{ states('sensor.hacs') }} {% else %} - {{'\U0001F197'}} {% endif %}
+
+################################################### Меню для управления в Telegrame #####################################################
+
+      - id: Системные данные в телеграм
+        alias: (Telegram) Вызов меню системные данные
+        initial_state: true
+        trigger: 
+          - platform: event
+            event_type: telegram_callback
+            event_data: {}
+        action:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/system_data'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      message: &msg_sd |
+                        {{'\U0001F4BE'}} *Системные данные:*
+                        {{'\U0001F552'}} *Обновлено в {{ states('sensor.custom_time_data') }}*
+                        * *
+                        {{'\U000026A0'}} *Сенсоры тревоги*
+                        {{'\U00002708'}} *Тревога* - {% if is_state('binary_sensor.netishin_air', 'on') %} {{'\U0001F480'}} *Опасность воздушного удара* {% else %} Безопасно {% endif %}
+                        {{'\U0001F4A7'}} *Протечка* - {% if (states('sensor.water_leak_detect') | int) > 0 %} {{'\U000026A0'}} *Обнаружено* {% else %} {{'\U0001F197'}} {% endif %}
+                        * *
+                        {{'\U000026A1'}} *Напряжение в сети - {{ states('sensor.volt_medium') }} Вольт*
+                        {{'\U0001F4A1'}} *Светильники* - {% if (states('sensor.all_light_on') | int) > 0 %} включено {{ states('sensor.all_light_on') }} {% else %} все выключены {% endif %}, {% if (states('sensor.all_light_unavailable') | int) > 0 %} Недоступно - {{ states('sensor.all_light_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                        {{'\U0001F50C'}} *Розетки* - {% if (states('sensor.all_switch_on') | int) > 0 %} активно {{ states('sensor.all_switch_on') }} {% else %} нет активных {% endif %}, {% if (states('sensor.all_switch_unavailable') | int) > 0 %} Недоступно - {{ states('sensor.all_switch_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                        {{'\U0001F51F'}} *Бинарные сенсоры* - {% if (states('sensor.all_binary_sensor_unavailable') | int) > 0 %}недоступно {{ states('sensor.all_binary_sensor_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                        {{'\U0001F520'}} *Сенсоры* - {% if (states('sensor.all_sensor_unavailable') | int) > 0 %}недоступно - {{ states('sensor.all_sensor_unavailable') }} {% else %} {{'\U0001F197'}} {% endif %}
+                        {{'\U0001F3E0'}} *Присутствие* - {% if (states('sensor.presence_detected') | int) > 0 %} {{ states('sensor.presence_detected') }} человек {% else %} присутствия нет {% endif %}
+                        {{'\U0001F3C3'}} *Движение* - {% if (states('sensor.motion_detected') | int) > 0 %} {{ states('sensor.motion_detected') }} датчиков {% else %} движения нет {% endif %}
+                        {{'\U0001F6AA'}} *Двери* - {% if (states('sensor.open_door') | int) > 0 %}открыто {{ states('sensor.open_door') }} {% else %} все закрыты {% endif %}
+                        {{'\U0001F50B'}} *Батарейки < 10%* {% if (states('sensor.battery_lower_10') | int) > 0 %} - {{ states('sensor.battery_lower_10') }} {% else %} {{'\U00002705'}} {% endif %}
+                        {{'\U0001F199'}} *Обновления HA и Add-on*{% if (states('sensor.update_yes') | int) > 0 %}: есть - {{ states('sensor.update_yes') }} {% else %} - {{'\U0001F197'}} {% endif %}
+                        {{'\U0001F199'}} *Обновления Hacs*{% if (states('sensor.hacs') | int) > 0 %}: есть - {{ states('sensor.hacs') }} {% else %} - {{'\U0001F197'}} {% endif %}
+                      inline_keyboard: &keyb_sd
+                        - '{{''\U00002601''}} Погода :/weather , {{''\U0001F4F9''}} Камеры :/cameras'
+                        - '{{''\U0001F4A1''}} Включенные :/list_light_on , {{''\U0001F4A1''}} Недоступные :/list_light_unavailable'
+                        - '{{''\U000026A1''}} Активные :/list_all_switch_on , {{''\U0001F50C''}} Недоступные :/all_switch_unavailable'
+                        - '{{''\U0001F51F''}} Бинарные :/list_all_binary_sensor_unavailable , {{''\U0001F520''}} Сенсоры :/list_all_sensor_unavailable , {{''\U0001F50B''}} Батарейки :/list_battery_lower_10'
+                        - '{{''\U0001F3C3''}} Движение :/list_motion_detected , {{''\U0001F3E0''}} Кто дома :/list_presence_detected , {{''\U0001F6AA''}} Двери :/list_open_door' 
+                        - '{{''\U0001F199''}} HA и Add-on:/update_ha , {{''\U0001F199''}} Hacs:/update_hacs , {{''\U0001F504''}} Restart НА :/restart_ha' 
+                        - '{{''\U000021A9''}} Вернуться:/menu_back , {{''\U000021AA''}} Обновить:/system_data' 
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/weather'' }}'
+                sequence:
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      message: |
+                         * *
+                         {{"\U0001F3E0"}} Отчет погоды за {{ states('sensor.custom_time_data') }}
+                         {{"\U000026C5"}} Погода:   {{ states('sensor.openweathermap_weather') }}
+                         {{'\U0001F321'}} Температура:   {{ states('sensor.openweathermap_temperature') }} °C
+                         {{'\U0001F321'}} Прогноз дня: {{ states('sensor.openweathermap_forecast_temperature') }} °C / {{ states('sensor.openweathermap_forecast_temperature_low') }} °C
+                         {{"\U0001F4A7"}} Влажность:   {{ states('sensor.openweathermap_humidity') }} %
+                         {{"\U0001F4A8"}} Ветер:   {{ states('sensor.openweathermap_wind_speed_kmh') }} км/ч
+                         {{"\U0001F4AA"}} Давление:   {{ states('sensor.openweathermap_forecast_pressure_mmhg') }} мм рт. ст
+                         {{"\U0001F327"}} Прогноз дождя:   {{ states('sensor.openweathermap_rain') }}
+                         {{"\U0001F328"}} Прогноз снега:   {{ states('sensor.openweathermap_snow') }}
+                         
+                         {{"\U0001F609"}} Приятного Вам дня!!! {{"\U0001F618"}}
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_light_on'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.all_light_on') | int) > 0 %} {{"\U0001F4A1"}} *Включенное освещение: * {% else %} *Все освещение выключено* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.all_light_on', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_light_unavailable'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.all_light_unavailable') | int) > 0 %} {{"\U000026A0"}} *Недоступное освещение: * {% else %} *Все освещение доступно* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.all_light_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_all_switch_on'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.all_switch_on') | int) > 0 %} {{"\U000026A1"}} *Включеные розетки:* {% else %} *Все розетки выключены* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.all_switch_on', 'list_entities')-%} {{ entity_name }} {{ '-' }} {{ entity_state }} {{ 'Ватт' }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/all_switch_unavailable'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.all_switch_unavailable') | int) > 0 %} {{"\U0001F50C"}} *Недоступные розетки: * {% else %} *Все розетки доступны* {% endif %}
+                         *{% for entity_name, entity_state in state_attr('sensor.all_switch_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                         * *
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_all_binary_sensor_unavailable'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.all_binary_sensor_unavailable') | int) > 0 %} {{"\U0001F50C"}} *Недоступные бинарные сенсоры: * {% else %} *Все бинарные сенсоры доступны* {% endif %}
+                         *{% for entity_name, entity_state in state_attr('sensor.all_binary_sensor_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                         * *
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_all_sensor_unavailable'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.all_sensor_unavailable') | int) > 0 %} {{"\U0001F50C"}} *Недоступные сенсоры: * {% else %} *Все сенсоры доступны* {% endif %}
+                         *{% for entity_name, entity_state in state_attr('sensor.all_sensor_unavailable', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                         * *
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_motion_detected'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.motion_detected') | int) > 0 %} {{"\U0001F3C3"}} *Движение: * {% else %} *Движение не обнаружено* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.motion_detected', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_presence_detected'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.presence_detected') | int) > 0 %} {{"\U0001F3E0"}} *Сейчас Дома: * {% else %} *Присутствия не обнаружено* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.presence_detected', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_open_door'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.open_door') | int) > 0 %} {{"\U0001F6AA"}} *Открытые двери: * {% else %} *Все двери закрыты* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.open_door', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/list_battery_lower_10'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.battery_lower_10') | int) > 0 %} {{"\U0001F50B"}} *Разряжающиеся батарейки: * {% else %} *Все батарейки в порядке* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.battery_lower_10', 'list_entities')-%} {{ entity_name }} {{ '-' }} {{ entity_state }} {{ '%' }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/update_ha'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                         * *
+                         {% if (states('sensor.update_yes') | int) > 0 %} {{"\U0001F199"}} *Доступные обновления: * {% else %} *Обновлений НЕТ {{"\U0001F44C"}}* {% endif %}
+                         * *
+                         *{% for entity_name, entity_state in state_attr('sensor.update_yes', 'list_entities')-%} {{ entity_name }} {{ '\n' -}} {% endfor %}*
+                      inline_keyboard: *keyb_sd
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/update_hacs'' }}'
+                sequence:
+                  - service: input_button.press
+                    target:
+                        entity_id: input_button.system_data_reload
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      title: *msg_sd
+                      message: |
+                          * *
+                          {% if (states('sensor.hacs') | int) > 0 %} {{"\U0001F199"}} *Доступные обновления: * {% else %} *Обновлений НЕТ {{"\U0001F44C"}}* {% endif %}
+                          {% for repo in state_attr('sensor.hacs', 'repositories') %}
+                          {{ repo.display_name }} {{ repo["installed_version"] }} -> {{ repo["available_version"] }}
+                          {% endfor %}
+                      inline_keyboard: *keyb_sd
+
+
+
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/restart_ha'' }}'
+                sequence:
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - service: script.turn_on
+                    entity_id: script.restart_ha
+                  - service: telegram_bot.answer_callback_query
+                    data:
+                      callback_query_id: "{{ trigger.event.data.id }}"
+                      message: | 
+                          {{"\U00002757"}} Перезагрузка сервера Home Assistant
+
+
+####################################################### Управление Камерами ############################################################
+
+      - id: Меню управления камерами в телеграме
+        alias: (Telegram) Меню управления камерами
+        initial_state: true
+        trigger:
+          - platform: event
+            event_type: telegram_callback
+            event_data: {}
+        action:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/cameras'' }}'
+                sequence:
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}' 
+                  - service: telegram_bot.send_message
+                    data:
+                      target: "{{ trigger.event.data.chat_id }}"
+                      message:  &msg_cam |
+                        {{'\U0001F4F9'}} *Управление Камерами :*
+                      inline_keyboard: &keyb_cam
+                        - '{{''\U0001F4F7''}} Фото с HallWay :/photo_hallway , {{''\U0001F4F7''}} Фото с BedRoom :/photo_bedroom'
+                        - '{{''\U0001F4F9''}} Видео с HallWay :/video_hallway , {{''\U0001F4F9''}} Видео с BedRoom :/video_bedroom'
+                        - '{{''\U000021A9''}} Вернуться:/system_data , {{''\U000021AA''}} Обновить:/cameras'
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/photo_hallway'' }}'
+                sequence:
+                  - service: camera.snapshot
+                    data:
+                         entity_id: camera.reolink_hallway_profile000_mainstream
+                         filename: "/config/www/camera/reolink_hallway.jpg"
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - delay: 00:00:03
+                  - service: telegram_bot.send_photo
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      file: "/config/www/camera/reolink_hallway.jpg"
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      message: *msg_cam
+                      inline_keyboard: *keyb_cam
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/photo_bedroom'' }}'
+                sequence:
+                  - service: camera.snapshot
+                    data:
+                         entity_id: camera.reolink_bedroom_profile000_mainstream
+                         filename: "/config/www/camera/reolink_bedroom.jpg"
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - delay: 00:00:03
+                  - service: telegram_bot.send_photo
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      file: "/config/www/camera/reolink_bedroom.jpg"
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      message: *msg_cam
+                      inline_keyboard: *keyb_cam
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/video_hallway'' }}'
+                sequence:
+                  - service: camera.record
+                    data:
+                        entity_id: camera.reolink_hallway_profile000_mainstream
+                        filename: "/config/www/camera/reolink_hallway.mp4"
+                        duration: 15
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - delay: 00:00:22
+                  - service: telegram_bot.send_video
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      file: "/config/www/camera/reolink_hallway.mp4"
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      message: *msg_cam
+                      inline_keyboard: *keyb_cam
+
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/video_bedroom'' }}'
+                sequence:
+                  - service: camera.record
+                    data:
+                        entity_id: camera.reolink_bedroom_profile000_mainstream
+                        filename: "/config/www/camera/reolink_bedroom.mp4"
+                        duration: 15
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+                  - delay: 00:00:22
+                  - service: telegram_bot.send_video
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      file: "/config/www/camera/reolink_bedroom.mp4"
+                  - service: telegram_bot.send_message
+                    data:
+                      target: '{{ trigger.event.data.chat_id }}'
+                      message: *msg_cam
+                      inline_keyboard: *keyb_cam
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

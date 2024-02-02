@@ -1,0 +1,347 @@
+presence:
+
+#########################################################################################################################################
+#                                                                  Шаблоны 
+#########################################################################################################################################
+
+    template:
+     
+      - binary_sensor:
+
+# Кто дома
+
+          - name: doma_vse
+            state: >
+              {{ is_state('input_boolean.serega', 'on')
+                 and is_state('input_boolean.nadiusha', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.doma_vse", "on") %}
+              mdi:account-multiple-check-outline
+              {% else %}
+              mdi:account-multiple-minus-outline
+              {% endif %}
+
+          - name: cepera_home
+            state: >
+              {{ is_state('input_boolean.serega', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.cepera_home", "on") %}
+              mdi:home-account
+              {% else %}
+              mdi:home-off
+              {% endif %}
+
+          - name: nadya_home
+            state: >
+              {{ is_state('input_boolean.nadiusha', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.nadya_home", "on") %}
+              mdi:home-account
+              {% else %}
+              mdi:home-off
+              {% endif %}
+
+# Общий сенсор присутствия по BLU
+
+          - name: serega_mi_band_4
+            state: >
+              {{ is_state('binary_sensor.esp32_ostrovok_cepera_mi_band_presence', 'on')
+                 or is_state('binary_sensor.blinds_livingroom_cepera_mi_band', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.serega_mi_band_4", "on") %}
+              mdi:watch-variant
+              {% else %}
+              watch-vibrate-off
+              {% endif %}
+
+          - name: nadiusha_mi_band_4
+            state: >
+              {{ is_state('binary_sensor.esp32_ostrovok_nadya_mi_band_presence', 'on')
+                 or is_state('binary_sensor.blinds_livingroom_nadya_mi_band', 'on')
+              }}
+            device_class: occupancy
+            icon: >
+              {% if is_state("binary_sensor.serega_mi_band_4", "on") %}
+              mdi:watch-variant
+              {% else %}
+              watch-vibrate-off
+              {% endif %}
+
+
+#########################################################################################################################################
+#                                                                Скрипты 
+#########################################################################################################################################
+
+    script:
+
+      camera_bedroom_in_room:
+        alias: (Присутствие) Поворот camera.bedroom в Спальню
+        icon: mdi:webcam
+        sequence:
+          - service: onvif.ptz
+            data:
+              preset: '000'
+              move_mode: GotoPreset
+            target:
+              entity_id: camera.reolink_bedroom_profile000_mainstream
+
+      camera_bedroom_in_door:
+        alias: (Присутствие) Поворот camera.bedroom на Входную дверь
+        icon: mdi:webcam
+        sequence:
+          - service: onvif.ptz
+            data:
+              preset: '001'
+              move_mode: GotoPreset
+            target:
+              entity_id: camera.reolink_bedroom_profile000_mainstream
+
+#########################################################################################################################################
+#                                                         Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+########################################################## Присутствие ##################################################################
+
+# СерегА Дома
+
+        - alias: (Присутствие) СерегА Дома
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: binary_sensor.serega_mi_band_4, device_tracker.ping_cepera
+          action:
+          - choose:
+            - conditions:
+              - condition: or
+                conditions:
+                - condition: state
+                  entity_id: binary_sensor.serega_mi_band_4
+                  state: 'off'
+                - condition: state
+                  entity_id: binary_sensor.serega_mi_band_4
+                  state: 'unavailable'
+              - condition: state
+                entity_id: device_tracker.ping_cepera
+                state: not_home
+              sequence:
+              - service: input_boolean.turn_off
+                target:
+                    entity_id: input_boolean.serega
+            - conditions:
+              - condition: or
+                conditions:
+                - condition: state
+                  entity_id: binary_sensor.serega_mi_bahd_4
+                  state: 'on'
+                - condition: state
+                  entity_id: device_tracker.ping_cepera
+                  state: home
+              sequence: 
+                - service: input_boolean.turn_on
+                  target:
+                    entity_id: input_boolean.serega
+
+        
+# Надюша Дома
+        - alias: (Присутствие) Надюша Дома
+          initial_state: true
+          trigger:
+          - platform: state
+            entity_id: binary_sensor.nadiusha_mi_band_4, device_tracker.ping_nadya
+          - platform: time_pattern
+            minutes: '/30'
+          action:
+          - choose:
+            - conditions:
+              - condition: or
+                conditions:
+                - condition: state
+                  entity_id: binary_sensor.nadiusha_mi_band_4
+                  state: 'off'
+                - condition: state
+                  entity_id: binary_sensor.nadiusha_mi_band_4
+                  state: 'unavailable'
+              - condition: state
+                entity_id: device_tracker.ping_nadya
+                state: not_home
+              sequence:
+              - service: input_boolean.turn_off
+                target:
+                    entity_id: input_boolean.nadiusha
+            - conditions:
+              - condition: or
+                conditions:
+                - condition: state
+                  entity_id: binary_sensor.nadiusha_mi_band_4
+                  state: 'on'
+                - condition: state
+                  entity_id: device_tracker.ping_nadya
+                  state: home
+              sequence: 
+                - service: input_boolean.turn_on
+                  target:
+                    entity_id: input_boolean.nadiusha
+
+
+############################################################ Пришли Домой ###############################################################
+
+# Действия по приходу домой
+        - alias: (Присутствие) Пришли домой 
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: group.Vse_doma
+              to: 'on'
+          action:
+            - service: light.turn_on
+              entity_id: light.galaxy_tab_a8_screen
+            - delay: 00:00:01
+            - service: switch.turn_off
+              entity_id: switch.uvedomlenie_trevogi
+            - delay: 00:00:01
+            - service: switch.turn_off
+              entity_id: switch.doorbell_notification
+            - delay: 00:10:00
+
+
+# Вкл автоматизации
+        - alias: (Присутствие) Пришли - Вкл автоматизаций
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: input_boolean.serega
+              to: 'on'
+            - platform: state
+              entity_id: input_boolean.nadiusha
+              to: 'on'
+          condition:
+            - condition: state
+              entity_id: 
+#                - automation.vkl_lenty_na_kukhne_pri_dvizhenii_vecherom
+                - automation.vkl_svet_v_garderobnoi_pri_dvizhenii
+                - automation.vkl_svet_v_koridore_pri_dvizhenie
+              state: 'off'
+          action:
+            - service: homeassistant.turn_on
+              entity_id: 
+#                - automation.vkl_lenty_na_kukhne_pri_dvizhenii_vecherom
+                - automation.vkl_svet_v_garderobnoi_pri_dvizhenii
+                - automation.vkl_svet_v_koridore_pri_dvizhenie
+
+
+########################################################### Нет никого Дома ############################################################
+
+# Выкл всего
+
+        - alias: (Присутствие) Ушли - Выкл все
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: group.Vse_doma
+              to: 'off'
+          action:
+            - service: script.turn_on
+              entity_id: script.all_in_the_home_off
+            - delay: 00:00:01
+            - service: switch.turn_on
+              entity_id: switch.uvedomlenie_trevogi
+            - delay: 00:00:01
+            - service: switch.turn_on
+              entity_id: switch.doorbell_notification
+            - delay: 00:00:05
+            # - service: script.turn_on
+            #   entity_id: script.camera_bedroom_in_door
+
+# Выкл автоматизации
+        - alias: (Присутствие) Ушли - Выкл автоматизаций
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: group.Vse_doma
+              to: 'off'
+          action:
+            - service: homeassistant.turn_off
+              entity_id: 
+#                - automation.vkl_lenty_na_kukhne_pri_dvizhenii_vecherom
+                - automation.vkl_svet_v_garderobnoi_pri_dvizhenii
+                - automation.vkl_svet_v_koridore_pri_dvizhenie
+
+# Проникновение
+        - id: Открылись входные двери
+          alias: (Telegram) Открытие входных дверей
+          initial_state: true
+          trigger:   
+             - platform: state
+               entity_id: binary_sensor.0x158d0001dff57f_contact
+               to: 'on'
+          condition:
+             - condition: state
+               entity_id: input_boolean.serega
+               state: 'off'
+             - condition: state
+               entity_id: input_boolean.nadiusha
+               state: 'off'
+          action:
+             - service: camera.record
+               data_template:
+                  entity_id: camera.reolink_hallway_profile000_mainstream
+                  filename: "/config/www/camera/reolink_hallway.mp4"
+                  duration: 30
+             - service: camera.record
+               data_template:
+                  entity_id: camera.reolink_bedroom_profile000_mainstream
+                  filename: "/config/www/camera/reolink_bedroom.mp4"
+                  duration: 30
+             - delay: 00:01:00
+             - condition: and
+               conditions:
+                 - condition: state
+                   entity_id: input_boolean.serega
+                   state: 'off'
+                 - condition: state
+                   entity_id: input_boolean.nadiusha
+                   state: 'off'
+             - service: notify.Telegram_Group
+               data:
+                message: | 
+                      {{"\U000026A0"}} Опасность
+                      {{"\U0000203C"}} ПРОНИКНОВЕНИЕ в {{ states('sensor.time') }} !
+                      {{"\U0001F4F1"}} (Аня) +38...985
+                      {{"\U0001F4F1"}} (Ковальчук) +38....163
+                      {{"\U0001F4F1"}} (Руслан) +380.....00
+             - service: telegram_bot.send_video
+               data_template:
+                 target:
+                    - !secret telegram_ID_Cepera
+                 file: "/config/www/camera/reolink_hallway.mp4"
+             - service: telegram_bot.send_video
+               data_template:
+                 target:
+                    - !secret telegram_ID_Cepera
+                 file: "/config/www/camera/reolink_bedroom.mp4"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,127 @@
+################################################################################################
+########################################### Гардеробная #########################################
+################################################################################################
+
+      type: custom:layout-card
+      layout_type: vertical
+      layout:
+        max_cols: 1
+        width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Гардеробная                                ##
+          icon: mdi:wardrobe
+          template: button_return_big
+
+################################### Выключить все ###########################################
+
+
+################################### Какие устройства вкл. ###########################################
+
+        - type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+              grid-template-columns: 87% auto
+          cards:
+
+            - type: conditional
+              conditions:
+                  - entity: group.garderobnaia                       ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  name: Включеные приборы
+                  template: button_zagolovok_2
+
+#=================================== Кнопка Выключить все ==========================================
+            - type: conditional
+              conditions:
+                  - entity: group.garderobnaia                         ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  icon: mdi:lightbulb-group-off
+                  entity: group.garderobnaia                           ##
+                  template: button_svet_all
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                        entity_id: group.garderobnaia                   ##
+                    confirmation:
+                        text: 'Выключить весь свет в Гардеробной?'
+#============================================================================================
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+    
+            - type: conditional
+              conditions:
+                  - entity: switch.svet_v_garderobnoi                       ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.svet_v_garderobnoi                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет
+                  template: button_svet_purpur_180
+
+################################### Выключатель ###########################################
+        - type: custom:button-card
+          name: Освещение
+          template: button_zagolovok
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+
+                - type: custom:button-card
+                  entity: switch.svet_v_garderobnoi                            ##
+                  icon: mdi:lightbulb-spot
+                  name: Свет
+                  template: button_svet_purpur_180
+
+################################### Датчики, Сенсоры ###########################################
+        - type: custom:button-card
+          name: Датчики
+          template: button_zagolovok
+    
+        - type: grid
+          columns: 2
+          square: false
+          cards:
+
+            - type: custom:button-card
+              entity: binary_sensor.0x158d00062fdc4f_motion
+              name: Гардеробная 
+              template: button_sensor_motion
+
+################################### Кнопка Режима ###########################################
+
+
+
+################################### Автоматизации ###########################################
+
+        - type: custom:button-card
+          entity: input_boolean.ui_hide_automation
+          name: Автоматизации
+          template: button_zagolovok_menu
+
+        - type: custom:state-switch
+          entity: input_boolean.ui_hide_automation
+          transition: slide-left
+#          transition_time: 1000
+          states:
+              "on":
+                type: entities
+                entities:
+                  - entity: automation.vkl_svet_v_garderobnoi_pri_dvizhenii
+                  - entity: automation.vykl_svet_v_garderobnoi_po_otsutstviiu_dvizheniia
+                  - entity: automation.vykl_svet_v_garderobnoi_prinuditelno
+                  - entity: automation.vykl_svet_v_garderobnoi_stirka

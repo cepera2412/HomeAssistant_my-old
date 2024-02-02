@@ -1,0 +1,320 @@
+zvonok:
+
+#########################################################################################################################################
+#                                                                  Сенсоры 
+#########################################################################################################################################
+
+#    sensor:
+
+#########################################################################################################################################
+#                                                                  Скрипты 
+#########################################################################################################################################
+
+    script:
+
+        zvonok_normal:
+          alias: Звонок перевести в состояние normal
+          icon: mdi:doorbell
+          sequence:
+          - service: localtuya.set_dp
+            data:
+              device_id: bf2130cf8d3a6a0366qo1v
+              dp: 32
+              value: "normal"
+
+        zvonok_vol_mute:
+          alias: Звонок громкость mute
+          icon: mdi:doorbell
+          sequence:
+          - service: localtuya.set_dp
+            data:
+              device_id: bf2130cf8d3a6a0366qo1v
+              dp: 30
+              value: "mute"
+        
+        zvonok_vol_lower_middle:
+          alias: Звонок громкость lower_middle
+          icon: mdi:doorbell
+          sequence:
+          - service: localtuya.set_dp
+            data:
+              device_id: bf2130cf8d3a6a0366qo1v
+              dp: 30
+              value: "lower_middle"
+        
+        zvonok_vol_upper_middle:
+          alias: Звонок громкость upper_middle
+          icon: mdi:doorbell
+          sequence:
+          - service: localtuya.set_dp
+            data:
+              device_id: bf2130cf8d3a6a0366qo1v
+              dp: 30
+              value: "upper_middle"
+        
+        zvonok_vol_low:
+          alias: Звонок громкость low
+          icon: mdi:doorbell
+          sequence:
+          - service: localtuya.set_dp
+            data:
+              device_id: bf2130cf8d3a6a0366qo1v
+              dp: 30
+              value: "low"
+        
+        zvonok_vol_high:
+          alias: Звонок громкость high
+          icon: mdi:doorbell
+          sequence:
+          - service: localtuya.set_dp
+            data:
+              device_id: bf2130cf8d3a6a0366qo1v
+              dp: 30
+              value: "high"
+
+
+        screen_off_timer_zvonok:
+          alias: (Планшет) Увеличения таймера экрана при звонке
+          icon: mdi:tablet
+          sequence:
+            - service: number.set_value
+              data:
+                value: '120'
+              target:
+                entity_id:
+                  - number.galaxy_tab_a8_screen_off_timer
+
+
+#########################################################################################################################################
+#                                                               Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+# Звуковой сигнал при нажатии
+        - alias: (Звонок) Кнопка звонка Mi звук
+          initial_state: true
+          trigger:
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: single
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: double
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: hold
+          action:
+            - service: script.zvonok_vol_lower_middle
+
+# Звуковой сигнал при нажатии тихо
+        - alias: (Звонок) Кнопка звонка Mi звук тихо
+          initial_state: false
+          trigger:
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: single
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: double
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: hold
+          action:
+            - service: script.zvonok_vol_low
+
+# Вкл. камеры при нажатии и телеграм
+        - alias: (Звонок) Кнопка звонка Mi камера
+          initial_state: true
+          trigger:
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: single
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: double
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: hold
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: group.Vse_doma
+                    state: 'on'
+                sequence:
+                    - service: light.turn_on
+                      entity_id: light.galaxy_tab_a8_screen
+                    - service: light.turn_on
+                      entity_id: light.cepera_screen
+                    - delay: 00:00:01
+                    - service: browser_mod.popup
+                      data:
+                        content:
+                            type: custom:frigate-card
+                            cameras:
+                              - camera_entity: camera.camera1
+                        size: wide
+                        browser_id: 
+                          - d7f06977-f88fde14
+                          - phone-ostrovok
+                    - service: script.screen_off_timer_zvonok
+                    - delay: 00:00:04
+                    - service: timer.cancel
+                      entity_id: timer.tablet_screen_off
+                    - delay: 00:01:00
+                    - service: browser_mod.close_popup
+                      data:
+                        browser_id: phone-ostrovok
+                    - delay: 00:01:30
+                    - service: browser_mod.close_popup
+                      data:
+                        browser_id: d7f06977-f88fde14
+              - conditions:
+                  - condition: state
+                    entity_id: group.Vse_doma
+                    state: 'off'
+                sequence:
+                  - service: notify.Telegram_Group
+                    data:
+                      message: | 
+                          {{"\U000026A0"}} Кто-то позвонил в дверь! Сейчас будет фото и видео!
+                  - service: camera.snapshot
+                    data:
+                        entity_id: camera.reolink_hallway_profile000_mainstream
+                        filename: "/config/www/camera/reolink_hallway.jpg"
+                  - delay: 00:00:03
+                  - service: telegram_bot.send_photo
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      file: "/config/www/camera/reolink_hallway.jpg"
+                  - service: notify.Telegram_Group
+                    data:
+                      message: | 
+                          {{"\U00002757"}} Можите запустить приложение Reolink и поговорите с посетителем.
+                  - service: camera.record
+                    data_template:
+                      entity_id: camera.reolink_hallway_profile000_mainstream
+                      filename: "/config/www/camera/reolink_hallway.mp4"
+                      duration: 30
+                  - delay: 00:00:35
+                  - service: telegram_bot.send_video
+                    data_template:
+                      target:
+                        - !secret telegram_ID_group
+                      file: "/config/www/camera/reolink_hallway.mp4"
+
+# Вкл. голосового оповещения при нажатии
+        - alias: (Звонок) Кнопка звонка Mi speaker
+          initial_state: true
+          trigger:
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: single
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: double
+            - platform: event
+              event_type: xiaomi_aqara.click
+              event_data:
+                entity_id: sensor.0x00158d0008317581_action
+                click_type: hold
+          action:
+            - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: group.Vse_doma
+                    state: 'on'
+                  - condition: state
+                    entity_id: binary_sensor.time_zvonok_golos_on
+                    state: 'on'
+                  - condition: state
+                    entity_id: input_boolean.dima_sleep
+                    state: 'off'
+                sequence:
+                    - service: media_player.volume_set
+                      data:
+                        volume_level: 0.5
+                      target:
+                        entity_id: media_player.mi_speaker
+                    - delay: 00:00:01
+                    - service: tts.google_translate_say
+                      data:
+                          entity_id: media_player.mi_speaker
+                          language: "uk"
+                          message: "Увага! Хтось зателефонував у двері!"
+                    - delay: 00:00:05
+                    - service: tts.google_translate_say
+                      data:
+                          entity_id: media_player.mi_speaker
+                          language: "uk"
+                          message: "Увага! Хтось зателефонував у двері!"
+              - conditions:
+                  - condition: state
+                    entity_id: group.Vse_doma
+                    state: 'on'
+                  - condition: state
+                    entity_id: binary_sensor.time_zvonok_golos_on
+                    state: 'on'
+                  - condition: state
+                    entity_id: input_boolean.dima_sleep
+                    state: 'on'
+                sequence:
+                    - service: media_player.volume_set
+                      data:
+                        volume_level: 0.3
+                      target:
+                        entity_id: media_player.mi_speaker
+                    - delay: 00:00:01
+                    - service: tts.google_translate_say
+                      data:
+                          entity_id: media_player.mi_speaker
+                          language: "uk"
+                          message: "Увага! Хтось зателефонував у двері!"
+                    - delay: 00:00:05
+                    - service: tts.google_translate_say
+                      data:
+                          entity_id: media_player.mi_speaker
+                          language: "uk"
+                          message: "Увага! Хтось зателефонував у двері!"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

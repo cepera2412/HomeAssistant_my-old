@@ -1,0 +1,268 @@
+tv:
+
+##########################################################################################################################################
+#                                                                     Шаблоны 
+##########################################################################################################################################
+
+    template:
+     
+      - binary_sensor:
+
+# Телек в работе
+          - name: xiaomitv_on
+            state: >
+              {{ states ( 'media_player.xiaomitv' ) != 'unavailable' }}
+
+##########################################################################################################################################
+#                                                             Скрипты 
+##########################################################################################################################################
+
+    script:
+
+############################################### Скрипты для Xiaomi TV..........Спальня ##################################################
+
+        box_home:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера  
+                command: HOME
+
+        box_power:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: POWER  
+
+        box_sleep:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: SLEEP
+
+        box_up:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: UP
+
+        box_down:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: DOWN
+
+        box_left:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: LEFT
+
+        box_right:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера  
+                command: RIGHT
+
+        box_volume_up:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: VOLUME_UP
+
+        box_volume_down:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: VOLUME_DOWN
+
+        box_center:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: CENTER
+
+        box_back:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера  
+                command: BACK
+
+        box_menu:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: MENU
+
+        box_mute:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: MUTE
+
+        box_search:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: SEARCH
+
+        box_setting:
+          icon: mdi:remote-tv
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.androidbox # Это имя которое вы указали в настройках медеа плеера 
+                command: SETTINGS
+
+        box_youtube:
+          icon: mdi:remote-tv
+          sequence:
+          - service: media_player.select_source
+            data:
+              entity_id: media_player.androidbox
+              source: "YouTube"
+
+        box_lm_delux:
+          icon: mdi:remote-tv
+          sequence:
+          - service: media_player.select_source
+            data:
+              entity_id: media_player.androidbox
+              source: "com.lazycatsoftware.lmd"
+
+        box_chrome:
+          icon: mdi:remote-tv
+          sequence:
+          - service: media_player.select_source
+            data:
+              entity_id: media_player.androidbox
+              source: "com.android.chrome"
+
+        box_hdbox:
+          icon: mdi:remote-tv
+          sequence:
+          - service: media_player.select_source
+            data:
+              entity_id: media_player.androidbox
+              source: "dkc.video.hdbox"
+
+        box_dash:
+          icon: mdi:remote-tv
+          sequence:
+          - service: media_player.select_source
+            data:
+              entity_id: 
+              source: "com.android.YouTube"
+
+
+#########################################################################################################################################
+#                                                              Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+# Подсветка на телеке Mi
+        - id: Вкл подсветки
+          alias: (Xiaomi TV) Вкл подсветки
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.xiaomitv_on
+              to: 'on'
+          action:
+              - service: select.select_option
+                data:
+                  entity_id: select.wled_preset
+                  option: Preset 1
+
+        - id: Выкл подсветки
+          alias: (Xiaomi TV) Выкл подсветки
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: media_player.xiaomitv
+              to: 'unavailable'
+          action:
+              - service: light.turn_off
+                entity_id: 
+                   - light.wled
+
+# Случайное вкл WLED
+        - id: Случайное вкл подсветки
+          alias: (Xiaomi TV) Случайное вкл подсветки
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: light.wled
+              to: 'on'
+              for:
+                minutes: 1
+          condition:
+           - condition: state
+             entity_id: media_player.xiaomitv
+             state: 'unavailable'
+          action:
+              - service: light.turn_off
+                entity_id: 
+                   - light.wled
+
+
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

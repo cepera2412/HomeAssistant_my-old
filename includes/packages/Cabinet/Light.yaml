@@ -1,0 +1,30 @@
+cabinet:
+
+######################################################################################################
+#                                       Автоматизации 
+######################################################################################################
+
+    automation:
+
+        - id: Принудительное выкл света в кабинете
+          alias: (Кабинет) Принудительное выкл света
+          initial_state: true
+          trigger:
+            - platform: state
+              entity_id: binary_sensor.no_presence_doma
+              from: 'off'
+              to: 'on'
+          condition:
+           - condition: state
+             entity_id: switch.svet_v_kabinete
+             state: 'on'
+          action:
+            - service: switch.turn_off
+              entity_id: switch.svet_v_kabinete
+
+
+
+
+
+
+

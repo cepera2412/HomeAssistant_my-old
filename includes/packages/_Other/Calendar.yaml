@@ -1,0 +1,114 @@
+calendar:
+
+##########################################################################################################################################
+#                                                                  Шаблоны 
+##########################################################################################################################################
+
+#    template:
+
+
+##########################################################################################################################################
+#                                                                Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+############################################################### Утренняя смена ###########################################################
+
+
+# Вкл чайника и погода
+        - alias: (Календарь) Утренняя смена
+          trigger:
+            - platform: calendar
+              event: start
+              offset: "-1:06:0"
+              entity_id: calendar.rabota
+          condition:
+            - condition: template
+              value_template: "{{ 'Утренняя смена' in trigger.calendar_event.summary }}"
+          action:
+            - service: automation.turn_off
+              entity_id: automation.kukhnia_vykl_lenty_po_otsutstviiu_dvizheniia
+            - service: automation.turn_off
+              entity_id: automation.koridor_vykl_svet_pri_zakrytie_dveri
+            - delay: 00:00:01
+            - service: switch.turn_on
+              entity_id: switch.chainik
+            - service: automation.turn_on
+              entity_id: automation.koridor_vykl_svet_pri_zakrytie_dveri_na_utrenniuiu_smenu
+            - delay: 00:06:00
+            - service: script.turn_on
+              entity_id: script.climate_report_cepera
+          mode: single
+
+# Выкл свет при закрытие двери на утреннюю смену
+        - alias: (Коридор) Выкл свет при закрытие двери на утреннюю смену
+          initial_state: false
+          trigger:
+           - platform: state
+             entity_id: binary_sensor.0x158d0001dff57f_contact
+             from: 'on'
+             to: 'off'
+          action:
+            - service: switch.turn_off
+              entity_id: switch.svet_v_koridore
+            - service: switch.turn_off
+              entity_id: switch.lenta_na_kukhne
+            - delay: 00:00:01
+            - service: automation.turn_on
+              entity_id: automation.kukhnia_vykl_lenty_po_otsutstviiu_dvizheniia
+            - service: automation.turn_on
+              entity_id: automation.koridor_vykl_svet_pri_zakrytie_dveri
+            - delay: 00:00:01
+            - service: automation.turn_off
+              entity_id: automation.koridor_vykl_svet_pri_zakrytie_dveri_na_utrenniuiu_smenu
+
+
+############################################################### Вечерняя смена ###########################################################
+
+# Погода перед сменой
+        - alias: (Календарь) Вечерняя смена
+          trigger:
+            - platform: calendar
+              event: start
+              offset: "-1:00:0"
+              entity_id: calendar.rabota
+          condition:
+            - condition: template
+              value_template: "{{ 'Вечерняя смена' in trigger.calendar_event.summary }}"
+          action:
+            - service: script.turn_on
+              entity_id: script.climate_report_cepera
+          mode: single
+
+
+################################################################ Ночная смена ############################################################
+
+# Погода перед сменой
+        - alias: (Календарь) Ночная смена
+          trigger:
+            - platform: calendar
+              event: start
+              offset: "-1:00:0"
+              entity_id: calendar.rabota
+          condition:
+            - condition: template
+              value_template: "{{ 'Ночная смена' in trigger.calendar_event.summary }}"
+          action:
+            - service: script.turn_on
+              entity_id: script.climate_report_cepera
+          mode: single
+
+
+
+
+
+
+
+
+
+
+
+
+
+

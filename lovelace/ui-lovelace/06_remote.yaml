@@ -1,0 +1,293 @@
+title: Пульт
+icon: mdi:remote-tv
+cards:
+
+############################## Пульт для Xiaomi TV #########################################
+
+        - type: vertical-stack
+          title: Пульт TV в спальне
+          cards: 
+          - type: horizontal-stack
+            cards:  
+              - type: media-control
+                entity: media_player.xiaomitv
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_mute
+                name: Mute
+                icon: mdi:volume-off
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_sleep
+                name: Sleep
+                icon: mdi:chat-sleep-outline
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_search
+                name: Поиск
+                icon: mdi:magnify
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/HDvideoBox.jpg
+                hold_action:
+                  action: none
+                tap_action:
+                  action: call-service
+                  service: script.box_hdbox
+                  service_data: {}
+                  target: {}
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_volume_up
+                name: Vol-
+                icon: mdi:volume-plus
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_up
+                name: Up
+                icon: mdi:arrow-up-bold
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_home
+                name: Home
+                icon: mdi:home-circle
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/youtube.jpg
+                tap_action:
+                  action: call-service
+                  service: script.box_youtube
+                  service_data: {}
+                  target: {}
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_left
+                name: Left
+                icon: mdi:arrow-left-bold
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_center
+                name: Enter
+                icon: mdi:location-enter
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_right
+                name: Right
+                icon: mdi:arrow-right-bold
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/LM Deluxe.jpg
+                tap_action:
+                  action: call-service
+                  service: script.box_lm_delux
+                  service_data: {}
+                  target: {}
+                hold_action:
+                  action: none
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_volume_down
+                name: Vol+
+                icon: mdi:volume-minus
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_down
+                name: Down
+                icon: mdi:arrow-down-bold
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_back
+                name: Back
+                icon: mdi:exit-to-app
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/Chrome.jpg
+                tap_action:
+                  action: call-service
+                  service: script.box_chrome
+                  service_data: {}
+                  target: {}
+                hold_action:
+                  action: none
+
+    
+############################## Пульт для UD TV #########################################
+
+        - type: vertical-stack
+          title: Пульт TV в Мастерской
+          cards: 
+          - type: horizontal-stack
+            cards:  
+              - type: media-control
+                entity: media_player.xiaomitv
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_mute
+                name: Mute
+                icon: mdi:volume-off
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.send_rm4c_mini
+                name: power
+                icon: mdi:power
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_search
+                name: Поиск
+                icon: mdi:magnify
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/HDvideoBox.jpg
+                hold_action:
+                  action: none
+                tap_action:
+                  action: call-service
+                  service: script.box_hdbox
+                  service_data: {}
+                  target: {}
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_volume_up
+                name: Vol-
+                icon: mdi:volume-plus
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_up
+                name: Up
+                icon: mdi:arrow-up-bold
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_home
+                name: Home
+                icon: mdi:home-circle
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/youtube.jpg
+                tap_action:
+                  action: call-service
+                  service: script.box_youtube
+                  service_data: {}
+                  target: {}
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_left
+                name: Left
+                icon: mdi:arrow-left-bold
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_center
+                name: Enter
+                icon: mdi:location-enter
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_right
+                name: Right
+                icon: mdi:arrow-right-bold
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/LM Deluxe.jpg
+                tap_action:
+                  action: call-service
+                  service: script.box_lm_delux
+                  service_data: {}
+                  target: {}
+                hold_action:
+                  action: none
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: script.box_volume_down
+                name: Vol+
+                icon: mdi:volume-minus
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_down
+                name: Down
+                icon: mdi:arrow-down-bold
+                tap_action:
+                  action: toggle
+              - type: button
+                entity: script.box_back
+                name: Back
+                icon: mdi:exit-to-app
+                tap_action:
+                  action: toggle
+              - type: picture
+                image: /local/images/Chrome.jpg
+                tap_action:
+                  action: call-service
+                  service: script.box_chrome
+                  service_data: {}
+                  target: {}
+                hold_action:
+                  action: none
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         
+
+
+
+
+
+

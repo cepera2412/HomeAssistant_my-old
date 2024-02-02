@@ -1,0 +1,2472 @@
+title: Главная
+panel: true
+icon: mdi:floor-plan
+cards:
+
+##########################################################################################################################################
+########################################################## План квартиры #################################################################
+##########################################################################################################################################
+      - type: picture-elements
+        image: local/3D Floorplan/Новое/1.1основной темный.png
+        style: |
+          ha-card {
+             background: none;
+             width: 129%;
+             margin: 0 auto;
+        elements:
+        
+##########################################################################################################################################
+######################################################### Картинки Вкл света #############################################################
+##########################################################################################################################################
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_vannoi
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/2.1ванная свет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_vannoi
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/3.1ванная лента.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_na_lodzhii
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/4.1лоджия свет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_na_lodzhii
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/5.1лоджия лента.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_tualete
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/6.1туалет свет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.podsvetka_on_v_tualete
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/7.1туалет подсветка.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_garderobnoi
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/8.1гардеробная.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_kabinete
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/9.1кабинет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_koridore
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/10.1коридор свет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_koridore
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/11.1коридор лента.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_spalne
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/12.1спальня свет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_spalne
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/13.1спальня лента.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_nad_stoleshnei
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/14.1кухня свет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_nad_stolom
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/15.1кухня свет над сталом.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_na_kukhne
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/16.1кухня лента.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_gostinoi
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/17.1гостиная свет.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.liustra_v_gostinoi
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/18.1гостиная люстра.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_gostinoi
+                state: 'on'
+            elements:
+              - type: image
+                image: local/3D Floorplan/Новое/19.1гостиная лента.png
+                style:
+                  pointer-events: none
+                  transform: translate(0,0)
+                  top: 0
+                  left: 0
+                  right: 0
+                  botton: 0
+                  mix-blend-mode: lighten
+
+########################################################################################################################################
+########################################################## Кнопки Комнат  ##############################################################
+########################################################################################################################################
+
+
+############################################################## Туалет  #################################################################
+          - type: image
+            entity: switch.svet_v_tualete
+            tap_action:
+              action: toggle
+            double_tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.vytiazhka_v_tualete
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-туалет.yaml
+            image: local/3D Floorplan/Новое/кнопки/туалет.png
+            style:
+              top: 3.4%
+              left: 60.5%
+              width: 9%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-5deg)
+              opacity: 0.0
+
+# Анимация
+          - type: custom:button-card
+            icon: mdi:fan
+            show_name: false
+            entity: switch.vytiazhka_v_tualete
+            tap_action:
+              action: none
+            state:
+              - value: 'on'
+                styles:
+                  icon:
+                    - color: '#f42010'
+                    - opacity: 0.9
+                    - animation: rotating 0.7s linear infinite 
+            styles:
+              card:
+                - background: none          # выкл фон
+                - box-shadow: none          # выкл обводку (тень)
+              icon:
+                - width: 28px
+                - opacity: 0.0
+            style:
+              top: 7.7%
+              left: 68.3%
+#              transform: translate(0,0) scale(1.4,1.4) rotate(0deg)
+
+############################################################# Ванная #################################################################### 
+          - type: image
+#            entity: switch.svet_v_vannoi
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.svet_v_vannoi
+            double_tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.lenta_v_vannoi
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-ванная.yaml
+            image: local/3D Floorplan/Новое/кнопки/ванна.png
+            style:
+              top: 9.4%
+              left: 61.5%
+              width: 9.5%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-5deg)
+              opacity: 0.0
+
+############################################################# Гардеробная ###############################################################
+          - type: image
+            entity: switch.svet_v_garderobnoi
+            tap_action:
+              action: toggle
+            # double_tap_action:
+            #   action: call-service
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                   service: browser_mod.popup
+                   data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-гардеробная.yaml
+            image: local/3D Floorplan/Новое/кнопки/гардеробная.png
+            style:
+              top: 6.4%
+              left: 25.9%
+              width: 17%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4deg)
+              opacity: 0.0
+
+############################################################### Гостинная ###############################################################
+          - type: image
+#            entity: switch.svet_v_gostinoi
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.svet_v_gostinoi
+            double_tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.lenta_v_gostinoi
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-гостиная.yaml
+            image: local/3D Floorplan/Новое/кнопки/гостинная.png
+            style:
+              top: 30.3%
+              left: 24.7%
+              width: 18.7%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-3deg)
+              opacity: 0.0
+
+################################################################# Кабинет ###############################################################
+          - type: image
+            entity: switch.svet_v_kabinete
+            tap_action:
+              action: toggle
+            # double_tap_action:
+            #   action: call-service
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-кабинет.yaml
+            image: local/3D Floorplan/Новое/кнопки/кабинет.png
+            style:
+              top: 71.2%
+              left: 39.8%
+              width: 14.7%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4.5deg)
+              opacity: 0.0
+
+################################################################## Коридор ##############################################################
+          - type: image
+#            entity: switch.svet_v_koridore
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.svet_v_koridore
+            double_tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.lenta_v_koridore
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-коридор.yaml
+            image: local/3D Floorplan/Новое/кнопки/коридор.png
+            style:
+              top: 4.3%
+              left: 41.2%
+              width: 21.5%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4deg)
+              opacity: 0.0
+
+################################################################# Кухня #################################################################
+          - type: image
+#            entity: switch.svet_nad_stoleshnei
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.svet_nad_stoleshnei
+            double_tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.lenta_na_kukhne
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-кухня.yaml
+            image: local/3D Floorplan/Новое/кнопки/кухня.png
+            style:
+              top: 26.3%
+              left: 57.3%
+              width: 18.5%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4deg)
+              opacity: 0.0
+
+################################################################## Спальня ##############################################################
+          - type: image
+#            entity: switch.svet_v_spalne
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.svet_v_spalne
+            double_tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.lenta_v_spalne
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-спальня.yaml
+            image: local/3D Floorplan/Новое/кнопки/спальня.png
+            style:
+              top: 22.1%
+              left: 41.4%
+              width: 18.1%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4deg)
+              opacity: 0.0
+              
+############################################################# Лоджия ###################################################################
+          - type: image
+#            entity: switch.svet_na_lodzhii
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.svet_na_lodzhii
+            double_tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.lenta_na_lodzhii
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-лоджия.yaml
+            image: local/3D Floorplan/Новое/кнопки/лоджия.png
+            style:
+              top: 73.4%
+              left: 23.8%
+              width: 17.2%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4.5deg)
+              opacity: 0.0
+
+
+########################################################################################################################################
+############################################################# Что в работе #############################################################
+########################################################################################################################################
+
+          - type: custom:layout-card
+            layout_type: vertical
+            layout:
+                max_cols: 1
+                width: 180
+            cards:
+                - !include /config/lovelace/ui-планшет/ui-main_Что_включено.yaml
+
+            style:
+              top: 25.5%
+              left: 12.5%
+              transform: translate(0,0) scale(0.9,0.8) rotate(0deg)
+
+
+########################################################################################################################################
+################################################################## Погода ##############################################################
+########################################################################################################################################
+
+          - type: conditional
+            conditions:
+              - entity: input_boolean.ui_hide_weather
+                state_not: 'on'
+            elements:
+              - type: custom:weather-card
+                entity: weather.openweathermap
+                number_of_forecasts: '5'
+                details: true
+                current: true
+                forecast: true
+                hourly_forecast: false
+                style:
+                  top: -8.9%
+                  left: -1.0%
+                  transform: translate(0,0) scale(0.9,0.6) rotate(0deg)
+
+########################################################################################################################################
+############################################################### Календарь ##############################################################
+########################################################################################################################################
+
+          - type: conditional
+            conditions:
+              - entity: input_boolean.ui_hide_calendar
+                state_not: 'on'
+            elements:
+              - type: custom:layout-card
+                layout_type: vertical
+                layout:
+                    max_cols: 1
+                    width: 180
+                cards:
+                - type: custom:swipe-card                    # Свайп карт
+                  start_card: 1                              # начальная карта
+                  parameters:
+                    effect: cube
+ #                   effect: flip
+                  cards:
+                  - type: "custom:atomic-calendar-revive"
+                    entities:
+                          - calendar.s_demeduk_gmail_com
+                          - calendar.dni_rozhdeniia
+                          - calendar.dni_rozhdeniia_nadiny
+                          - calendar.pravoslavnye_prazdniki
+                          - calendar.prazdniki_ukrainy
+                    maxDaysToShow: 14
+                    maxEventCount: 6
+                    showLocation: true
+                    showMonth: true
+                    showWeekDay: true
+                    showDate: true
+                    showDescription: false
+                    showNoEventsForToday: false
+                    disableEventLink: true
+                    disableLocationLink: false
+                    defaultMode: Event
+                    refreshInterval: 60
+                    showHours: true
+                    showRelativeTime: true
+                    europeanDate: true
+                    dateFormat: 'LL'
+                    hoursFormat: 'HH:mm'
+                  - type: "custom:atomic-calendar-revive"
+                    entities:
+                          - calendar.rabota
+                    maxDaysToShow: 5
+                    maxEventCount: 5
+                    showLocation: true
+                    showMonth: true
+                    showWeekDay: true
+                    showDate: true
+                    showDescription: false
+                    showNoEventsForToday: false
+                    disableEventLink: true
+                    disableLocationLink: false
+                    defaultMode: Event
+                    refreshInterval: 60
+                    showHours: true
+                    showRelativeTime: true
+                    europeanDate: true
+                    dateFormat: 'LL'
+                    hoursFormat: 'HH:mm'
+                style:
+                  top: 23.8%
+                  left: -0.35%
+                  transform: 'translate(0%, 0%) scale(0.95, 0.7)'
+
+########################################################################################################################################
+################################################################### Часы ###############################################################
+########################################################################################################################################
+
+          - type: conditional
+            conditions:
+              - entity: input_boolean.ui_hide_clock
+                state_not: 'on'
+            elements:
+              - type: "custom:analog-clock"
+                hide_SecondHand: false
+                hide_minorticks: false
+                diameter: 200
+                style_hourhand: 1
+                style_minutehand: 1
+                style_secondhand: 6
+                color_HourHand: '#326ba8'
+                color_MinuteHand: '#3273a8'
+                color_secondhand: red
+                color_DigitalTime: '#ffffff'
+                color_FaceDigits: '#a83832'
+                color_Ticks: '#ffffff'
+                color_text: '#ffffff'
+                color_background: black
+                style:
+                  top: 93%
+                  left: 69.3%
+#                  transform: 'translate(0%, 0%) scale(0.8, 0.8)'
+
+########################################################################################################################################
+################################################################## Кто дома ############################################################
+########################################################################################################################################
+
+          - type: image
+            entity: input_boolean.nadiusha
+            state_image:
+              'on': local/3D Floorplan/test/ыаыаываыв.png
+              'off': local/3D Floorplan/test/ыаыаываыв.png
+            state_filter:
+#              "on": brightness(110%) saturate(1.2)
+              "off": brightness(50%) saturate(0.2)
+            style:
+              pointer-events: none
+              top: 7.8%
+              left: 49.5%
+              width: 3.5%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4deg)
+              opacity: 0.7
+
+          - type: image
+            entity: input_boolean.serega
+            state_image:
+              'on': local/3D Floorplan/test/цукуцкук.png
+              'off': local/3D Floorplan/test/цукуцкук.png
+            state_filter:
+#              "on": brightness(110%) saturate(1.2)
+              "off": brightness(50%) saturate(0.2)
+            style:
+              pointer-events: none
+              top: 7.2%
+              left: 53.0%
+              width: 3.5%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-4deg)
+              opacity: 0.7
+
+# ########################################################################################################################################
+# ############################################### Медиа ###############################################
+# ########################################################################################################################################
+
+
+# #################################### Mi Speaker в Работе ###########################################
+
+#           - type: conditional
+#             conditions:
+#               - entity: input_boolean.ui_hide_music
+#                 state_not: 'on'
+#             elements:
+#               - type: custom:layout-card
+#                 layout_type: vertical
+#                 layout:
+#                     max_cols: 1
+#                     width: 280
+#                 cards:
+#                   - type: custom:mini-media-player
+#                     entity: media_player.mi_speaker
+#                     icon: mdi:speaker
+#                     hide:
+#                       power_state: false
+#                       icon_state: false
+#                       shuffle: false
+#                       source: false
+#                       sound_mode: false
+#                     group: false
+#                     volume_stateless: false
+#                     artwork: material
+#                     source: full
+#                     sound_mode: full
+#                     info: scroll
+#                     idle_view:
+#                       when_idle: true
+#                       when_paused: true
+#                       when_standby: true
+#                     tap_action:
+#                       action: fire-dom-event
+#                       browser_mod:
+#                             command: popup
+#                             title: []
+#                             hide_header: true
+#                             large: false
+#                             card:
+#                                   type: custom:layout-card
+#                                   layout_type: vertical
+#                                   layout:
+#                                     max_cols: 1
+#                                     width: 280
+#                                   cards:
+#                                         - !include /config/lovelace/ui-планшет/ui-main_Media_player.yaml
+#                 style:
+#                     top: 72.6%
+#                     left: 11.4%
+# #                    transform: 'translate(0%, 0%) scale(1.53, 0.9)'
+
+########################################################################################################################################
+############################################################### Камеры #################################################################
+########################################################################################################################################
+
+
+############################################################## Свайп Карта #############################################################
+
+          - type: conditional
+            conditions:
+              - entity: input_boolean.ui_hide_camera
+                state_not: 'on'
+            elements:
+              - type: custom:layout-card
+                layout_type: vertical
+                layout:
+                    max_cols: 1
+                    width: 280
+                cards:
+                  - type: custom:frigate-card
+                    cameras:
+                      - camera_entity: camera.camera1
+                    view:
+                      camera_select: live
+                    menu:
+                      mode: hover-top
+                      style: hover
+                    live:
+                      preload: true
+                style:
+                    top: 93.3%
+                    left: 11.4%
+
+#           - type: conditional
+#             conditions:
+#               - entity: input_boolean.ui_hide_camera
+#                 state_not: 'on'
+#             elements:
+#               - type: custom:layout-card
+#                 layout_type: vertical
+#                 layout:
+#                     max_cols: 1
+#                     width: 280
+#                 cards:
+#                   - type: custom:swipe-card
+#                     start_card: 1                              # начальная карта
+#                     parameters:
+# #                        loop: true
+#                         effect: cube
+# #                        effect: flip
+#                     cards:
+#                       - type: custom:frigate-card
+#                         cameras:
+#                           - camera_entity: camera.reolink_hallway_profile001_substream
+#                         view:
+#                           camera_select: live
+#                         menu:
+#                           mode: hover-top
+#                           buttons:
+#                             frigate: false
+#                         live:
+#                           preload: true
+#                       - type: custom:frigate-card
+#                         cameras:
+#                           - camera_entity: camera.reolink_bedroom_profile001_substream
+#                         view:
+#                           camera_select: live
+#                         menu:
+#                           mode: hover-top
+#                           buttons:
+#                             frigate: false
+#                         live:
+#                           preload: true
+#                 style:
+#                     top: 93.3%
+#                     left: 11.4%
+#     #                transform: 'translate(0%, 0%) scale(0.9, 0.8)'
+
+############################################################# Иконки ###################################################################
+
+# Лесничная клетка
+          - type: image
+            image: local/3D Floorplan/test/камера.png
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  size: wide
+                  content:
+                    type: custom:frigate-card
+                    cameras:
+                      - camera_entity: camera.camera1
+                    view:
+                      default: live
+            hold_action:
+                action: call-service
+                service: button.press
+                service_data: 
+                  entity_id: button.camera_reolink_reboot
+            style:
+              top: 0%
+              left: 41%
+              width: 2%
+              transform: translate(0,0) scale(0.9,0.9) rotate(10deg)
+
+# Спальня
+          - type: custom:button-card
+            icon: mdi:webcam
+            show_name: false
+            entity: camera.camera2
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  size: wide
+                  content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 800
+                          cards:
+                              - type: picture-glance
+                                title: Камера Bedroom
+                                camera_image: camera.camera2
+                                camera_view: live
+                                entities:
+                                  - entity: camera.reolink_bedroom_profile000_mainstream
+                                    icon: mdi:sofa
+                                    tap_action:
+                                      action: call-service
+                                      service: onvif.ptz
+                                      service_data:
+                                        entity_id: camera.reolink_bedroom_profile000_mainstream
+                                        preset: '000'
+                                        move_mode: GotoPreset
+                                  - entity: camera.reolink_bedroom_profile000_mainstream
+                                    icon: mdi:door
+                                    tap_action:
+                                      action: call-service
+                                      service: onvif.ptz
+                                      service_data:
+                                        entity_id: camera.reolink_bedroom_profile000_mainstream
+                                        preset: '001'
+                                        move_mode: GotoPreset
+                                  - entity: camera.reolink_bedroom_profile000_mainstream
+                                    icon: mdi:wardrobe-outline
+                                    tap_action:
+                                      action: call-service
+                                      service: onvif.ptz
+                                      service_data:
+                                        entity_id: camera.reolink_bedroom_profile000_mainstream
+                                        preset: '002'
+                                        move_mode: GotoPreset
+            hold_action:
+                action: call-service
+                service: button.press
+                service_data: 
+                  entity_id: button.reolink_bedroom_reboot
+            state:
+              - value: 'on'
+                styles:
+                  icon:
+                    - color: '#ffffff'
+            styles:
+              card:
+                - background: none          # выкл фон
+                - box-shadow: none          # выкл обводку (тень)
+              icon:
+                - width: 11px
+            style:
+              top: 28.6%
+              left: 49.1%
+              transform: translate(0,0) scale(2.9,2.9) rotate(180deg)
+              opacity: 0.8
+
+
+########################################################################################################################################
+############################################################### Жалюзи #################################################################
+########################################################################################################################################
+
+############################################################### Гостиная ###############################################################
+
+          - type: custom:button-card
+            show_name: false
+            entity: sensor.position_left_blinds_lr
+            tap_action:
+                action: call-service
+                service: cover.toggle
+                service_data: 
+                  entity_id: cover.livingroom_blinds
+            double_tap_action:
+                action: call-service
+                service: cover.stop_cover
+                service_data: 
+                  entity_id: cover.livingroom_blinds
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-main_Роллеты_Гостиная.yaml
+            styles:
+              card:
+                - background: none          # выкл фон
+                - box-shadow: none          # выкл обводку (тень)
+              icon:
+                - color: '#fa1478'
+                - width: 30px
+            style:
+              top: 96.1%
+              left: 29.3%
+              width: 8%
+              transform: translate(0,0) scale(2.1,2.1) rotate(-7deg)
+              opacity: 0.8
+
+############################################################### Спальня ###############################################################
+
+          - type: custom:button-card
+            show_name: false
+            entity: sensor.position_left_blinds_br
+            tap_action:
+                action: call-service
+                service: cover.toggle
+                service_data: 
+                  entity_id: cover.Bedroom_blinds
+            double_tap_action:
+                action: call-service
+                service: cover.stop_cover
+                service_data: 
+                  entity_id: cover.Bedroom_blinds
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-main_Роллеты_Спальня.yaml
+            styles:
+              card:
+                - background: none          # выкл фон
+                - box-shadow: none          # выкл обводку (тень)
+              icon:
+                - color: '#265cff'
+                - width: 30px
+            style:
+              top: 89.1%
+              left: 44.5%
+              width: 8%
+              transform: translate(0,0) scale(2.1,2.1) rotate(-7deg)
+              opacity: 0.8
+
+
+
+############################################################### Кухня ##################################################################
+
+          - type: custom:button-card
+            show_name: false
+            entity: sensor.position_left_blinds_k
+            tap_action:
+                action: call-service
+                service: cover.toggle
+                service_data: 
+                  entity_id: cover.kitchen_blinds
+            double_tap_action:
+                action: call-service
+                service: cover.stop_cover
+                service_data: 
+                  entity_id: cover.kitchen_blinds
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 280
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-main_Роллеты_Кухня.yaml
+            styles:
+              card:
+                - background: none          # выкл фон
+                - box-shadow: none          # выкл обводку (тень)
+              icon:
+                - color: '#78fa14'
+                - width: 30px
+            style:
+              top: 68.1%
+              left: 63.3%
+              width: 8%
+              transform: translate(0,0) scale(2.1,2.1) rotate(-7deg)
+              opacity: 0.8
+
+
+
+
+
+
+########################################################################################################################################
+############################################################### Увлажнители ############################################################
+########################################################################################################################################
+
+          - type: image
+            entity: humidifier.jsq5_cloud_466808
+            tap_action:
+              action: call-service
+              service: homeassistant.toggle
+              service_data:
+                entity_id: humidifier.jsq5_cloud_466808
+            double_tap_action:
+              action: none
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                      type: custom:mini-humidifier
+                      entity: humidifier.jsq5_cloud_466808
+                      name: Mi Увлаж.
+                      model: deerma.humidifier.jsq5
+                      target_humidity:
+                          icon: mdi:water
+                          unit: '%'
+                          min: 30
+                          max: 80
+                          step: 5
+                          hide: false
+                          hide_indicator: false
+                          disabled: false
+                          state:
+                            attribute: humidity
+                      secondary_info:
+                          type: mode
+                          icon: mdi:air-humidifier
+                      toggle:
+                          default: 'on'
+                          hide: 'on'
+                      power:
+                          icon: mdi:power
+                          type: button
+                          hide: false
+                      indicators:
+                          '1':
+                            icon:
+                              template: |
+                                (value) => {
+                                  if (value == '')
+                                    return 'mdi:wifi';
+                                  return 'mdi:wifi-off';
+                                }
+                              style: |
+                                (value) => {
+                                  if (value === '')
+                                    return { color: '#58ff3c' };
+                                  return { color: 'red' };
+                                }
+                            source:
+                              entity: device_tracker.b4_60_ed_4a_c5_0c
+                              mapper: '(state) => (state ? '''' : ''!'')'
+                          no_water:
+                            icon:
+                              template: |
+                                (value) => {
+                                  if (value == '')
+                                    return 'mdi:dishwasher';
+                                  return 'mdi:dishwasher-alert';
+                                }
+                              style: |
+                                (value) => {
+                                  if (value === '')
+                                    return { color: '#58ff3c' };
+                                  if (value === '!')
+                                    return { color: 'red' };
+                                  return {};
+                                }
+                            source:
+                              entity: fan.humidifier_xiaomi
+                              attribute: no_water
+                              mapper: '(state) => (state ? ''!'' : '''')'
+                          water_tank_detached:
+                            icon:
+                              template: |
+                                (value) => {
+                                  if (value == '')
+                                    return 'mdi:water-boiler';
+                                  return 'mdi:water-boiler-off';
+                                }
+                              style: |
+                                (value) => {
+                                  if (value === '')
+                                    return { color: '#58ff3c' };
+                                  if (value === '!')
+                                    return { color: 'red' };
+                                  return {};
+                                }
+                            source:
+                              entity: fan.humidifier_xiaomi
+                              attribute: water_tank_detached
+                              mapper: '(state) => (state ? ''!'' : '''')'
+                      buttons:
+                          mode:
+                            icon: mdi:air-humidifier
+                            source:
+                              Level1: Низкая
+                              Level2: Средная
+                              Level3: Высокая
+                              Humidity: Влажность
+                          led:
+                            icon: mdi:lightbulb-on-outline
+                            type: button
+                            state:
+                              entity: switch.xiaomi_humidifier_led
+                          buzzer:
+                            icon: mdi:volume-high
+                            state:
+                              entity: switch.xiaomi_humidifier_buzzer
+
+            image: local/3D Floorplan/test/Mi увлажнитель.png
+            state_filter:
+              "on": brightness(110%) 
+              "off": brightness(40%) 
+            style:
+              top: 54.9%
+              left: 55.2%
+              width: 1.2%
+              transform: translate(0,0) scale(0.9,0.9) rotate(-5deg)
+              opacity: 1.0
+
+          - type: conditional
+            conditions: 
+              - entity: humidifier.jsq5_cloud_466808
+                state: 'on'
+            elements:
+              - type: custom:button-card
+                icon: mdi:scent
+                show_name: false
+                entity: humidifier.jsq5_cloud_466808
+                tap_action:
+                  action: none
+                state:
+                  - value: 'on'
+                    styles:
+                      icon:
+                        - color: '#1e87e7'
+                        - animation: blink 4s linear infinite
+                styles:
+                  card:
+                    - background: none          # выкл фон
+                    - box-shadow: none          # выкл обводку (тень)
+                  icon:
+                    - width: 22px
+                    
+                style:
+                  top: 51.7%
+                  left: 55.12%
+                  transform: translate(0,0) scale(1.4,1.4) rotate(0deg)
+
+
+#######################################################################################################################################
+############################################################ Пылсос ###################################################################
+#######################################################################################################################################
+
+          - type: custom:button-card
+            show_entity_picture: true
+            show_name: false
+            state:
+              - value: "idle"
+                entity_picture: /local/3D Floorplan/test/rrobot_dark.png
+              - value: "docked"
+                entity_picture: /local/3D Floorplan/test/rrobot_dark.png
+              - value: "play"
+                entity_picture: /local/3D Floorplan/test/rrobot.png
+                styles:
+                  icon:
+                   - animation: twister 2s linear infinite alternate
+              - value: "cleaning"
+                entity_picture: /local/3D Floorplan/test/rrobot.png
+                styles:
+                  icon:
+                   - animation: twister 2s linear infinite alternate
+              - value: "returning"
+                entity_picture: /local/3D Floorplan/test/rrobot.png
+                styles:
+                  icon:
+                   - animation: blink 2s linear infinite alternate
+            extra_styles: |
+              @keyframes twister {
+                0% {transform: rotatez(0deg); top: 10px}
+                25% {transform: rotatez(15deg)}
+                50% {top: -15px}
+                75% {transform: rotatez(-15deg)}
+                100% {transform: rotatez(0deg); top: 10px}
+              }
+            styles:
+              card:
+                - background: none          # выкл фон
+                - box-shadow: none          # выкл обводку (тень)
+            entity: vacuum.mc1808_cloud_753499
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                  service: browser_mod.popup
+                  data:
+#                    size: wide
+                    content:
+                          type: custom:layout-card
+                          layout_type: vertical
+                          layout:
+                            max_cols: 1
+                            width: 320
+                          cards:
+                                - !include /config/lovelace/ui-планшет/ui-main_Пылесос.yaml
+
+            # tap_action:
+            #   action: call-service
+            #   service: vacuum.start
+            #   service_data:
+            #     entity_id: vacuum.mc1808_d4d2d6f3e626
+            double_tap_action:
+              action: call-service
+              service: vacuum.Return_to_base
+              service_data:
+                entity_id: vacuum.mc1808_d4d2d6f3e626
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                    type: custom:vacuum-card
+                    entity: vacuum.mc1808_d4d2d6f3e626
+                    image: default
+            style:
+              top: 19.0%
+              left: 50.3%
+              width: 5%
+              transform: translate(0,0) scale(0.9,0.9) rotate(0deg) 
+              opacity: 1.0
+
+#######################################################################################################################################
+############################################################# Чайник ##################################################################
+#######################################################################################################################################
+
+          - type: image
+            entity: switch.chainik
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.chainik
+            double_tap_action:
+              action: none
+            hold_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                    type: custom:button-card
+                    entity: input_boolean.timer_chainik
+                    icon: mdi:kettle-steam-outline
+                    show_name: false
+                    aspect_ratio: 2.1/1
+                    show_state: false
+                    hold_action:
+                      action: fire-dom-event
+                      browser_mod:
+                        service: browser_mod.popup
+                        data:
+                          content:
+                              type: entities
+                              entities:
+                                - entity: input_datetime.chainik
+                    styles:
+                      card:
+                        - border-radius: 3px
+                        - padding: 2%
+                      grid:
+                        - grid-template-areas: '"i temp" "i temp"'
+                        - grid-template-columns: 1fr 1fr
+                        - grid-template-rows: 1fr
+                      icon:
+                        - width: 200px
+                      custom_fields:
+                        temp:
+                          - font-weight: 450
+                          - font-size: 50px
+                    custom_fields:
+                      temp: |
+                        [[[ return states['input_datetime.chainik'].state; ]]]
+                    state:
+                      - value: unavailable
+                        styles:
+                          card:
+                            - box-shadow: '1px 1px 1px 2px #808080'
+                            - color: '#808080'
+                          icon:
+                            - color: '#808080'
+                          temp:
+                            - color: '#808080'
+                      - value: 'on'
+                        styles:
+                          card:
+                            - box-shadow: '1px 1px 5px 3px #3aff41'
+                          icon:
+                            - color: '#3aff41'
+                          custom_fields:
+                            temp:
+                              - color: '#3aff41'
+                      - value: 'off'
+                        styles:
+                          card:
+                            - box-shadow: 1px 1px 2px 1px yellow
+                            - border-radius: 2px
+                            - margin: 0px 0px 4px 0px
+                            - padding: 2%
+                          icon:
+                            - color: yellow
+                          custom_fields:
+                            temp:
+                              - color: yellow
+
+            image: local/3D Floorplan/test/чайник.png
+            style:
+              top: 53.4%
+              left: 59.3%
+              width: 1.5%
+              transform: translate(0,0) scale(0.9,0.9) rotate(0deg)
+              opacity: 1.0
+
+
+#######################################################################################################################################
+############################################################ Температура ##############################################################
+#######################################################################################################################################
+
+# Гостинная
+          - type: state-label
+            entity: sensor.a4c138f9ce31_temperature
+            style:
+              pointer-events: none
+              top: 50%
+              left: 33%
+              transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+              opacity: 0.11
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_gostinoi
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138f9ce31_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 33%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.3
+          - type: conditional
+            conditions:
+              - entity: switch.liustra_v_gostinoi
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138f9ce31_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 33%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.35
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_gostinoi
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138f9ce31_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 33%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.1
+
+          - type: state-label
+            entity: sensor.a4c138f9ce31_humidity
+            style:
+              pointer-events: none
+              top: 52.5%
+              left: 33.5%
+              transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+              opacity: 0.11
+#              "--paper-item-icon-color": pink
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_gostinoi
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138f9ce31_humidity
+                style:
+                  pointer-events: none
+                  top: 52.5%
+                  left: 33.5%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.3
+          - type: conditional
+            conditions:
+              - entity: switch.liustra_v_gostinoi
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138f9ce31_humidity
+                style:
+                  pointer-events: none
+                  top: 52.5%
+                  left: 33.5%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.35
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_gostinoi
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138f9ce31_humidity
+                style:
+                  pointer-events: none
+                  top: 52.5%
+                  left: 33.5%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.1
+
+# Спальня
+          - type: state-label
+            entity: sensor.a4c138c67cbc_temperature
+            style:
+              pointer-events: none
+              top: 50%
+              left: 48%
+              transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+              opacity: 0.11
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_spalne
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138c67cbc_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 48%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.3
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_spalne
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138c67cbc_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 48%
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+                  opacity: 0.1
+
+          - type: state-label
+            entity: sensor.a4c138c67cbc_humidity
+            style:
+              pointer-events: none
+              top: 52.5%
+              left: 48.5%
+              transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+              opacity: 0.11
+          - type: conditional
+            conditions:
+              - entity: switch.svet_v_spalne
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138c67cbc_humidity
+                style:
+                  pointer-events: none
+                  top: 52.5%
+                  left: 48.5%
+                  opacity: 0.3
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_v_spalne
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138c67cbc_humidity
+                style:
+                  pointer-events: none
+                  top: 52.5%
+                  left: 48.5%
+                  opacity: 0.1
+                  transform: translate(0,0) scale(2.0,1.0) rotate(-6deg)
+
+# Кухня
+          - type: state-label
+            entity: sensor.a4c138ea1a11_temperature
+            style:
+              pointer-events: none
+              top: 50%
+              left: 62%
+              transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+              opacity: 0.11
+          - type: conditional
+            conditions:
+              - entity: switch.svet_nad_stoleshnei
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138ea1a11_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 62%
+                  opacity: 0.3
+                  transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+          - type: conditional
+            conditions:
+              - entity: switch.svet_nad_stolom
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138ea1a11_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 62%
+                  opacity: 0.2
+                  transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_na_kukhne
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138ea1a11_temperature
+                style:
+                  pointer-events: none
+                  top: 50%
+                  left: 62%
+                  opacity: 0.1
+                  transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+
+          - type: state-label
+            entity: sensor.a4c138ea1a11_humidity
+            style:
+              pointer-events: none
+              top: 52%
+              left: 62.5%
+              transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+              opacity: 0.11
+          - type: conditional
+            conditions:
+              - entity: switch.svet_nad_stoleshnei
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138ea1a11_humidity
+                style:
+                  pointer-events: none
+                  top: 52%
+                  left: 62.5%
+                  opacity: 0.3
+                  transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+          - type: conditional
+            conditions:
+              - entity: switch.svet_nad_stolom
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138ea1a11_humidity
+                style:
+                  pointer-events: none
+                  top: 52%
+                  left: 62.5%
+                  opacity: 0.2
+                  transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+          - type: conditional
+            conditions:
+              - entity: switch.lenta_na_kukhne
+                state: 'on'
+            elements:
+              - type: state-label
+                entity: sensor.a4c138ea1a11_humidity
+                style:
+                  pointer-events: none
+                  top: 52%
+                  left: 62.5%
+                  opacity: 0.1
+                  transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+
+# Улица
+          - type: state-label
+            entity: sensor.a4c138bfa633_temperature
+            style:
+              pointer-events: none
+              top: 78%
+              left: 55.5%
+              transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+              opacity: 0.2
+          - type: state-label
+            entity: sensor.a4c138bfa633_humidity
+            style:
+              pointer-events: none
+              top: 79.9%
+              left: 56.0%
+              transform: translate(0,0) scale(1.5,0.8) rotate(-5deg)
+              opacity: 0.2
+
+
+#######################################################################################################################################
+################################################################## Протечки ###########################################################
+#######################################################################################################################################
+
+# Туалет
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.54ef44e5ca71_water_leak
+                state: 'on'
+            elements:
+              - type: custom:button-card
+                entity: binary_sensor.54ef44e5ca71_water_leak
+                show_name: false
+                show_icon: true
+                size: 40px
+                tap_action:
+                  action: none
+                state:                                            # цвета каждого состояния датчиков
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background: none
+                        - box-shadow: none
+                        - color: red
+                        - animation: flasher 1s linear infinite
+                      icon: 
+                        - color: red
+                        - animation: blink 5s linear infinite
+                extra_styles: |
+                  @keyframes flasher {
+                    50% { background: radial-gradient(rgb(0, 0, 0, 10%) 20%, rgb(255, 0, 0, 50%));
+                    box-shadow: 0px 0px 30px rgb(255, 0, 0, 0%);
+                  }
+                style:
+                  top: 3.4%
+                  left: 60.5%
+                  width: 9%
+                  transform: translate(0,0) scale(0.9,0.9) rotate(-4deg)
+                  opacity: 0.8
+
+# Ванная
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.54ef44e5d062_water_leak
+                state: 'on'
+            elements:
+              - type: custom:button-card
+                entity: binary_sensor.54ef44e5d062_water_leak
+                show_name: false
+                show_icon: true
+                aspect_ratio: 1.13/1
+                size: 136px
+                tap_action:
+                  action: none
+                state:                                            # цвета каждого состояния датчиков
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background: none
+                        - box-shadow: none
+                        - color: red
+                        - animation: flasher 1s linear infinite
+                      icon: 
+                        - color: red
+                        - width: 50px
+                        - animation: blink 5s linear infinite
+                extra_styles: |
+                  @keyframes flasher {
+                    50% { background: radial-gradient(rgb(0, 0, 0, 10%) 20%, rgb(255, 0, 0, 50%));
+                    box-shadow: 0px 0px 30px rgb(255, 0, 0, 0%);
+                  }
+                style:
+                  top: 9.4%
+                  left: 61.5%
+                  width: 9.5%
+                  transform: translate(0,0) scale(0.9,0.9) rotate(-5deg)
+                  opacity: 0.8
+
+# Кухня
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.54ef44e5d0d9_water_leak
+                state: 'on'
+            elements:
+              - type: custom:button-card
+                entity: binary_sensor.54ef44e5d0d9_water_leak
+                show_name: false
+                show_icon: true
+                aspect_ratio: 1.01/1
+                size: 136px
+                tap_action:
+                  action: none
+                state:                                            # цвета каждого состояния датчиков
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background: none
+                        - box-shadow: none
+                        - color: red
+                        - animation: flasher 1s linear infinite
+                      icon: 
+                        - color: red
+                        - width: 50px
+                        - animation: blink 5s linear infinite
+                extra_styles: |
+                  @keyframes flasher {
+                    50% { background: radial-gradient(rgb(0, 0, 0, 10%) 20%, rgb(255, 0, 0, 50%));
+                    box-shadow: 0px 0px 30px rgb(255, 0, 0, 0%);
+                  }
+                style:
+                  top: 26%
+                  left: 57.3%
+                  width: 18.5%
+                  transform: translate(0,0) scale(0.9,0.9) rotate(-8deg)
+                  opacity: 0.8
+
+
+#######################################################################################################################################
+############################################################## Панель кнопок ##########################################################
+#######################################################################################################################################
+
+
+################################################################ Режимы ###############################################################
+
+          - type: custom:layout-card
+            layout_type: vertical
+            layout:
+                max_cols: 1
+                width: 280
+            cards:
+
+              - type: grid
+                columns: 4
+                square: false
+                cards:
+
+                - type: custom:button-card
+                  entity: input_boolean.dima_sleep
+                  name: Дима спит 
+                  icon: mdi:sleep
+                  template: button_mode
+    
+                - type: custom:button-card
+                  entity: input_boolean.strijka
+                  name: Стрижка 
+                  template: button_mode
+    
+                - type: custom:button-card
+                  entity: input_boolean.syshka
+                  name: Сушка 
+                  template: button_mode
+
+                - type: custom:button-card
+                  entity: automation.garderobnaia_vkl_svet_pri_dvizhenii
+                  name: Авто.Гардероб 
+                  icon: mdi:lightbulb-auto
+                  template: button_mode
+
+            style:
+                top: 75.3%
+                left: 11.8%
+
+
+################################################################## Свет ###############################################################
+
+          - type: custom:button-card
+            icon: mdi:home-lightbulb-outline
+            entity: group.light_all
+            size: 35px
+            show_name: false
+            styles:
+              card:
+                - border-radius: 0px
+                - box-shadow: '1px 1px 3px 2px yellow'
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - box-shadow: '1px 1px 5px 3px green'
+                  icon:
+                    - color: '#fff900'
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                      type: custom:layout-card
+                      layout_type: vertical
+                      layout:
+                        max_cols: 1
+                        width: 280
+                      cards:
+                            - !include /config/lovelace/ui-планшет/ui-main_Свет.yaml
+            style:
+                top: 103.3%
+                left: 25.4%
+
+##################################################################### Датчики #########################################################
+
+          - type: custom:button-card
+            icon: mdi:leak
+            entity: group.dat4iki_all
+            size: 35px
+            show_name: false
+            styles:
+              card:
+                - border-radius: 0px
+                - box-shadow: '1px 1px 3px 2px yellow'
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - box-shadow: '1px 1px 5px 3px green'
+                  icon:
+                    - color: '#fff900'
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                      type: custom:layout-card
+                      layout_type: vertical
+                      layout:
+                        max_cols: 1
+                        width: 280
+                      cards:
+                            - !include /config/lovelace/ui-планшет/ui-main_Датчики.yaml
+            style:
+                top: 103.3%
+                left: 27.9%
+
+################################################################# Системное ############################################################
+
+          - type: custom:button-card
+            icon: mdi:home-analytics
+            size: 35px
+            show_name: false
+            styles:
+              card:
+                - border-radius: 0px
+                - box-shadow: '1px 1px 3px 2px yellow'
+            # state:
+            #   - value: 'on'
+            #     styles:
+            #       card:
+            #         - box-shadow: '1px 1px 5px 3px green'
+            #       icon:
+            #         - color: '#fff900'
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  size: wide
+                #   style: |
+                #       :host .content {
+                #         width: 50vw;
+                #         height: 75vh;
+                #       }
+                  content:
+                    type: custom:layout-card
+                    cards:
+                            - !include /config/lovelace/ui-планшет/ui-main_System.yaml
+            style:
+                top: 103.3%
+                left: 30.4%
+
+################################################################ Графики ##############################################################
+
+          - type: custom:button-card
+            icon: mdi:chart-areaspline
+            size: 35px
+            show_name: false
+            styles:
+              card:
+                - border-radius: 0px
+                - box-shadow: '1px 1px 3px 2px yellow'
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - box-shadow: '1px 1px 5px 3px green'
+                  icon:
+                    - color: '#fff900'
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                      type: custom:layout-card
+                      layout_type: vertical
+                      layout:
+                        max_cols: 1
+                        width: 380
+                      cards:
+                            - !include /config/lovelace/ui-планшет/ui-main_Графики.yaml
+            style:
+                top: 103.3%
+                left: 32.9%
+
+############################################################### Батарейки #############################################################
+
+          - type: custom:button-card
+            icon: mdi:home-battery-outline
+            size: 35px
+            show_name: false
+            styles:
+              card:
+                - border-radius: 0px
+                - box-shadow: '1px 1px 3px 2px yellow'
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                      type: custom:layout-card
+                      layout_type: vertical
+                      layout:
+                        max_cols: 1
+                        width: 480
+                      cards:
+                            - !include /config/lovelace/ui-планшет/ui-main_Батарейки.yaml
+            style:
+                top: 103.3%
+                left: 35.4%
+
+############################################################## Автоматизации ##########################################################
+
+          - type: custom:button-card
+            icon: mdi:refresh-auto
+            size: 35px
+            show_name: false
+            styles:
+              card:
+                - border-radius: 0px
+                - box-shadow: '1px 1px 3px 2px yellow'
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  content:
+                      type: custom:layout-card
+                      layout_type: vertical
+                      layout:
+                        max_cols: 1
+                        width: 280
+                      cards:
+                            - !include /config/lovelace/ui-планшет/ui-main_Автоматизации.yaml
+            style:
+                top: 103.3%
+                left: 37.9%
+
+############################################################ Заряд планшета ###########################################################
+
+          - type: icon
+            icon: mdi:battery-outline
+            style:
+              pointer-events: none
+              top: 1.35%
+              left: 71.0%
+              transform: scale(1.8,1.8) rotate(90deg)
+
+          - type: state-label
+            entity: sensor.galaxy_tab_a8_battery_level
+            style:
+              pointer-events: none
+              top: 0.73%
+              left: 70.35%
+              transform: scale(0.8,0.8)
+
+
+########################################################## Напряжение сети ############################################################
+
+          - type: icon
+            icon: mdi:transmission-tower-export
+            style:
+              pointer-events: none
+              top: 6.2%
+              left: 71.1%
+              transform: scale(1.1,1.1)
+
+          - type: state-label
+            entity: sensor.rele_napriazheniia_phase_a_voltage
+            style:
+              pointer-events: none
+              top: 4.5%
+              left: 72.5%
+              transform: scale(1.1,1.1)
+          - type: state-label
+            entity: sensor.rele_napriazheniia_phase_a_current
+            style:
+              pointer-events: none
+              top: 6.5%
+              left: 72.5%
+              transform: scale(1.1,1.1)
+
+########################################################## Перезагрузка Страниц #######################################################
+
+          - type: icon
+            icon: mdi:refresh
+            style:
+              top: 3%
+              left: 73.5%
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.refresh
+                data:
+                  browser_id: d7f06977-f88fde14
+            double_tap_action:
+              action: call-service
+              service: button.press
+              data:
+                entity_id: button.galaxy_tab_a8_restart_browser
+            hold_action:
+              action: none
+
+################################################################ Настройки ############################################################
+
+          - type: icon
+            icon: mdi:cog
+            style:
+              top: 3%
+              left: 75.5%
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.popup
+                data:
+                  title: Настройки
+                  content:
+                    type: entities
+                    entities:
+                      - entity: sensor.online
+                      - entity: script.restart_ha
+                        name: Перезагрузка НА
+                        action_name: Пуск
+                      - entity: number.galaxy_tab_a8_screen_off_timer
+                        name: Таймер Экрана
+                      - entity: number.galaxy_tab_a8_screensaver_brightness
+                        name: Яркость Заставки
+                      - entity: number.galaxy_tab_a8_screensaver_timer
+                        name: Таймер Заставки
+#                       - entity: input_boolean.strijka
+#                         name: Режим Стрижки
+#                       - entity: input_boolean.syshka
+#                         name: Режим Сушки
+#                       - entity: automation.garderobnaia_vkl_svet_pri_dvizhenii
+# #                      - entity: automation.metka_otkl_avtomatizatsii_sveta_v_garderobnoi
+#                         name: Автоматизация Гардеробной
+                      - entity: switch.galaxy_tab_a8_motion_detection
+                        name: Motion Detection
+                      - entity: input_boolean.ui_hide_weather
+                        name: Погода на экране
+                      - entity: input_boolean.ui_hide_calendar
+                        name: Календарь на экране
+                      - entity: input_boolean.ui_hide_clock
+                        name: Часы на экране
+                      - entity: input_boolean.ui_hide_camera
+                        name: Камеры на экране
+            double_tap_action:
+              action: navigate
+              navigation_path: /dashboard
+            hold_action:
+              action: call-service
+              service: fullykiosk.to_background
+              service_data:
+                entity_id: media_player.galaxy_tab_a8_media_player
+
+
+#######################################################################################################################################
+########################################################## Панель состояния ###########################################################
+#######################################################################################################################################
+
+
+############################################################# Обнова НА ###############################################################
+          - type: conditional
+            conditions:
+              - entity: group.update_home_assistant
+                state_not: 'off'
+            elements:
+              - type: custom:button-card
+                icon: mdi:download
+                entity: binary_sensor.updater 
+                template: button_bar
+                tap_action:
+                    action: navigate
+                    navigation_path: /config/dashboard
+                style:
+                  top: 2%
+                  left: 29.3%
+
+############################################################## Обнова HACS ############################################################
+          - type: conditional
+            conditions:
+              - entity: sensor.hacs
+                state_not: '0'
+            elements:
+              - type: custom:button-card
+                icon: mdi:cloud-download
+                entity: sensor.hacs
+                template: button_bar
+                tap_action:
+                    action: navigate
+                    navigation_path: /hacs/entry
+                style:
+                  top: 2%
+                  left: 31.3%
+
+########################################################### Обнова Add-on's ###########################################################
+          - type: conditional
+            conditions:
+              - entity: group.vse_addon
+                state_not: 'off'
+            elements:
+              - type: custom:button-card
+                icon: mdi:briefcase-download
+                entity: group.vse_addon
+                template: button_bar
+                tap_action:
+                    action: navigate
+                    navigation_path: /hassio/dashboard
+                style:
+                  top: 2%
+                  left: 33.5%
+
+#################################################################### Батарея ###########################################################
+
+          - type: conditional
+            conditions:
+              - entity: input_boolean.ui_hide_battery
+                state_not: 'on'
+            elements:
+              - type: custom:auto-entities
+                card:
+                    type: custom:button-card
+                    icon: mdi:battery-alert-variant-outline
+                    template: button_bar
+                    tap_action:
+                      action: fire-dom-event
+                      browser_mod:
+                        service: browser_mod.popup
+                        data:
+                          content:
+                              type: custom:layout-card
+                              layout_type: vertical
+                              layout:
+                                max_cols: 1
+                                width: 480
+                              cards:
+                                    - !include /config/lovelace/ui-планшет/ui-main_Батарейки.yaml
+                filter:
+                    include:
+                     - entity_id: sensor.*battery*
+                    exclude:
+                     - state: '> 10.0'
+                     - state: 'unknown'
+                     - state: 'good'
+                     - state: 'discharging'
+                     - state: 'Charging'
+                     - state: 'Not Charging'
+                     - state: 'charging'
+                     - entity_id: "*telefon*"
+                     - entity_id: "*phone*"
+                     - entity_id: "*planshet*"
+                     - entity_id: "*Планшет*"
+                     - entity_id: sensor.battery_lower_10
+                     - state: 'unavailable'
+                # filter:
+                #   include:
+                #     - domain: sensor
+                #       attributes:
+                #         device_class: battery
+                #       state: "< 10"
+                #   exclude:
+                #   - state: '> 10.0'
+                #   - state: 'unknown'
+                #   - state: 'good'
+                #   - state: 'discharging'
+                #   - state: 'Charging'
+                #   - state: 'Not Charging'
+                #   - state: 'charging'
+                #   - entity_id: "*telefon*"
+                #   - entity_id: "*phone*"
+                #   - entity_id: "*planshet*"
+                #   - entity_id: "*Планшет*"
+                #   - state: 'unavailable'
+                #   - entity_id: "*redmi*"
+                #   - entity_id: sensor.battery_lower_10
+                style:
+                  top: 2%
+                  left: 35.4%
+
+######################################## Radial-menu ########################################
+
+          - type: 'custom:radial-menu'
+            icon: 'mdi:google-play'
+            name: 'Apps'
+            default_open: false
+            default_dismiss: true
+            # double_tap_action:
+            #   action: call-service
+            #   service: script.turn_on
+            #   service_data:
+            #     entity_id: script.radial_menu_double_tap_off
+            hold_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.radial_menu_double_tap_on
+            items:
+              - icon: 'mdi:spotify'
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  service_data:
+                    entity_id: media_player.galaxy_tab_a8_media_player
+                    application: com.spotify.music
+              - icon: 'mdi:youtube-subscription'
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  service_data:
+                    entity_id: media_player.galaxy_tab_a8_media_player
+                    application: com.vanced.android.youtube
+              - icon: 'mdi:navigation-variant'
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  service_data:
+                    entity_id: media_player.galaxy_tab_a8_media_player
+                    application: org.telegram.messenger
+              - icon: 'mdi:robot-vacuum'
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  service_data:
+                    entity_id: media_player.galaxy_tab_a8_media_player
+                    application: com.xiaomi.smarthome
+              - icon: 'mdi:text-shadow'
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  service_data:
+                    entity_id: media_player.galaxy_tab_a8_media_player
+                    application: com.tuya.smart
+              - icon: 'mdi:google-home'
+                tap_action:
+                  action: call-service
+                  service: fullykiosk.start_application
+                  service_data:
+                    entity_id: media_player.galaxy_tab_a8_media_player
+                    application: com.google.android.apps.chromecast.app
+            style:
+              top: 18.0%
+              left: 26.2%
+
+
+
+
+
+
+
+
+
+
+
+
+                # action: url
+                # url_path: https://www.youtube.com/watch?v=XcnelTTAAhw&list=RDXcnelTTAAhw&start_radio=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+

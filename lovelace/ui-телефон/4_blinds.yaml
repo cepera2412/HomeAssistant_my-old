@@ -1,0 +1,641 @@
+title: blinds
+icon: phu:shutter-100
+path: blinds
+badges: []
+cards:
+
+########################################################### Иконки ######################################################################
+
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: back
+      - type: entity
+        entity: sensor.position_left_blinds_k
+        icon_color: green
+      - type: entity
+        entity: sensor.position_left_blinds_lr
+        icon_color: pink
+      - type: entity
+        entity: sensor.position_left_blinds_br
+        icon_color: blue
+    alignment: center
+
+########################################################### Кухня ######################################################################
+
+  - type: vertical-stack
+    cards:
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+# полежение жалюзи
+                      - type: custom:button-card
+                        entity: sensor.position_left_blinds_k
+                        name: Левая
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_kitchen_left_blinds_k
+                                            name: Левая
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_left_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_green_full
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_left_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_green_full
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_left_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_green_full
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_left_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_green_full
+                        styles:
+                          icon:
+                            - color: '#78fa14'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+                      - type: custom:button-card
+                        entity: sensor.position_right_blinds_k
+                        name: Правая
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_kitchen_right_blinds_k
+                                            name: Правая
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_right_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_green_full
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_right_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_green_full
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_right_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_green_full
+                                              - type: custom:button-card
+                                                entity: script.kitchen_blinds_right_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_green_full
+                        styles:
+                          icon:
+                            - color: '#78fa14'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+# управление всем окном
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+                  - type: custom:blind-card
+                    entities:
+                      - entity: cover.kitchen_blinds
+                        name: Все
+                        buttons_position: left
+                        title_position: top
+                        blind_color: '#78fa14'
+                  - type: vertical-stack
+                    cards:
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_75
+                        name: 75% 
+                        icon: phu:shutter-30
+                        template: button_cover_green_full
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_50
+                        name: 50% 
+                        icon: phu:shutter-50
+                        template: button_cover_green_full
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_33
+                        name: 33% 
+                        icon: phu:shutter-70
+                        template: button_cover_green_full
+                      - type: custom:button-card
+                        entity: script.kitchen_blinds_full_25
+                        name: 25% 
+                        icon: phu:shutter-80
+                        template: button_cover_green_full
+
+########################################################### Гостиная ######################################################################
+
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+# полежение жалюзи
+                      - type: custom:button-card
+                        entity: sensor.position_left_blinds_lr
+                        name: Левая
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_livingroom_left_blinds_lr
+                                            name: Левая
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_left_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_left_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_left_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_left_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_purpur_full
+                        styles:
+                          icon:
+                            - color: '#fa1478'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+                      - type: custom:button-card
+                        entity: sensor.position_central_blinds_lr
+                        name: Центральная
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_livingroom_central_blinds_lr
+                                            name: Центральная
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_central_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_central_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_central_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_central_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_purpur_full
+                        styles:
+                          icon:
+                            - color: '#fa1478'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+                      - type: custom:button-card
+                        entity: sensor.position_right_blinds_lr
+                        name: Правая
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_livingroom_right_blinds_lr
+                                            name: Правая
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_right_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_right_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_right_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_purpur_full
+                                              - type: custom:button-card
+                                                entity: script.livingroom_blinds_right_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_purpur_full
+                        styles:
+                          icon:
+                            - color: '#fa1478'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+# управление всем окном
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+                  - type: custom:blind-card
+                    entities:
+                      - entity: cover.livingroom_blinds
+                        name: Все
+                        buttons_position: left
+                        title_position: top
+                        blind_color: '#fa1478'
+                  - type: vertical-stack
+                    cards:
+                      - type: custom:button-card
+                        entity: script.livingroom_blinds_full_75
+                        name: 75% 
+                        icon: phu:shutter-30
+                        template: button_cover_purpur_full
+                      - type: custom:button-card
+                        entity: script.livingroom_blinds_full_50
+                        name: 50% 
+                        icon: phu:shutter-50
+                        template: button_cover_purpur_full
+                      - type: custom:button-card
+                        entity: script.livingroom_blinds_full_33
+                        name: 33% 
+                        icon: phu:shutter-70
+                        template: button_cover_purpur_full
+                      - type: custom:button-card
+                        entity: script.livingroom_blinds_full_25
+                        name: 25% 
+                        icon: phu:shutter-80
+                        template: button_cover_purpur_full
+
+########################################################### Спальня ######################################################################
+
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+# полежение жалюзи
+                      - type: custom:button-card
+                        entity: sensor.position_left_blinds_br
+                        name: Левая
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_bedroom_left_blinds_br
+                                            name: Левая
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_left_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_left_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_left_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_left_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_blue_full
+                        styles:
+                          icon:
+                            - color: '#265cff'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+                      - type: custom:button-card
+                        entity: sensor.position_central_blinds_br
+                        name: Центр
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_bedroom_central_blinds_br
+                                            name: Центральная
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_central_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_central_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_central_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_central_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_blue_full
+                        styles:
+                          icon:
+                            - color: '#265cff'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+                      - type: custom:button-card
+                        entity: sensor.position_right_blinds_br
+                        name: Правая
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_bedroom_right_blinds_br
+                                            name: Правая
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_right_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_right_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_right_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_right_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_blue_full
+                        styles:
+                          icon:
+                            - color: '#265cff'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+                      - type: custom:button-card
+                        entity: sensor.position_door_blinds_br
+                        name: Балкон
+                        show_state: true
+                        tap_action:
+                          action: fire-dom-event
+                          browser_mod:
+                              service: browser_mod.popup
+                              data:
+                                content:
+                                  type: custom:stack-in-card
+                                  mode: vertical
+                                  cards:
+                                     - type: horizontal-stack
+                                       cards:
+                                          - type: custom:mushroom-cover-card
+                                            entity: cover.blinds_bedroom_door_blinds_br
+                                            name: Балкон
+                                            layout: vertical
+                                            show_position_control: false
+                                            show_buttons_control: true
+                                          - type: vertical-stack
+                                            cards:
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_door_75
+                                                name: 75% 
+                                                icon: phu:shutter-30
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_door_50
+                                                name: 50% 
+                                                icon: phu:shutter-50
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_door_33
+                                                name: 33% 
+                                                icon: phu:shutter-70
+                                                template: button_cover_blue_full
+                                              - type: custom:button-card
+                                                entity: script.bedroom_blinds_door_25
+                                                name: 25% 
+                                                icon: phu:shutter-80
+                                                template: button_cover_blue_full
+                        styles:
+                          icon:
+                            - color: '#265cff'
+                          grid:
+                            - grid-template-areas: '"n n n" "i i i" "s s s"'
+                            - grid-template-columns: min-content 1fr min-content
+                            - grid-template-rows:  min-content 1fr min-content
+
+# управление всем окном
+            - type: custom:stack-in-card
+              mode: vertical
+              cards:
+                - type: horizontal-stack
+                  cards:
+                  - type: custom:blind-card
+                    entities:
+                      - entity: cover.bedroom_blinds
+                        name: Все
+                        buttons_position: left
+                        title_position: top
+                        blind_color: '#265cff'
+                  - type: vertical-stack
+                    cards:
+                      - type: custom:button-card
+                        entity: script.bedroom_blinds_full_75
+                        name: 75% 
+                        icon: phu:shutter-30
+                        template: button_cover_blue_full
+                      - type: custom:button-card
+                        entity: script.bedroom_blinds_full_50
+                        name: 50% 
+                        icon: phu:shutter-50
+                        template: button_cover_blue_full
+                      - type: custom:button-card
+                        entity: script.bedroom_blinds_full_33
+                        name: 33% 
+                        icon: phu:shutter-70
+                        template: button_cover_blue_full
+                      - type: custom:button-card
+                        entity: script.bedroom_blinds_full_25
+                        name: 25% 
+                        icon: phu:shutter-80
+                        template: button_cover_blue_full
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

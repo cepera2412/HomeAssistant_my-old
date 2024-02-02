@@ -1,0 +1,52 @@
+title: Media
+path: Media
+icon: mdi:motion-play
+cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: back
+          - type: entity
+            entity: sensor.count_media_player_on
+            icon_color: green
+            use_entity_picture: false
+            icon: ''
+          - type: entity
+            entity: sensor.count_media_player_unavailable
+            icon_color: red
+            icon: ''
+        alignment: center
+
+
+      - type: custom:spotify-card
+      - type: custom:mini-media-player
+        entity: media_player.xiaomitv
+        toggle_power: true
+        group: false
+        info: scroll
+        sound_mode: full
+        source: full
+        artwork: full-cover
+      - type: custom:mini-media-player
+        entity: media_player.mi_speaker
+        volume_stateless: true
+        artwork: full-cover
+        source: full
+        sound_mode: full
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

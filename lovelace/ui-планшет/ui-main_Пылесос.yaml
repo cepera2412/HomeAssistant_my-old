@@ -1,0 +1,127 @@
+#####################################################################################################
+######################################### Кнопка Пылесоса ##########################################
+#####################################################################################################
+
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+      - type: custom:vacuum-card
+        entity: vacuum.mc1808_cloud_753499
+        stats:
+          default:
+            - entity_id: sensor.dreame_mc1808_e626_filter_left_time
+              subtitle: Фільтр
+              unit: годин
+            - entity_id: sensor.dreame_mc1808_e626_brush_left_time_2
+              subtitle: Бічна Щітка
+              unit: годин
+            - entity_id: sensor.dreame_mc1808_e626_brush_left_time
+              subtitle: Головна щітка
+              unit: годин
+        compact_view: false
+        show_toolbar: true
+        actions:
+          start:
+            service: script.clean_select_rooms
+        shortcuts:
+          - name: Уборка в Коридоре
+            service: input_boolean.toggle
+            service_data:
+              entity_id: input_boolean.corridor_vacuum
+            icon: phu:rooms-hallway
+          - name: Уборка на Кухне
+            service: input_boolean.toggle
+            service_data:
+              entity_id: input_boolean.kitchen_vacuum
+            icon: phu:rooms-dining
+          - name: Уборка в Спальне
+            service: input_boolean.toggle
+            service_data:
+              entity_id: input_boolean.bedroom_vacuum
+            icon: phu:rooms-bedroom
+          - name: Уборка в Кабинете
+            service: input_boolean.toggle
+            service_data:
+              entity_id: input_boolean.cabinet_vacuum
+            icon: phu:rooms-office
+          - name: Уборка в Гостиной
+            service: input_boolean.toggle
+            service_data:
+              entity_id: input_boolean.livingroom_vacuum
+            icon: phu:rooms-living
+          - name: Уборка в Гардеробной
+            service: input_boolean.toggle
+            service_data:
+              entity_id: input_boolean.dressingroom_vacuum
+            icon: phu:rooms-closet
+          - name: Уборка на Лоджии
+            service: input_boolean.toggle
+            service_data:
+              entity_id: input_boolean.loggia_vacuum
+            icon: mdi:hammer-screwdriver
+
+      - type: entity-filter
+        show_empty: false
+        entities:
+          - entity: input_boolean.corridor_vacuum
+            icon: phu:rooms-hallway
+            name: Коридор
+          - entity: input_boolean.kitchen_vacuum
+            icon: phu:rooms-dining
+            name: Кухня
+          - entity: input_boolean.bedroom_vacuum
+            icon: phu:rooms-bedroom
+            name: Спальня
+          - entity: input_boolean.cabinet_vacuum
+            icon: phu:rooms-office
+            name: Кабинет
+          - entity: input_boolean.livingroom_vacuum
+            icon: phu:rooms-living
+            name: Гостиная
+          - entity: input_boolean.dressingroom_vacuum
+            icon: phu:rooms-closet
+            name: Гардероб
+          - entity: input_boolean.loggia_vacuum
+            icon: mdi:hammer-screwdriver
+            name: Лоджия
+        state_filter:
+          - 'on'
+        card:
+          type: glance
+          show_state: false
+          show_name: true
+          title: Ну что, поехали убирать -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

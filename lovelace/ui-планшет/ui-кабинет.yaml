@@ -1,0 +1,88 @@
+################################################################################################
+########################################### Кабинет ############################################
+################################################################################################
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Кабинет                                ##
+          icon: mdi:laptop 
+          template: button_return
+
+################################### Выключить все ###########################################
+
+
+################################### Какие устройства вкл. ###########################################
+
+        - type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+              grid-template-columns: 87% auto
+          cards:
+
+            - type: conditional
+              conditions:
+                  - entity: group.kabinet                      ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  name: Включеные приборы
+                  template: button_zagolovok_2
+
+#=================================== Кнопка Выключить все ==========================================
+            - type: conditional
+              conditions:
+                  - entity: group.kabinet                         ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  icon: mdi:lightbulb-group-off
+                  entity: group.kabinet                           ##
+                  template: button_svet_all
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                        entity_id: group.kabinet                   ##
+                    confirmation:
+                        text: 'Выключить весь свет в Кабинете?'
+#============================================================================================
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+    
+            - type: conditional
+              conditions:
+                  - entity: switch.svet_v_kabinete                       ##
+                    state: 'on'
+              card:
+                  type: custom:button-card
+                  entity: switch.svet_v_kabinete                            ##
+                  icon: mdi:wall-sconce-flat
+                  name: Свет
+                  template: button_svet_blue
+
+################################### Выключатель ###########################################
+        - type: custom:button-card
+          name: Освещение
+          template: button_zagolovok
+
+        - type: grid
+          columns: 3
+          square: false
+          cards:
+
+                - type: custom:button-card
+                  entity: switch.svet_v_kabinete                            ##
+                  icon: mdi:wall-sconce-flat
+                  name: Свет
+                  template: button_svet_blue

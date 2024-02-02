@@ -1,0 +1,65 @@
+#####################################################################################################
+######################################### Кнопка Батарейки ##########################################
+#####################################################################################################
+
+
+      type: custom:layout-card
+      layout_type: vertical
+    #   layout:
+    #     max_cols: 1
+    #     width: 250
+      cards:
+
+# ################################### Название с кнопкой выхода ###########################################
+
+        - type: custom:button-card
+          name: Батарейки                                ##
+          icon: mdi:battery-medium
+          template: button_return_big
+
+
+        - type: custom:bar-card
+          icon: mdi:battery-medium
+          severity:
+              - color: Red
+                from: 0
+                to: 10
+              - color: Orange
+                from: 26
+                to: 50
+              - color: Green
+                from: 51
+                to: 100
+          entities:
+              - entity: sensor.0x158d0001dff57f_battery
+              - entity: sensor.0x158d00069b0949_battery
+              - entity: sensor.0x158d00028d3838_battery
+              - entity: sensor.0x158d00067963a8_battery
+              - entity: sensor.0x158d00062fdc4f_battery
+              - entity: sensor.0x158d0003fb0f3a_battery
+              - entity: sensor.0x158d00067919d1_battery
+              - entity: sensor.0x158d0006337230_battery
+              - entity: sensor.28d1272d46cc_battery
+              - entity: sensor.28d1272f330d_battery
+              - entity: sensor.54ef44e5d062_battery
+              - entity: sensor.54ef44e5ca71_battery
+              - entity: sensor.54ef44e5d0d9_battery
+              - entity: sensor.0x158d0006ea5f45_battery
+              - entity: sensor.0x158d0006ba1c1d_battery
+              - entity: sensor.0x158d0006ba1ba3_battery
+              - entity: sensor.0x158d00054bca97_battery
+              - entity: sensor.0x00158d0008317581_battery
+              - entity: sensor.0x00158d00083219e2_battery
+              - entity: sensor.a4c138f9ce31_battery
+              - entity: sensor.a4c138ea1a11_battery
+              - entity: sensor.a4c138c67cbc_battery
+              - entity: sensor.a4c138bfa633_battery
+
+
+
+
+
+
+
+
+

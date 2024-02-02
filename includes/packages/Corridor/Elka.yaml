@@ -1,0 +1,73 @@
+# elka:
+
+# ID обьекта: switch.elka
+
+#     automation:
+
+#         # Вкл Елки
+#         - alias: Вкл Елки при закате
+#           initial_state: true
+#           trigger:
+#           - platform: sun
+#              event: sunset
+#           condition:
+#             condition: and
+#             conditions:
+#               - condition: state
+#                  entity_id: switch.elka
+#                  state: 'off'
+#               - condition: or
+#                  conditions:
+#                  - condition: state
+#                   entity_id: input_boolean.nadiusha
+#                   state: 'on'
+#                  - condition: state
+#                   entity_id: input_boolean.serega
+#                   state: 'on'
+#           action:
+#           - service: switch.turn_on
+#              entity_id: switch.elka
+        
+#         # Вкл Елки при открытие двери
+#         - alias: Вкл Елки при открытие двери
+#           initial_state: true
+#           trigger:
+#           - platform: state
+#              entity_id: binary_sensor.0x158d0001dff57f_contact
+#              to: 'on'
+#           condition:
+#           - condition: state
+#              entity_id: switch.elka
+#              state: 'off'
+#              for:
+#               minutes: 10
+#           - condition: template
+#              value_template: '{{ state_attr("sun.sun", "elevation") < 0 }}'
+#           - condition: time
+#              after: '16:20:00'
+#              before: '00:03:00'
+#           action:
+#           - service: switch.turn_on
+#              entity_id: switch.elka
+        
+#         # Выкл Елка
+#         - alias: Выкл Елку в полночь
+#           initial_state: true
+#           trigger:
+#           - platform: time
+#              at: '00:05:00'
+#           condition:
+#           - condition: state
+#              entity_id: switch.elka
+#              state: 'on'
+#           action:
+#           - service: switch.turn_off
+#              entity_id: switch.elka
+        
+
+
+
+
+
+
+

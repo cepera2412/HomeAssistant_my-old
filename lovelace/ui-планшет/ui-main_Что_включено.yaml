@@ -1,0 +1,809 @@
+            type: custom:layout-card
+            layout_type: vertical
+            layout:
+                max_cols: 1
+                width: 180
+            cards:
+
+############################################## Включеный Свет ###############################################
+
+                - type: custom:layout-card
+                  layout_type: custom:grid-layout
+                  layout:
+                      grid-template-columns: 87% auto
+                  cards:
+        
+                    - type: conditional
+                      conditions:
+                          - entity: group.light_all                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          name: Включеные приборы
+                          template: button_zagolovok_2
+
+#=================================== Кнопка Выключить все ==========================================
+                    - type: conditional
+                      conditions:
+                          - entity: group.light_all                         ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          icon: mdi:lightbulb-group-off
+                          entity: group.light_all                           ##
+                          template: button_svet_all
+                          tap_action:
+                            action: call-service
+                            service: switch.turn_off
+                            service_data:
+                                entity_id: group.light_all                  ##
+                            confirmation:
+                                text: 'Выключить весь свет?'
+#===================================================================================================
+
+                - type: grid
+                  columns: 3
+                  square: false
+                  cards:
+
+# Коридор
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_koridore                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_koridore                            ##
+                          icon: mdi:dome-light
+                          name: Коридор
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_koridore                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_koridore                           ##
+                          icon: mdi:led-strip-variant
+                          name: Коридор
+                          template: button_main_light
+        
+# Туалет
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_tualete                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_tualete
+                          icon: mdi:lightbulb-spot
+                          name: Туалет
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.vytiazhka_v_tualete                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.vytiazhka_v_tualete
+                          icon: mdi:fan
+                          name: Вытяжка
+                          template: button_main_light_fan
+        
+# Ванная
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_vannoi                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_vannoi
+                          icon: mdi:lightbulb-spot
+                          name: Ванная
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_vannoi                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_vannoi                           ##
+                          icon: mdi:led-strip-variant
+                          name: Ванная
+                          template: button_main_light
+        
+# Гостиная
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_gostinoi                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_gostinoi                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Гостиная
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_gostinoi                        ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_gostinoi                           ##
+                          icon: mdi:led-strip-variant
+                          name: Гостиная
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.liustra_v_gostinoi                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.liustra_v_gostinoi                           ##
+                          icon: mdi:vanity-light
+                          name: Гостиная
+                          template: button_main_light
+        
+# Гардеробная
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_garderobnoi                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_garderobnoi                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Гардероб
+                          template: button_main_light_180
+        
+# Лоджия
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_na_lodzhii                        ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_na_lodzhii                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Лоджия
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_na_lodzhii                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_na_lodzhii                           ##
+                          icon: mdi:led-strip-variant
+                          name: Лоджия
+                          template: button_main_light
+        
+# Спальня
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_spalne                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_spalne                            ##
+                          icon: mdi:vanity-light
+                          name: Спальня
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_spalne                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_spalne                           ##
+                          icon: mdi:led-strip-variant
+                          name: Спальня
+                          template: button_main_light
+        
+# Кабинет
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_kabinete                         ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_kabinete                            ##
+                          icon: mdi:wall-sconce-flat
+                          name: Кабинет
+                          template: button_main_light
+        
+# Кухня
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_nad_stoleshnei                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_nad_stoleshnei                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Кухня
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_na_kukhne                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_na_kukhne                           ##
+                          icon: mdi:led-strip-variant
+                          name: Кухня
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_nad_stolom                     ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_nad_stolom                            ##
+                          icon: mdi:vanity-light
+                          name: Кухня
+                          template: button_main_light
+
+#--------------------------------------------------------------------------------------------
+# Устройства
+                    # - type: conditional
+                    #   conditions:
+                    #       - entity: switch.chainik                     ##
+                    #         state: 'on'
+                    #   card:
+                    #       type: custom:button-card
+                    #       entity: switch.chainik                            ##
+                    #       icon: mdi:vanity-light
+                    #       name: Чайник
+                    #       template: button_
+# и ТД
+#---------------------------------------------------------------------------------------------
+
+################################################ Активные Датчики #############################################
+
+                - type: custom:layout-card
+                  layout_type: custom:grid-layout
+                  cards:
+                    - type: conditional
+                      conditions:
+                          - entity: group.dat4iki_all                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          name: Активные датчики
+                          template: button_zagolovok_2
+
+                - type: grid
+                  columns: 3
+                  square: false
+                  cards:
+        
+# Протечки
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.54ef44e5ca71_water_leak                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.54ef44e5ca71_water_leak
+                          name: Туалет 
+                          template: button_main_sensor_Water_Leak
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.54ef44e5d062_water_leak                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.54ef44e5d062_water_leak
+                          name: Ванная 
+                          template: button_main_sensor_Water_Leak
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.54ef44e5d0d9_water_leak                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.54ef44e5d0d9_water_leak
+                          name: Кухня 
+                          template: button_main_sensor_Water_Leak
+                          
+# Двери
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d0001dff57f_contact                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d0001dff57f_contact
+                          name: Входная 
+                          template: button_main_sensor_door
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00028d3838_contact                     ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00028d3838_contact
+                          name: Туалет 
+                          template: button_main_sensor_door
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00069b0949_contact                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00069b0949_contact
+                          name: Ванная 
+                          template: button_main_sensor_door
+
+# Окна
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.blinds_livingroom_open_window_livingroom                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.blinds_livingroom_open_window_livingroom
+                          name: Лоджая 
+                          template: button_main_sensor_door
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.blinds_kitchen_open_window_kitchen                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.blinds_kitchen_open_window_kitchen
+                          name: Кухня 
+                          template: button_main_sensor_door
+            
+# Движение
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d0003fb0f3a_motion                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d0003fb0f3a_motion
+                          name: Коридор 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.28d1272f330d_motion                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.28d1272f330d_motion
+                          name: нс Коридор
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00067963a8_motion                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00067963a8_motion
+                          name: Ванная 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00067919d1_motion                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00067919d1_motion
+                          name: Туалет 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d0006337230_motion                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d0006337230_motion
+                          name: Кухня 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00062fdc4f_motion                       ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00062fdc4f_motion
+                          name: Гардеробная 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.28d1272d46cc_motion                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.28d1272d46cc_motion
+                          name: нс Гостиная
+                          template: button_main_sensor_motion
+
+# Присутствие
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.kitchen_ld2410_occupancy                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.kitchen_ld2410_occupancy
+                          name: Кухня 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.vanna_49_94_9a_35_13_36_occupancy                      ##
+                            state: 'on'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.vanna_49_94_9a_35_13_36_occupancy
+                          name: Ванная 
+                          template: button_main_sensor_motion
+
+################################################ Недоступные ########################################################
+
+                - type: custom:layout-card
+                  layout_type: custom:grid-layout
+                  cards:
+                        - type: custom:button-card
+                          name: Недоступные
+                          template: button_zagolovok_2
+
+                - type: grid
+                  columns: 3
+                  square: false
+                  cards:
+
+# Выключатели
+
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_koridore                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_koridore                            ##
+                          icon: mdi:dome-light
+                          name: Коридор
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_koridore                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_koridore                           ##
+                          icon: mdi:led-strip-variant
+                          name: Коридор
+                          template: button_main_light
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_tualete                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_tualete
+                          icon: mdi:lightbulb-spot
+                          name: Туалет
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.vytiazhka_v_tualete                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.vytiazhka_v_tualete
+                          icon: mdi:fan
+                          name: Вытяжка
+                          template: button_main_light_fan
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_vannoi                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_vannoi
+                          icon: mdi:lightbulb-spot
+                          name: Ванная
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_vannoi                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_vannoi                           ##
+                          icon: mdi:led-strip-variant
+                          name: Ванная
+                          template: button_main_light
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_gostinoi                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_gostinoi                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Гостиная
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_gostinoi                        ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_gostinoi                           ##
+                          icon: mdi:led-strip-variant
+                          name: Гостиная
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.liustra_v_gostinoi                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.liustra_v_gostinoi                           ##
+                          icon: mdi:vanity-light
+                          name: Гостиная
+                          template: button_main_light
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_garderobnoi                      ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_garderobnoi                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Гардероб
+                          template: button_main_light_180
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_na_lodzhii                        ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_na_lodzhii                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Лоджия
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_na_lodzhii                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_na_lodzhii                           ##
+                          icon: mdi:led-strip-variant
+                          name: Лоджия
+                          template: button_main_light
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_spalne                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_spalne                            ##
+                          icon: mdi:vanity-light
+                          name: Спальня
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_v_spalne                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_v_spalne                           ##
+                          icon: mdi:led-strip-variant
+                          name: Спальня
+                          template: button_main_light
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_v_kabinete                         ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_v_kabinete                            ##
+                          icon: mdi:wall-sconce-flat
+                          name: Кабинет
+                          template: button_main_light
+        
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_nad_stoleshnei                      ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_nad_stoleshnei                            ##
+                          icon: mdi:lightbulb-spot
+                          name: Кухня
+                          template: button_main_light_180
+                    - type: conditional
+                      conditions:
+                          - entity: switch.lenta_na_kukhne                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.lenta_na_kukhne                           ##
+                          icon: mdi:led-strip-variant
+                          name: Кухня
+                          template: button_main_light
+                    - type: conditional
+                      conditions:
+                          - entity: switch.svet_nad_stolom                     ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: switch.svet_nad_stolom                            ##
+                          icon: mdi:vanity-light
+                          name: Кухня
+                          template: button_main_light
+
+
+# Датчики
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.54ef44e5ca71_water_leak                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.54ef44e5ca71_water_leak
+                          name: Туалет 
+                          template: button_main_sensor_Water_Leak
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.54ef44e5d062_water_leak                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.54ef44e5d062_water_leak
+                          name: Ванная 
+                          template: button_main_sensor_Water_Leak
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.54ef44e5d0d9_water_leak                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.54ef44e5d0d9_water_leak
+                          name: Кухня 
+                          template: button_main_sensor_Water_Leak
+                          
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d0001dff57f_contact                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d0001dff57f_contact
+                          name: Входная 
+                          template: button_main_sensor_door
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00028d3838_contact                     ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00028d3838_contact
+                          name: Туалет 
+                          template: button_main_sensor_door
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00069b0949_contact                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00069b0949_contact
+                          name: Ванная 
+                          template: button_main_sensor_door
+
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d0003fb0f3a_motion                      ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d0003fb0f3a_motion
+                          name: Коридор 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.28d1272f330d_motion                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.28d1272f330d_motion
+                          name: нс Коридор
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00067963a8_motion                      ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00067963a8_motion
+                          name: Ванная 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00067919d1_motion                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00067919d1_motion
+                          name: Туалет 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d0006337230_motion                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d0006337230_motion
+                          name: Кухня 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.0x158d00062fdc4f_motion                       ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.0x158d00062fdc4f_motion
+                          name: Гардеробная 
+                          template: button_main_sensor_motion
+                    - type: conditional
+                      conditions:
+                          - entity: binary_sensor.28d1272d46cc_motion                      ##
+                            state: 'unavailable'
+                      card:
+                          type: custom:button-card
+                          entity: binary_sensor.28d1272d46cc_motion
+                          name: нс Гостиная
+                          template: button_main_sensor_motion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

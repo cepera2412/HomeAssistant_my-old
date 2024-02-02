@@ -1,0 +1,112 @@
+label:                 #                                       МЕТКИ
+
+##########################################################################################################################################
+#                                                         Сенсоры 
+##########################################################################################################################################
+
+
+
+##########################################################################################################################################
+#                                                          Скрипты 
+##########################################################################################################################################
+
+    script:
+
+##########################################################################################################################################
+#                                                       Автоматизации 
+##########################################################################################################################################
+
+    automation:
+
+## Тестирование меток
+#       - alias: (Метка) Тест
+#         trigger:
+#           - platform: tag
+#             tag_id: a07a487b-a8c3-48d5-bd36-96518ea255ff               # менять
+#         action:
+#           - service: switch.toggle
+#             entity_id: switch.svet_v_garderobnoi
+#         mode: single
+
+
+# Голосовое оповещение погоды
+      - alias: (Метка) Голосовое оповещение погоды
+        trigger:
+          - platform: tag
+            tag_id: 08380f91-6d04-4615-84dd-b288c8ef2167
+        action:
+          - service: media_player.volume_set
+            data:
+              volume_level: 0.5
+            target:
+              entity_id: media_player.mi_speaker
+          - delay: 00:00:01
+          - service: tts.google_translate_say
+            data:
+              entity_id: media_player.mi_speaker
+              message: | 
+                 Добридень! Цікавить погода? Зараз все розповім.
+                 Температура на вулиці {{ states('sensor.a4c138bfa633_temperature')|int }} градусів
+                 Прогноз погоди на добу:
+                 максимальна {{ states('sensor.my_smart_home_realfeel_temperature_max_0d')|int }}
+                 мінімальна {{ states('sensor.my_smart_home_realfeel_temperature_min_0d')|int }}
+                 вітер {{ states('sensor.my_smart_home_wind')|int }} кілометрів на годину
+                 гарного вам дня та мирного неба!
+                 слава Україні! 
+        mode: single
+
+# Переключение автоматизации света в Гардеробной
+      - alias: (Метка) Откл автоматизации света в Гардеробной
+        trigger:
+          - platform: tag
+            tag_id: fdb2e79d-a0a0-4673-9aab-74c0464fb5a8
+        action:
+          - service: automation.toggle
+            entity_id: automation.garderobnaia_vkl_svet_pri_dvizhenii
+        mode: single
+
+# Переключение режима Сушки
+      - alias: (Метка) Вкл. режима Сушки
+        trigger:
+          - platform: tag
+            tag_id: a07a487b-a8c3-48d5-bd36-96518ea255ff
+        action:
+          - service: input_boolean.toggle
+            entity_id: input_boolean.syshka
+        mode: single
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

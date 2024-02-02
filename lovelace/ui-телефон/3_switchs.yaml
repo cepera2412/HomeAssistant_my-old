@@ -1,0 +1,120 @@
+title: switchs
+icon: mdi:power-plug-outline
+path: switchs
+badges: []
+cards:
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: back
+      - type: entity
+        entity: sensor.all_switch_on
+        icon_color: yellow
+        use_entity_picture: false
+        icon: mdi:power-plug-outline
+      - type: entity
+        entity: sensor.all_switch_unavailable
+        icon_color: red
+        icon: mdi:power-plug-off-outline
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-entity-card
+        entity: switch.rele_napriazheniia
+        icon: mdi:light-switch
+        secondary_info: last-changed
+        tap_action:
+          action: toggle
+        layout: vertical
+      - type: custom:mushroom-entity-card
+        entity: switch.0x84b4dbfffeac2b87
+        icon: mdi:light-switch
+        secondary_info: last-changed
+        tap_action:
+          action: toggle
+        layout: vertical
+  - type: custom:mushroom-title-card
+    title: Коридор
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-entity-card
+        entity: switch.planshet
+        secondary_info: last-changed
+        tap_action:
+          action: toggle
+        layout: vertical
+      - type: custom:mushroom-entity-card
+        entity: switch.rele_dlia_mi_robota
+        secondary_info: last-changed
+        tap_action:
+          action: toggle
+        layout: vertical
+        name: Реле Robota
+      - type: custom:mushroom-entity-card
+        entity: switch.troinaia_rozetka
+        layout: vertical
+        tap_action:
+          action: toggle
+        secondary_info: last-changed
+        name: Тройная
+  - type: custom:mushroom-title-card
+    title: Спальня
+    alignment: center
+  - type: custom:mushroom-entity-card
+    entity: switch.0xa4c1hyperion8da0f3b1dbd
+    icon: mdi:television
+    secondary_info: last-changed
+    icon_color: teal
+  - type: custom:mushroom-title-card
+    title: Островок
+    alignment: center
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-entity-card
+        entity: switch.chainik
+        layout: vertical
+        secondary_info: none
+        tap_action:
+          action: toggle
+        icon: mdi:kettle
+        name: Чайник
+        icon_color: pink
+      - type: custom:mushroom-entity-card
+        entity: switch.ostrovok_bp_12v
+        name: USB
+        icon: mdi:usb-flash-drive-outline
+        layout: vertical
+        secondary_info: none
+        icon_color: green
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-entity-card
+        entity: switch.mini_kholodilnik
+        name: Холодольник
+        icon: mdi:fridge-industrial
+        icon_color: blue
+        layout: vertical
+        secondary_info: none
+        tap_action:
+          action: toggle
+      - type: custom:mushroom-entity-card
+        entity: switch.ostrovok_rozetki
+        layout: vertical
+        icon_color: yellow
+        secondary_info: none
+        name: Розетки
+        tap_action:
+          action: toggle
+
+
+
+
+
+
+
+
+
+
+
+
+

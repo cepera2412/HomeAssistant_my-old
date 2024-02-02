@@ -1,0 +1,449 @@
+telegram_notification:
+
+#########################################################################################################################################
+#                                                                  Шаблоны 
+#########################################################################################################################################
+
+    template:
+    
+      - binary_sensor:
+
+          - name: switch_vannoi_unavailable
+            state: >
+              {{ is_state('switch.lenta_v_vannoi', 'unavailable')
+                 and is_state('switch.svet_v_vannoi', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_garderobnoi_unavailable
+            state: >
+              {{ is_state('switch.svet_v_garderobnoi', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_gostinoi_unavailable
+            state: >
+              {{ is_state('switch.lenta_v_gostinoi', 'unavailable')
+                 and is_state('switch.liustra_v_gostinoi', 'unavailable')
+                 and is_state('switch.svet_v_gostinoi', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_kabinete_unavailable
+            state: >
+              {{ is_state('switch.svet_v_kabinete', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_koridore_unavailable
+            state: >
+              {{ is_state('switch.lenta_v_koridore', 'unavailable')
+                 and is_state('switch.svet_v_koridore', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_spalne_unavailable
+            state: >
+              {{ is_state('switch.lenta_v_spalne', 'unavailable')
+                 and is_state('switch.svet_v_spalne', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_tualete_unavailable
+            state: >
+              {{ is_state('switch.vytiazhka_v_tualete', 'unavailable')
+                 and is_state('switch.svet_v_tualete', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_kukhne_unavailable
+            state: >
+              {{ is_state('switch.lenta_na_kukhne', 'unavailable')
+                 and is_state('switch.svet_nad_stolom', 'unavailable')
+                 and is_state('switch.svet_nad_stoleshnei', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+          - name: switch_lodzhii_unavailable
+            state: >
+              {{ is_state('switch.lenta_na_lodzhii', 'unavailable')
+                 and is_state('switch.svet_na_lodzhii', 'unavailable')
+              }}
+            delay_on: 00:01:00
+
+
+#########################################################################################################################################
+#                                                               Автоматизации 
+#########################################################################################################################################
+
+    automation:
+
+#################################################################### Режимы #############################################################
+
+# Режим "Дима спит"
+      - id: Напоминание о вкл Режиме "Дима спит"
+        alias: (Внимание) Напоминание о вкл Режиме "Дима спит"
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: input_boolean.dima_sleep
+            to: 'on'
+            for:
+              hours: 3
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U000026A0"}} Режиме "Дима спит" всё еще включен, может его пора отключить?
+              inline_keyboard:
+                - '{{''\U0001F4A4''}} Выключить:/off_dima_sleep'
+
+# Режим "Авто. Гардероб"
+      - id: Напоминание о выкл Режиме "Авто. Гардероб"
+        alias: (Внимание) Напоминание о выкл Режиме "Авто. Гардероб"
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: automation.garderobnaia_vkl_svet_pri_dvizhenii
+            to: 'off'
+            for:
+              hours: 3
+        condition:
+          - condition: state
+            entity_id: binary_sensor.avtovkl_sveta_v_garderobnoi
+            state: 'on'
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U000026A0"}} Автоматизация в Гардеробной всё еще отключена, может его пора включить?
+
+# Режим "Стрижка"
+      - id: Напоминание о вкл Режиме "Стрижка"
+        alias: (Внимание) Напоминание о вкл Режиме "Стрижка"
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: input_boolean.strijka
+            to: 'on'
+            for:
+              minutes: 45
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U000026A0"}} Режиме "Стрижка" всё еще включен, может его пора отключить?
+
+# Режим "Сушка"
+      - id: Напоминание о вкл Режиме "Сушка"
+        alias: (Внимание) Напоминание о вкл Режиме "Сушка"
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: input_boolean.syshka
+            to: 'on'
+            for:
+              minutes: 20
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U000026A0"}} Режиме "Сушка" всё еще включен, может его пора отключить?
+
+
+# Выкл режимов и тд с телеграм
+      - id: Выкл режимов с телеграм
+        alias: (Внимание) Выкл режимов с телеграм
+        initial_state: true
+        trigger:
+          - platform: event
+            event_type: telegram_callback
+            event_data: {}
+        action:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/off_dima_sleep'' }}'
+                sequence:
+                  - service: input_boolean.turn_off
+                    entity_id: input_boolean.dima_sleep
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.answer_callback_query
+                    data:
+                      callback_query_id: "{{ trigger.event.data.id }}"
+                      message: | 
+                          {{"\U0001F4A4"}} Режим "Дима спит" выключен!
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/reset_all_svet'' }}'
+                sequence:
+                  - service: switch.turn_off
+                    entity_id: switch.0x84b4dbfffeac2b87
+                  - delay: 00:00:05
+                  - service: switch.turn_on
+                    entity_id: switch.0x84b4dbfffeac2b87
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.answer_callback_query
+                    data:
+                      callback_query_id: "{{ trigger.event.data.id }}"
+                      message: | 
+                          {{"\U0001F4A4"}} Перезапущен весь свет в квартире!
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+
+
+################################################################ Оповещение #############################################################
+
+# Зависание выключателя
+      - id: Зависание выключателя
+        alias: (Внимание) Завис выключатель
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: binary_sensor.switch_vannoi_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_garderobnoi_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_gostinoi_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_kabinete_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_koridore_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_spalne_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_tualete_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_kukhne_unavailable
+            to: 'on'
+          - platform: state
+            entity_id: binary_sensor.switch_lodzhii_unavailable
+            to: 'on'
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_group
+              message: |
+                  {{"\U0001F4E8"}} Состояние системы
+                  {{"\U000026A0"}} Завис выключатель
+              inline_keyboard:
+                - '{{''\U0001F503''}} Перезагрузить:/reset_all_svet'
+
+
+#################################################################### Обновы #############################################################
+
+# Обнова Home Assistant
+      - id: Появление обновы Home Assistant
+        alias: (Внимание) Появилась обнова Home Assistant
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: update.home_assistant_core_update
+            to: 'on'
+          - platform: state
+            entity_id: update.home_assistant_operating_system_update
+            to: 'on'
+          - platform: state
+            entity_id: update.home_assistant_supervisor_update
+            to: 'on'
+        action:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: update.home_assistant_core_update
+                    state: 'on'
+                sequence:
+                  - service: telegram_bot.send_message
+                    data:
+                      target:
+                        - !secret telegram_ID_Cepera
+                      message: |
+                        {{'\U0001F4AC'}} *Появилось обновление Home Assistant*
+                      inline_keyboard:
+                        - '{{''\U0001F503''}} Обновить:/HA_core'
+              - conditions:
+                  - condition: state
+                    entity_id: update.home_assistant_operating_system_update
+                    state: 'on'
+                sequence:
+                  - service: telegram_bot.send_message
+                    data:
+                      target:
+                        - !secret telegram_ID_Cepera
+                      message: |
+                        {{'\U0001F4AC'}} *Появилось обновление Home Assistant*
+                      inline_keyboard:
+                        - '{{''\U0001F503''}} Обновить:/HA_system'
+              - conditions:
+                  - condition: state
+                    entity_id: update.home_assistant_supervisor_update
+                    state: 'on'
+                sequence:
+                  - service: telegram_bot.send_message
+                    data:
+                      target:
+                        - !secret telegram_ID_Cepera
+                      message: |
+                        {{'\U0001F4AC'}} *Появилось обновление Home Assistant*
+                      inline_keyboard:
+                        - '{{''\U0001F503''}} Обновить:/HA_supervisor'
+
+      - id: Обновление Home Assistant с телеграм
+        alias: (Внимание) Обновление Home Assistant с телеграм
+        initial_state: true
+        trigger:
+          - platform: event
+            event_type: telegram_callback
+            event_data: {}
+        action:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/HA_core'' }}'
+                sequence:
+                  - service: update.install
+                    data:
+                      backup: true
+                    entity_id: update.home_assistant_core_update
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/HA_system'' }}'
+                sequence:
+                  - service: update.install
+                    data:
+                      backup: true
+                    entity_id: update.home_assistant_operating_system_update
+                #   - service: update.install
+                #     entity_id: update.home_assistant_operating_system_update
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+              - conditions:
+                  - condition: template
+                    value_template: '{{ trigger.event.data.command == ''/HA_supervisor'' }}'
+                sequence:
+                  - service: update.install
+                    data:
+                      backup: true
+                    entity_id: update.home_assistant_supervisor_update
+                  - delay:
+                      milliseconds: 500
+                  - service: telegram_bot.delete_message
+                    data_template:
+                      message_id: '{{ trigger.event.data.message.message_id }}'
+                      chat_id: '{{ trigger.event.data.chat_id }}'
+
+# Обнова Add-on's
+      - id: Появление обновы Add-on's
+        alias: (Внимание) Появилась обнова Add-on's
+        initial_state: true
+        trigger:
+          - platform: state
+            entity_id: group.vse_addon
+            to: 'on'
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_Cepera
+              message: |
+                {{'\U0001F4AC'}} *Появилось обновление Add-on's*
+
+# Обнова Hacs
+      - id: Появление обновы Hacs
+        alias: (Внимание) Появилась обнова Hacs
+        initial_state: true
+        trigger:
+          - platform: template
+            value_template: "{{ (states('sensor.hacs') | int) > 0 }}"
+        action:
+          - service: telegram_bot.send_message
+            data_template:
+              target:
+                - !secret telegram_ID_Cepera
+              message: |
+                {{'\U0001F4AC'}} *Появилось обновление Hacs*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

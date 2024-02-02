@@ -1,0 +1,734 @@
+esphome:
+  name: blinds-bedroom
+  friendly_name: blinds-bedroom
+  on_boot:
+    then:
+      # We don't set MS1 to LOW because it is on pin D4, which is tied to the internal LED.
+      # We set it to LOW in on_loop below when target and current positions differ.
+# Первая
+      - output.turn_off: blinds1_in1
+      - output.turn_off: blinds1_in2
+      - output.turn_off: blinds1_in3
+      - output.turn_off: blinds1_in4
+# Вторая
+      - output.turn_off: blinds2_in1
+      - output.turn_off: blinds2_in2
+      - output.turn_off: blinds2_in3
+      - output.turn_off: blinds2_in4
+# Третья
+      - output.turn_off: blinds3_in1
+      - output.turn_off: blinds3_in2
+      - output.turn_off: blinds3_in3
+      - output.turn_off: blinds3_in4
+# Четвертая
+      - output.turn_off: blinds4_in1
+      - output.turn_off: blinds4_in2
+      - output.turn_off: blinds4_in3
+      - output.turn_off: blinds4_in4
+
+# Первая
+      - stepper.report_position:
+          id: blinds_stepper1
+          position: !lambda return id(stepper_position1);
+      - stepper.set_target:
+          id: blinds_stepper1
+          target: !lambda return id(stepper_position1);
+      - if: 
+          condition:
+            - lambda: 'return id(stepper_position1) == 0;'
+          then: 
+            - cover.template.publish:
+                id: blinds1
+                state: CLOSED
+                current_operation: IDLE
+          else:
+            - cover.template.publish:
+                id: blinds1
+                state: OPEN
+                current_operation: IDLE
+# Вторая
+      - stepper.report_position:
+          id: blinds_stepper2
+          position: !lambda return id(stepper_position2);
+      - stepper.set_target:
+          id: blinds_stepper2
+          target: !lambda return id(stepper_position2);
+      - if: 
+          condition:
+            - lambda: 'return id(stepper_position2) == 0;'
+          then: 
+            - cover.template.publish:
+                id: blinds2
+                state: CLOSED
+                current_operation: IDLE
+          else:
+            - cover.template.publish:
+                id: blinds2
+                state: OPEN
+                current_operation: IDLE
+# Третья
+      - stepper.report_position:
+          id: blinds_stepper3
+          position: !lambda return id(stepper_position3);
+      - stepper.set_target:
+          id: blinds_stepper3
+          target: !lambda return id(stepper_position3);
+      - if: 
+          condition:
+            - lambda: 'return id(stepper_position3) == 0;'
+          then: 
+            - cover.template.publish:
+                id: blinds3
+                state: CLOSED
+                current_operation: IDLE
+          else:
+            - cover.template.publish:
+                id: blinds3
+                state: OPEN
+                current_operation: IDLE
+# Четвертая
+      - stepper.report_position:
+          id: blinds_stepper4
+          position: !lambda return id(stepper_position4);
+      - stepper.set_target:
+          id: blinds_stepper4
+          target: !lambda return id(stepper_position4);
+      - if: 
+          condition:
+            - lambda: 'return id(stepper_position4) == 0;'
+          then: 
+            - cover.template.publish:
+                id: blinds4
+                state: CLOSED
+                current_operation: IDLE
+          else:
+            - cover.template.publish:
+                id: blinds4
+                state: OPEN
+                current_operation: IDLE
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "hoiphp"
+  services:
+# Первой роллеты
+    - service: set_closed_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper1
+            position: !lambda return id(end_position1);
+        - stepper.set_target:
+            id: blinds_stepper1
+            target: !lambda return id(end_position1);
+        - globals.set:
+            id: stepper_position1
+            value: !lambda return id(end_position1);
+    - service: set_open_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper1
+            position: 0
+        - stepper.set_target:
+            id: blinds_stepper1
+            target: 0
+        - globals.set:
+            id: stepper_position1
+            value: '0'
+    - service: control_stepper
+      variables:
+        target: int
+      then:
+        - stepper.set_target:
+            id: blinds_stepper1
+            target: !lambda 'return target;'
+        - globals.set:
+            id: stepper_position1
+            value: !lambda return target;
+# Второй роллеты
+    - service: set_closed_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper2
+            position: !lambda return id(end_position2);
+        - stepper.set_target:
+            id: blinds_stepper2
+            target: !lambda return id(end_position2);
+        - globals.set:
+            id: stepper_position2
+            value: !lambda return id(end_position2);
+    - service: set_open_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper2
+            position: 0
+        - stepper.set_target:
+            id: blinds_stepper2
+            target: 0
+        - globals.set:
+            id: stepper_position2
+            value: '0'
+    - service: control_stepper
+      variables:
+        target: int
+      then:
+        - stepper.set_target:
+            id: blinds_stepper2
+            target: !lambda 'return target;'
+        - globals.set:
+            id: stepper_position2
+            value: !lambda return target;
+# Третьей роллеты
+    - service: set_closed_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper3
+            position: !lambda return id(end_position3);
+        - stepper.set_target:
+            id: blinds_stepper3
+            target: !lambda return id(end_position3);
+        - globals.set:
+            id: stepper_position3
+            value: !lambda return id(end_position3);
+    - service: set_open_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper3
+            position: 0
+        - stepper.set_target:
+            id: blinds_stepper3
+            target: 0
+        - globals.set:
+            id: stepper_position3
+            value: '0'
+    - service: control_stepper
+      variables:
+        target: int
+      then:
+        - stepper.set_target:
+            id: blinds_stepper3
+            target: !lambda 'return target;'
+        - globals.set:
+            id: stepper_position3
+            value: !lambda return target;
+# Четвертой роллеты
+    - service: set_closed_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper4
+            position: !lambda return id(end_position4);
+        - stepper.set_target:
+            id: blinds_stepper4
+            target: !lambda return id(end_position4);
+        - globals.set:
+            id: stepper_position4
+            value: !lambda return id(end_position4);
+    - service: set_open_position
+      then:
+        - stepper.report_position:
+            id: blinds_stepper4
+            position: 0
+        - stepper.set_target:
+            id: blinds_stepper4
+            target: 0
+        - globals.set:
+            id: stepper_position4
+            value: '0'
+    - service: control_stepper
+      variables:
+        target: int
+      then:
+        - stepper.set_target:
+            id: blinds_stepper4
+            target: !lambda 'return target;'
+        - globals.set:
+            id: stepper_position4
+            value: !lambda return target;
+
+ota:
+  password: "63827"
+
+wifi:
+  ssid: ""
+  password: ""
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "esp32b-br"
+    password: "ik-"
+
+captive_portal:
+
+globals:
+# Первая роллета
+  - id: stepper_position1
+    type: int
+    restore_value: true
+    initial_value: '0'
+  - id: end_position1
+    type: int
+    restore_value: true
+    initial_value: '-37600'           # Эксперементальное определение хода шагового движка на роллету
+# Вторая роллета
+  - id: stepper_position2
+    type: int
+    restore_value: true
+    initial_value: '0'
+  - id: end_position2
+    type: int
+    restore_value: true
+    initial_value: '-36600'           # Эксперементальное определение хода шагового движка на роллету
+# Третья роллета
+  - id: stepper_position3
+    type: int
+    restore_value: true
+    initial_value: '0'
+  - id: end_position3
+    type: int
+    restore_value: true
+    initial_value: '38000'           # Эксперементальное определение хода шагового движка на роллету
+# Четвертая роллета
+  - id: stepper_position4
+    type: int
+    restore_value: true
+    initial_value: '0'
+  - id: end_position4
+    type: int
+    restore_value: true
+    initial_value: '-27000'           # Эксперементальное определение хода шагового движка на роллету
+
+output:
+# Выходы первой роллеты
+  - platform: gpio
+    id: blinds1_in1
+    pin: GPIO27
+  - platform: gpio
+    id: blinds1_in2
+    pin: GPIO14
+  - platform: gpio
+    id: blinds1_in3
+    pin: GPIO12
+  - platform: gpio
+    id: blinds1_in4
+    pin: GPIO13
+# Выходы Второй роллеты
+  - platform: gpio
+    id: blinds2_in1
+    pin: GPIO32
+  - platform: gpio
+    id: blinds2_in2
+    pin: GPIO33
+  - platform: gpio
+    id: blinds2_in3
+    pin: GPIO25
+  - platform: gpio
+    id: blinds2_in4
+    pin: GPIO26
+# Выходы третей роллеты
+  - platform: gpio
+    id: blinds3_in1
+    pin: GPIO23
+  - platform: gpio
+    id: blinds3_in2
+    pin: GPIO22
+  - platform: gpio
+    id: blinds3_in3
+    pin: GPIO21
+  - platform: gpio
+    id: blinds3_in4
+    pin: GPIO19
+# Выходы четвертой роллеты
+  - platform: gpio
+    id: blinds4_in1
+    pin: GPIO18
+  - platform: gpio
+    id: blinds4_in2
+    pin: GPIO5
+  - platform: gpio
+    id: blinds4_in3
+    pin: GPIO17
+  - platform: gpio
+    id: blinds4_in4
+    pin: GPIO16
+
+# физическое соединение
+stepper: 
+# Первая роллета
+  - platform: uln2003
+    id: blinds_stepper1
+    pin_a: GPIO27
+    pin_b: GPIO14
+    pin_c: GPIO12
+    pin_d: GPIO13
+    max_speed: 250 steps/s
+    sleep_when_done: true 
+    acceleration: inf
+    deceleration: inf
+# Вторая роллета
+  - platform: uln2003
+    id: blinds_stepper2
+    pin_a: GPIO32
+    pin_b: GPIO33
+    pin_c: GPIO25
+    pin_d: GPIO26
+    max_speed: 250 steps/s
+    sleep_when_done: true 
+    acceleration: inf
+    deceleration: inf
+# Третья роллета
+  - platform: uln2003
+    id: blinds_stepper3
+    pin_a: GPIO23
+    pin_b: GPIO22
+    pin_c: GPIO21
+    pin_d: GPIO19
+    max_speed: 250 steps/s
+    sleep_when_done: true 
+    acceleration: inf
+    deceleration: inf
+# Четвертая роллета
+  - platform: uln2003
+    id: blinds_stepper4
+    pin_a: GPIO18
+    pin_b: GPIO5
+    pin_c: GPIO17
+    pin_d: GPIO16
+    max_speed: 250 steps/s
+    sleep_when_done: true 
+    acceleration: inf
+    deceleration: inf
+
+# Управление жалюзями
+cover:
+# Первая
+  - platform: template
+    id: blinds1
+    device_class: blind
+    name: "Right blinds BR"
+    open_action:
+      - logger.log:
+          format: "OPEN called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position1)' ]
+      - stepper.set_target:
+          id: blinds_stepper1
+          target: 0
+      - globals.set:
+          id: stepper_position1
+          value: '0'
+    close_action:
+      - logger.log:
+          format: "CLOSE called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position1)' ]
+      - stepper.set_target:
+          id: blinds_stepper1
+          target: !lambda return id(end_position1);
+      - globals.set:
+          id: stepper_position1
+          value: !lambda return id(end_position1);
+    stop_action:
+      - stepper.set_target:
+          id: blinds_stepper1
+          target: !lambda return id(blinds_stepper1).current_position;
+      - globals.set:
+          id: stepper_position1
+          value: !lambda return id(blinds_stepper1).current_position;
+    optimistic: true
+    assumed_state: true
+    has_position: true
+
+# Вторая
+  - platform: template
+    id: blinds2
+    device_class: blind
+    name: "Central blinds BR"
+    open_action:
+      - logger.log:
+          format: "OPEN called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position2)' ]
+      - stepper.set_target:
+          id: blinds_stepper2
+          target: 0
+      - globals.set:
+          id: stepper_position2
+          value: '0'
+    close_action:
+      - logger.log:
+          format: "CLOSE called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position2)' ]
+      - stepper.set_target:
+          id: blinds_stepper2
+          target: !lambda return id(end_position2);
+      - globals.set:
+          id: stepper_position2
+          value: !lambda return id(end_position2);
+    stop_action:
+      - stepper.set_target:
+          id: blinds_stepper2
+          target: !lambda return id(blinds_stepper2).current_position;
+      - globals.set:
+          id: stepper_position2
+          value: !lambda return id(blinds_stepper2).current_position;
+    optimistic: true
+    assumed_state: true
+    has_position: true
+
+# Третья
+  - platform: template
+    id: blinds3
+    device_class: blind
+    name: "Left blinds BR"
+    open_action:
+      - logger.log:
+          format: "OPEN called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position3)' ]
+      - stepper.set_target:
+          id: blinds_stepper3
+          target: 0
+      - globals.set:
+          id: stepper_position3
+          value: '0'
+    close_action:
+      - logger.log:
+          format: "CLOSE called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position3)' ]
+      - stepper.set_target:
+          id: blinds_stepper3
+          target: !lambda return id(end_position3);
+      - globals.set:
+          id: stepper_position3
+          value: !lambda return id(end_position3);
+    stop_action:
+      - stepper.set_target:
+          id: blinds_stepper3
+          target: !lambda return id(blinds_stepper3).current_position;
+      - globals.set:
+          id: stepper_position3
+          value: !lambda return id(blinds_stepper3).current_position;
+    optimistic: true
+    assumed_state: true
+    has_position: true
+
+# Четвертая
+  - platform: template
+    id: blinds4
+    device_class: blind
+    name: "Door blinds BR"
+    open_action:
+      - logger.log:
+          format: "OPEN called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position4)' ]
+      - stepper.set_target:
+          id: blinds_stepper4
+          target: 0
+      - globals.set:
+          id: stepper_position4
+          value: '0'
+    close_action:
+      - logger.log:
+          format: "CLOSE called. Stepper position is set to: %d"
+          args: [ 'id(stepper_position4)' ]
+      - stepper.set_target:
+          id: blinds_stepper4
+          target: !lambda return id(end_position4);
+      - globals.set:
+          id: stepper_position4
+          value: !lambda return id(end_position4);
+    stop_action:
+      - stepper.set_target:
+          id: blinds_stepper4
+          target: !lambda return id(blinds_stepper4).current_position;
+      - globals.set:
+          id: stepper_position4
+          value: !lambda return id(blinds_stepper4).current_position;
+    optimistic: true
+    assumed_state: true
+    has_position: true
+
+sensor:
+# Сенсор шагового двигателя
+# Шаги первого ШГ
+  - platform: template
+    name: "Position Right blinds BR"
+    unit_of_measurement: steps
+    lambda: return id(blinds_stepper1).current_position;
+    update_interval: 1s
+# Шаги второго ШГ
+  - platform: template
+    name: "Position Central blinds BR"
+    unit_of_measurement: steps
+    lambda: return id(blinds_stepper2).current_position;
+    update_interval: 1s
+# Шаги третьего ШГ
+  - platform: template
+    name: "Position Left blinds BR"
+    unit_of_measurement: steps
+    lambda: return id(blinds_stepper3).current_position;
+    update_interval: 1s
+# Шаги четвертого ШГ
+  - platform: template
+    name: "Position Door blinds BR"
+    unit_of_measurement: steps
+    lambda: return id(blinds_stepper4).current_position;
+    update_interval: 1s
+
+# Общие данные ESP32
+  - platform: uptime
+    id: uptime_sec
+  - platform: wifi_signal
+    name: WiFi Signal blinds BR
+    id: wifis_signal
+    update_interval: 900s
+
+# Фоторезистор
+  - platform: adc
+    pin: GPIO35
+    name: "LUX Windows BR"
+    update_interval: '10s'
+    unit_of_measurement: lux
+    filters:
+      - lambda: |-
+          return (x / 10000.0) * 2000000.0;
+
+text_sensor:
+  - platform: wifi_info
+    ssid:
+      name: Connected SSID
+  - platform: template
+    name: Uptime blinds BR
+    lambda: |-
+      int seconds = (id(uptime_sec).state);
+      int days = seconds / (24 * 3600);
+      seconds = seconds % (24 * 3600); 
+      int hours = seconds / 3600;
+      seconds = seconds % 3600;
+      int minutes = seconds /  60;
+      seconds = seconds % 60;
+      return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m ").c_str() };
+    icon: mdi:clock-start
+    update_interval: 1200s
+  - platform: template
+    name: Wifi Strength blinds BR
+    icon: "mdi:wifi"
+    lambda: |-
+      if (id(wifis_signal).state > -50 ) {
+        return {"Excellent"};
+      } else if (id(wifis_signal).state > -60) {
+        return {"Good"};
+      } else if (id(wifis_signal).state > -70) {
+        return {"Fair"};
+      } else if (id(wifis_signal).state < -70) {
+        return {"Weak"};
+      } else {
+        return {"None"};
+      }
+    update_interval: 900s
+
+# Для управления с помощью степени открытия
+# Первой роллетой
+number:
+  - platform: template
+    name: Control Right blinds BR
+    min_value: -37600
+    max_value: 0
+    step: 393
+    set_action:
+      then:
+        - stepper.set_target:
+            id: blinds_stepper1
+            target: !lambda 'return x;'
+# Второй роллетой
+  - platform: template
+    name: Control Central blinds BR
+    min_value: -36600
+    max_value: 0
+    step: 380
+    set_action:
+      then:
+        - stepper.set_target:
+            id: blinds_stepper2
+            target: !lambda 'return x;'
+# Третьей роллетой
+  - platform: template
+    name: Control Left blinds BR
+    min_value: 0
+    max_value: 38000
+    step: 393
+    set_action:
+      then:
+        - stepper.set_target:
+            id: blinds_stepper3
+            target: !lambda 'return x;'
+# Четвертой роллетой
+  - platform: template
+    name: Control Door blinds BR
+    min_value: -27000
+    max_value: 0
+    step: 393
+    set_action:
+      then:
+        - stepper.set_target:
+            id: blinds_stepper4
+            target: !lambda 'return x;'
+
+binary_sensor:
+# Открытие окна
+  - platform: gpio
+    pin: 
+      number: GPIO2
+      inverted: true
+    name: "Open Window BedRoom"
+    device_class: window
+
+# Датчик Присутствия
+  - platform: gpio
+    pin: GPIO4
+    name: "presence BedRoom"
+    device_class: occupancy
+
+# Добавление Прокси
+esp32_ble_tracker:
+
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+# Рестарт ESP
+switch:
+  - platform: restart
+    name: Restart blinds BR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
